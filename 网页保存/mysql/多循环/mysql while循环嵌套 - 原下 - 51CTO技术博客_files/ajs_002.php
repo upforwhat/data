@@ -1,0 +1,3 @@
+var OX_3df928c5 = '';
+OX_3df928c5 += "<"+"a href=\'//gg.51cto.com/www/delivery/ck.php?oaparams=2__bannerid=3687__zoneid=460__cb=301535599e__oadest=http%3A%2F%2Fbbs.51cto.com%2Fthread-1376067-1.html\' target=\'_blank\'><"+"div style=\" color:red;font-family:微软雅黑 \">【热门话题】面试中被问到“现在的薪水是多少” 该如何回答？<"+"/div><"+"/a><"+"div id=\'beacon_301535599e\' style=\'position: absolute; left: 0px; top: 0px; visibility: hidden;\'><"+"img src=\'//gg.51cto.com/www/delivery/lg.php?bannerid=3687&amp;campaignid=804&amp;zoneid=460&amp;loc=1&amp;referer=http%3A%2F%2Fimysqldba.blog.51cto.com%2F1222376%2F595433&amp;cb=301535599e\' width=\'0\' height=\'0\' alt=\'\' style=\'width: 0px; height: 0px;\' /><"+"/div>\n";
+document.write(OX_3df928c5);

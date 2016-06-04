@@ -1,0 +1,24 @@
+begin 
+set @a=1800;
+set @createtime='2018-05-06';
+set @deleted=1;
+WHILE @a<=100000 DO
+insert into tc_user(
+userName,
+accountName,
+password,
+credentialsSalt,
+description,
+locked,
+createTime,
+deletestatus) values(concat('username',@a),
+concat('countname',@a),
+concat('pwd',@a),
+concat('dfdsaf',@a),
+concat('descrip',@a),
+'0',
+ @createtime,
+ @deleted);
+set @a=@a+1;
+end WHILE;
+END

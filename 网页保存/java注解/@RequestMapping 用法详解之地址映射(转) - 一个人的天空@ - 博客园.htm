@@ -1,0 +1,1165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>@RequestMapping 用法详解之地址映射(转) - 一个人的天空@ - 博客园</title>
+<link type="text/css" rel="stylesheet" href="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/bundle-nature.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/qq78292959/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/qq78292959/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/qq78292959/wlwmanifest.xml">
+<script src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/encoder.js" type="text/javascript"></script><script src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'qq78292959', cb_enable_mathjax=false;</script>
+<script src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.js" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="banner"><div id="bnr_pic">
+<!--done-->
+<div class="header">
+	<div class="headerText">
+		<a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/qq78292959/">一个人的天空</a><br>
+	</div><br>
+	<div class="headerDis"></div>
+</div>
+</div></div>
+<div id="main">
+	<!-- left starts -->
+	<div id="left">
+		<div id="mystats">
+			<br>
+				
+<!--done-->
+<div class="blogStats">
+随笔 - 895&nbsp;
+文章 - 0&nbsp;
+评论 - 108&nbsp;
+
+</div>
+			
+		</div>
+		<div id="mylinks">
+<!--done-->
+<a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a>&nbsp;&nbsp;<a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/qq78292959/">首页</a>&nbsp;&nbsp;<a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a>&nbsp;&nbsp;<a id="MyLinks1_ContactLink" accesskey="9" class="menu" rel="nofollow" href="http://msg.cnblogs.com/send/%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA%40">联系</a>&nbsp;&nbsp;<a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a>&nbsp;&nbsp;<a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/qq78292959/rss">订阅</a>&nbsp;<a id="MyLinks1_XMLLink" href="http://www.cnblogs.com/qq78292959/rss"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/xml.gif" alt="订阅"></a></div>
+		<div id="topics">
+			
+<div id="post_detail">
+<div class="post">
+	<div class="postTitle">
+		<h1><a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/qq78292959/p/3760560.html">@RequestMapping 用法详解之地址映射(转)</a></h1>
+	</div>
+	<div id="cnblogs_post_body"><h2>引言：</h2>
+<p>前段时间项目中用到了RESTful模式来开发程序，但是当用POST、PUT模式提交数据时，发现服务器端接受不到提交的数据（服务器端参数绑定
+没有加任何注解），查看了提交方式为application/json， 而且服务器端通过request.getReader() 
+打出的数据里确实存在浏览器提交的数据。为了找出原因，便对参数绑定（@RequestParam、 @RequestBody、 
+@RequestHeader 、 
+@PathVariable）进行了研究，同时也看了一下HttpMessageConverter的相关内容，在此一并总结。</p>
+<p>&nbsp;</p>
+<h2><a name="t1"></a>简介：</h2>
+<p>@RequestMapping</p>
+<p>RequestMapping是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径。</p>
+<p>RequestMapping注解有六个属性，下面我们把她分成三类进行说明。</p>
+<h3><a name="t2"></a>1、 value， method；</h3>
+<p>value：&nbsp;&nbsp;&nbsp;&nbsp; 指定请求的实际地址，指定的地址可以是URI Template 模式（后面将会说明）；</p>
+<p>method：&nbsp; 指定请求的method类型， GET、POST、PUT、DELETE等；</p>
+<p>&nbsp;</p>
+<h3><a name="t3"></a>2、 consumes，produces；</h3>
+<p>consumes： 指定处理请求的提交内容类型（Content-Type），例如application/json, text/html;</p>
+<p>produces:&nbsp;&nbsp;&nbsp; 指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回；</p>
+<p>&nbsp;</p>
+<h3><a name="t4"></a>3、 params，headers；</h3>
+<p>params： 指定request中必须包含某些参数值是，才让该方法处理。</p>
+<p>headers： 指定request中必须包含某些指定的header值，才能让该方法处理请求。</p>
+<p>&nbsp;</p>
+<h2><a name="t5"></a>示例：</h2>
+<h3><a name="t6"></a>1、value&nbsp; / method 示例</h3>
+<p>默认RequestMapping("....str...")即为value的值；</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #000000;">@Controller
+@RequestMapping(</span>"/appointments"<span style="color: #000000;">)
+</span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> AppointmentsController {
+
+    </span><span style="color: #0000ff;">private</span><span style="color: #000000;"> AppointmentBook appointmentBook;
+    
+    @Autowired
+    </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> AppointmentsController(AppointmentBook appointmentBook) {
+        </span><span style="color: #0000ff;">this</span>.appointmentBook =<span style="color: #000000;"> appointmentBook;
+    }
+
+    @RequestMapping(method </span>=<span style="color: #000000;"> RequestMethod.GET)
+    </span><span style="color: #0000ff;">public</span> Map&lt;String, Appointment&gt;<span style="color: #000000;"> get() {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> appointmentBook.getAppointmentsForToday();
+    }
+
+    @RequestMapping(value</span>="/{day}", method =<span style="color: #000000;"> RequestMethod.GET)
+    </span><span style="color: #0000ff;">public</span> Map&lt;String, Appointment&gt; getForDay(@PathVariable @DateTimeFormat(iso=<span style="color: #000000;">ISO.DATE) Date day, Model model) {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> appointmentBook.getAppointmentsForDay(day);
+    }
+
+    @RequestMapping(value</span>="/new", method =<span style="color: #000000;"> RequestMethod.GET)
+    </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> AppointmentForm getNewForm() {
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> AppointmentForm();
+    }
+
+    @RequestMapping(method </span>=<span style="color: #000000;"> RequestMethod.POST)
+    </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> String add(@Valid AppointmentForm appointment, BindingResult result) {
+        </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (result.hasErrors()) {
+            </span><span style="color: #0000ff;">return</span> "appointments/new"<span style="color: #000000;">;
+        }
+        appointmentBook.addAppointment(appointment);
+        </span><span style="color: #0000ff;">return</span> "redirect:/appointments"<span style="color: #000000;">;
+    }
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>value的uri值为以下三类：</p>
+<p>A） 可以指定为普通的具体值；</p>
+<p>B)&nbsp; 可以指定为含有某变量的一类值(URI Template Patterns with Path Variables)；</p>
+<p>C) 可以指定为含正则表达式的一类值( URI Template Patterns with Regular Expressions);</p>
+<p>&nbsp;</p>
+<p>example B)</p>
+<div class="cnblogs_code">
+<pre>@RequestMapping(value="/owners/{ownerId}", method=<span style="color: #000000;">RequestMethod.GET)
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;"> String findOwner(@PathVariable String ownerId, Model model) {
+  Owner owner </span>=<span style="color: #000000;"> ownerService.findOwner(ownerId);  
+  model.addAttribute(</span>"owner"<span style="color: #000000;">, owner);  
+  </span><span style="color: #0000ff;">return</span> "displayOwner"<span style="color: #000000;">; 
+}</span></pre>
+</div>
+<p><span>example C)</span></p>
+<div class="cnblogs_code">
+<pre>@RequestMapping("/spring-web/{symbolicName:[a-z-]+}-{version:\d\.\d\.\d}.{extension:\.[a-z]}"<span style="color: #000000;">)
+  </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> handle(@PathVariable String version, @PathVariable String extension) {    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> ...</span>
+<span style="color: #000000;">  }
+}</span></pre>
+</div>
+<h3>2 consumes、produces 示例</h3>
+<p>cousumes的样例：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">@Controller
+@RequestMapping(value </span>= "/pets", method = RequestMethod.POST, consumes="application/json"<span style="color: #000000;">)
+</span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> addPet(@RequestBody Pet pet, Model model) {    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> implementation omitted</span>
+}</pre>
+</div>
+<p><span>方法仅处理request Content-Type为“application/json”类型的请求。</span></p>
+<p><span><span>produces的样例：</span></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">@Controller
+@RequestMapping(value </span>= "/pets/{petId}", method = RequestMethod.GET, produces="application/json"<span style="color: #000000;">)
+@ResponseBody
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;"> Pet getPet(@PathVariable String petId, Model model) {    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> implementation omitted</span>
+}</pre>
+</div>
+<p>方法仅处理request请求中Accept头中包含了"application/json"的请求，同时暗示了返回的内容类型为application/json;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="t8"></a>3 params、headers 示例</h3>
+<p>params的样例：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #000000;">@Controller
+@RequestMapping(</span>"/owners/{ownerId}"<span style="color: #000000;">)
+</span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> RelativePathUriTemplateController {
+
+  @RequestMapping(value </span>= "/pets/{petId}", method = RequestMethod.GET, params="myParam=myValue"<span style="color: #000000;">)
+  </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) {    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> implementation omitted</span>
+<span style="color: #000000;">  }
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>仅处理请求中包含了名为“myParam”，值为“myValue”的请求；</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>headers的样例：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #000000;">@Controller
+@RequestMapping(</span>"/owners/{ownerId}"<span style="color: #000000;">)
+</span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> RelativePathUriTemplateController {
+
+@RequestMapping(value </span>= "/pets", method = RequestMethod.GET, headers="Referer=http://www.ifeng.com/"<span style="color: #000000;">)
+  </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) {    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> implementation omitted</span>
+<span style="color: #000000;">  }
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>仅处理request的header中包含了指定“Refer”请求头和对应值为“<code class="focusRow subFocusRow ">http://www.ifeng.com/</code>”的请求；</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>上面仅仅介绍了，RequestMapping指定的方法处理哪些请求，下面一篇将讲解怎样处理request提交的数据（数据绑定）和返回的数据。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="t9"></a>参考资料：</h2>
+<p>1、 Spring Web Doc：&nbsp;</p>
+<pre>spring-3.1.0/docs/spring-framework-reference/html/mvc.html</pre></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/qq78292959/category/577528.html">Spring</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(3760560,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://msg.cnblogs.com/send/%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA%40" target="_blank">联系我</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon_weibo_24.png" alt=""></a>
+<a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/qq78292959/" target="_blank"><img src="@RequestMapping%20%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%28%E8%BD%AC%29%20-%20%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A4%A9%E7%A9%BA@%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/sample_face.gif" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/qq78292959/">一个人的天空@</a><br>
+<a href="http://home.cnblogs.com/u/qq78292959/followees">关注 - 2</a><br>
+<a href="http://home.cnblogs.com/u/qq78292959/followers">粉丝 - 359</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(3760560,'Digg')">
+        <span class="diggnum" id="digg_count">4</span>
+    </div>
+	<div class="buryit" onclick="votePost(3760560,'Bury')"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/qq78292959/p/3759632.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/qq78292959/p/3759632.html" title="发布于2014-05-29 17:23">【转】JavaScript eval处理JSON数据 为什么要加括号</a><br><a href="http://www.cnblogs.com/qq78292959/p/3760651.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/qq78292959/p/3760651.html" title="发布于2014-05-30 10:48">@RequestBody, @ResponseBody 注解详解(转)</a><br></div>
+</div>
+
+
+	<div class="postDesc">posted on <span id="post-date">2014-05-30 10:07</span> <a href="http://www.cnblogs.com/qq78292959/">一个人的天空@</a> 阅读(<span id="post_view_count">63358</span>) 评论(<span id="post_comment_count">3</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=3760560" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(3760560);return false;">收藏</a></div>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=90670,cb_entryId=3760560,cb_blogApp=currentBlogApp,cb_blogUserGuid='3ab20756-6392-e011-a53f-842b2b196315',cb_entryCreatedDate='2014/5/30 10:07:00';loadViewCount(cb_entryId);</script>
+
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<br>
+<div class="feedback_area_title">发表评论</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3272986" class="layer">#1楼</a><a name="3272986" id="comment_anchor_3272986"></a>  <span class="comment_date">2015-09-23 22:25</span> | <a id="a_comment_author_3272986" class="feedbackmanagelink" href="http://www.cnblogs.com/newsea/" target="_blank">NewSea</a> <a href="http://msg.cnblogs.com/send/NewSea" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3272986" class="blog_comment_body">学习。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3272986,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3272986,'Bury',this)">反对(0)</a></div><span id="comment_3272986_avatar" style="display:none;">http://pic.cnblogs.com/face/u18191.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3390931" class="layer">#2楼</a><a name="3390931" id="comment_anchor_3390931"></a>  <span class="comment_date">2016-03-24 17:39</span> | <a id="a_comment_author_3390931" class="feedbackmanagelink" href="http://www.cnblogs.com/aibeibei-beauty/" target="_blank">wild_cat</a> <a href="http://msg.cnblogs.com/send/wild_cat" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3390931" class="blog_comment_body">学习了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3390931,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3390931,'Bury',this)">反对(0)</a></div><span id="comment_3390931_avatar" style="display:none;">http://pic.cnblogs.com/face/819991/20151009105758.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3429628" class="layer">#3楼</a><a name="3429628" id="comment_anchor_3429628"></a><span id="comment-maxId" style="display:none;">3429628</span><span id="comment-maxDate" style="display:none;">2016/5/12 15:16:40</span>  <span class="comment_date">2016-05-12 15:16</span> | <a id="a_comment_author_3429628" class="feedbackmanagelink" href="http://home.cnblogs.com/u/859988/" target="_blank">XeonZhao</a> <a href="http://msg.cnblogs.com/send/XeonZhao" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3429628" class="blog_comment_body">很详细，不错</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3429628,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3429628,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login('commentform');">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block"></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/545375/" target="_blank">奇葩公司非法集资涉案超3亿 发公告求国家做接盘侠</a><br> ·  <a href="http://news.cnblogs.com/n/545374/" target="_blank">苹果投资滴滴让易到有些震动和压力 CEO内部信安抚员工</a><br> ·  <a href="http://news.cnblogs.com/n/545373/" target="_blank">任正非：板凳要坐十年冷，没有理论基础的创新是做不成大产业的</a><br> ·  <a href="http://news.cnblogs.com/n/545372/" target="_blank">软件的反重力定律</a><br> ·  <a href="http://news.cnblogs.com/n/545371/" target="_blank">苹果将为WWDC奖学金获奖者举办交流活动</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/543110/" target="_blank">架构漫谈（九）：理清技术、业务和架构的关系</a><br> ·  <a href="http://kb.cnblogs.com/page/542725/" target="_blank">架构漫谈（八）：从架构的角度看如何写好代码</a><br> ·  <a href="http://kb.cnblogs.com/page/542257/" target="_blank">架构漫谈（七）：不要空设架构师这个职位，给他实权</a><br> ·  <a href="http://kb.cnblogs.com/page/541740/" target="_blank">架构漫谈（六）：软件架构到底是要解决什么问题？</a><br> ·  <a href="http://kb.cnblogs.com/page/541188/" target="_blank">架构漫谈（五）：什么是软件</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"><b>历史上的今天:</b><br>2012-05-30 <a href="http://www.cnblogs.com/qq78292959/archive/2012/05/30/2527109.html">Qt 让QLabel自适应text的大小，并且自动换行(转)</a><br>2012-05-30 <a href="http://www.cnblogs.com/qq78292959/archive/2012/05/30/2527101.html">Visual C++位图操作（转）</a><br>2012-05-30 <a href="http://www.cnblogs.com/qq78292959/archive/2012/05/30/2527099.html">QT中文显示乱码解决</a><br>2012-05-30 <a href="http://www.cnblogs.com/qq78292959/archive/2012/05/30/2526761.html">/usr/local/lib/libz.a: could not read symbols: Bad value(64 位 Linux)</a><br>2012-05-30 <a href="http://www.cnblogs.com/qq78292959/archive/2012/05/30/2526757.html">centos 单独安装apachebench</a><br>2012-05-30 <a href="http://www.cnblogs.com/qq78292959/archive/2012/05/30/2526758.html">Cent os 升级python到2.5后yum安装出错</a><br></div>
+<script type="text/javascript">
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+		</div>
+	</div>
+	<!-- left ends -->
+	<!-- right starts -->
+	<div id="right">
+		<!-- 右侧工具部分 -->
+		<div id="right_content">
+	
+			
+<!--done-->
+<h2 class="listtitle">公告</h2>
+<div class="newsItem">
+	<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/qq78292959/">一个人的天空@</a><br>园龄：<a href="http://home.cnblogs.com/u/qq78292959/" title="入园时间：2011-06-09">4年11个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/qq78292959/followers/">359</a><br>关注：<a href="http://home.cnblogs.com/u/qq78292959/followees/">2</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger('3ab20756-6392-e011-a53f-842b2b196315')">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+	
+			<div id="calendar"><div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" title="Calendar" cellpadding="0" cellspacing="0">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar('2016/04/01');return false;">&lt;</a></td><td align="center">2016年5月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar('2016/06/01');return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" abbr="日" scope="col" align="center">日</th><th class="CalDayHeader" abbr="一" scope="col" align="center">一</th><th class="CalDayHeader" abbr="二" scope="col" align="center">二</th><th class="CalDayHeader" abbr="三" scope="col" align="center">三</th><th class="CalDayHeader" abbr="四" scope="col" align="center">四</th><th class="CalDayHeader" abbr="五" scope="col" align="center">五</th><th class="CalDayHeader" abbr="六" scope="col" align="center">六</th></tr><tr><td class="CalOtherMonthDay" align="center">24</td><td class="CalOtherMonthDay" align="center">25</td><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td></tr><tr><td class="CalWeekendDay" align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td class="CalWeekendDay" align="center">7</td></tr><tr><td class="CalWeekendDay" align="center">8</td><td align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td class="CalTodayDay" align="center">14</td></tr><tr><td class="CalWeekendDay" align="center">15</td><td align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td class="CalWeekendDay" align="center">21</td></tr><tr><td class="CalWeekendDay" align="center">22</td><td align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td class="CalWeekendDay" align="center">28</td></tr><tr><td class="CalWeekendDay" align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+				<div id="leftcontentcontainer">
+					<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk" type="text">&nbsp;<input onclick="zzk_go()" value="找找看" id="btnZzk" class="btn_my_zzk" type="button"></div>
+<div id="widget_my_google" class="div_my_zzk"><input name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk" type="text">&nbsp;<input onclick="google_go()" value="谷歌搜索" class="btn_my_zzk" type="button"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/qq78292959/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/qq78292959/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/qq78292959/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/qq78292959/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/qq78292959/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+
+</div></div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+<!--done-->
+
+		<h1 class="catListTitle">随笔分类</h1>
+		
+				<ul>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_0" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304331.html">Android(70)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_1" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304344.html">C++(100)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_2" class="listitem" href="http://www.cnblogs.com/qq78292959/category/424058.html">Cloud(2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_3" class="listitem" href="http://www.cnblogs.com/qq78292959/category/648345.html">css(3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_4" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304346.html">Delphi(2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_5" class="listitem" href="http://www.cnblogs.com/qq78292959/category/504269.html">Django(9)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_6" class="listitem" href="http://www.cnblogs.com/qq78292959/category/627439.html">eclipse(1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_7" class="listitem" href="http://www.cnblogs.com/qq78292959/category/361682.html">English(1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_8" class="listitem" href="http://www.cnblogs.com/qq78292959/category/654766.html">git(2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_9" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304329.html">Iphone(31)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_10" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304327.html">iPhone人机界面指南(11)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_11" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304328.html">iPhone应用程序编程指南(10)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_12" class="listitem" href="http://www.cnblogs.com/qq78292959/category/386496.html">ipvs(lvs)(12)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_13" class="listitem" href="http://www.cnblogs.com/qq78292959/category/426908.html">java(46)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_14" class="listitem" href="http://www.cnblogs.com/qq78292959/category/505367.html">javascript&amp;jquery(9)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_15" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304337.html">Linux(151)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_16" class="listitem" href="http://www.cnblogs.com/qq78292959/category/377618.html">Linux C(67)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_17" class="listitem" href="http://www.cnblogs.com/qq78292959/category/590820.html">lua(1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_18" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304325.html">Mac(8)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_19" class="listitem" href="http://www.cnblogs.com/qq78292959/category/576717.html">maven(5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_20" class="listitem" href="http://www.cnblogs.com/qq78292959/category/441865.html">mongodb(8)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_21" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304338.html">MTV</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_22" class="listitem" href="http://www.cnblogs.com/qq78292959/category/376002.html">mysql(22)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_23" class="listitem" href="http://www.cnblogs.com/qq78292959/category/701507.html">nginx(2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_24" class="listitem" href="http://www.cnblogs.com/qq78292959/category/392182.html">php(35)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_25" class="listitem" href="http://www.cnblogs.com/qq78292959/category/399633.html">python(92)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_26" class="listitem" href="http://www.cnblogs.com/qq78292959/category/377359.html">Qt(28)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_27" class="listitem" href="http://www.cnblogs.com/qq78292959/category/450591.html">redis(17)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_28" class="listitem" href="http://www.cnblogs.com/qq78292959/category/605491.html">socket(2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_29" class="listitem" href="http://www.cnblogs.com/qq78292959/category/577528.html">Spring(16)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_30" class="listitem" href="http://www.cnblogs.com/qq78292959/category/342546.html">Web(21)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_31" class="listitem" href="http://www.cnblogs.com/qq78292959/category/498712.html">windbg(5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_32" class="listitem" href="http://www.cnblogs.com/qq78292959/category/539476.html">Windows(12)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_33" class="listitem" href="http://www.cnblogs.com/qq78292959/category/722221.html">WTL(2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_34" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304340.html">播客视频(6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_35" class="listitem" href="http://www.cnblogs.com/qq78292959/category/429255.html">大数据处理(1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_36" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304334.html">多媒体编程(36)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_37" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304348.html">个人日记(6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_38" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304326.html">个性化推荐与搜索(4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_39" class="listitem" href="http://www.cnblogs.com/qq78292959/category/342274.html">管理(8)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_40" class="listitem" href="http://www.cnblogs.com/qq78292959/category/397569.html">汇编(4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_41" class="listitem" href="http://www.cnblogs.com/qq78292959/category/342247.html">架构师(13)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_42" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304335.html">美食天下</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_43" class="listitem" href="http://www.cnblogs.com/qq78292959/category/512102.html">爬虫(8)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_44" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304333.html">其他(22)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_45" class="listitem" href="http://www.cnblogs.com/qq78292959/category/452999.html">设计模式(4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_46" class="listitem" href="http://www.cnblogs.com/qq78292959/category/429582.html">数据结构(2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_47" class="listitem" href="http://www.cnblogs.com/qq78292959/category/526862.html">算法&amp;数据结构(1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_48" class="listitem" href="http://www.cnblogs.com/qq78292959/category/365743.html">网络编程(11)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_49" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304342.html">武(2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_50" class="listitem" href="http://www.cnblogs.com/qq78292959/category/492299.html">系统编程(1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_51" class="listitem" href="http://www.cnblogs.com/qq78292959/category/430966.html">系统架构(11)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_52" class="listitem" href="http://www.cnblogs.com/qq78292959/category/371095.html">协议(7)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_53" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304332.html">形意拳(4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_54" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304330.html">研发质量管理(11)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_55" class="listitem" href="http://www.cnblogs.com/qq78292959/category/400620.html">音频(3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_56" class="listitem" href="http://www.cnblogs.com/qq78292959/category/304336.html">转载日记(11)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_57" class="listitem" href="http://www.cnblogs.com/qq78292959/category/465142.html">自动化(6)</a>
+				</li>
+			
+				</ul>
+			
+	
+		<h1 class="catListTitle">随笔档案</h1>
+		
+				<ul>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_0" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2016/01.html">2016年1月 (5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_1" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/12.html">2015年12月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_2" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/11.html">2015年11月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_3" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/10.html">2015年10月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_4" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/09.html">2015年9月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_5" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/08.html">2015年8月 (6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_6" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/07.html">2015年7月 (6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_7" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/06.html">2015年6月 (5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_8" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/05.html">2015年5月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_9" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/04.html">2015年4月 (7)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_10" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/03.html">2015年3月 (8)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_11" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/02.html">2015年2月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_12" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2015/01.html">2015年1月 (9)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_13" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/12.html">2014年12月 (6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_14" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/11.html">2014年11月 (13)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_15" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/10.html">2014年10月 (16)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_16" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/09.html">2014年9月 (9)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_17" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/08.html">2014年8月 (4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_18" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/07.html">2014年7月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_19" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/06.html">2014年6月 (14)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_20" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/05.html">2014年5月 (20)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_21" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/04.html">2014年4月 (9)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_22" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/03.html">2014年3月 (9)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_23" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/02.html">2014年2月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_24" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2014/01.html">2014年1月 (4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_25" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/12.html">2013年12月 (7)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_26" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/11.html">2013年11月 (5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_27" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/10.html">2013年10月 (7)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_28" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/09.html">2013年9月 (12)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_29" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/08.html">2013年8月 (19)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_30" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/07.html">2013年7月 (6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_31" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/06.html">2013年6月 (4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_32" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/05.html">2013年5月 (29)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_33" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/04.html">2013年4月 (20)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_34" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/03.html">2013年3月 (15)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_35" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/02.html">2013年2月 (16)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_36" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2013/01.html">2013年1月 (52)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_37" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/12.html">2012年12月 (25)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_38" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/11.html">2012年11月 (10)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_39" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/10.html">2012年10月 (10)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_40" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/08.html">2012年8月 (23)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_41" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/07.html">2012年7月 (21)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_42" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/06.html">2012年6月 (23)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_43" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/05.html">2012年5月 (23)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_44" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/04.html">2012年4月 (8)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_45" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/03.html">2012年3月 (22)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_46" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/02.html">2012年2月 (18)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_47" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2012/01.html">2012年1月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_48" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/12.html">2011年12月 (38)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_49" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/11.html">2011年11月 (19)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_50" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/10.html">2011年10月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_51" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/09.html">2011年9月 (9)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_52" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/08.html">2011年8月 (9)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_53" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/07.html">2011年7月 (17)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_54" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/06.html">2011年6月 (25)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_55" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/05.html">2011年5月 (59)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_56" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/04.html">2011年4月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_57" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/03.html">2011年3月 (4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_58" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/02.html">2011年2月 (6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_59" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2011/01.html">2011年1月 (6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_60" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/12.html">2010年12月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_61" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/11.html">2010年11月 (13)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_62" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/10.html">2010年10月 (11)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_63" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/09.html">2010年9月 (6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_64" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/08.html">2010年8月 (22)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_65" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/07.html">2010年7月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_66" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/06.html">2010年6月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_67" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/05.html">2010年5月 (15)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_68" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/04.html">2010年4月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_69" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/03.html">2010年3月 (6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_70" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/02.html">2010年2月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_71" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2010/01.html">2010年1月 (5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_72" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2009/12.html">2009年12月 (5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_73" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2009/11.html">2009年11月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_74" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2009/09.html">2009年9月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_75" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2009/08.html">2009年8月 (5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_76" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2009/07.html">2009年7月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_77" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2009/06.html">2009年6月 (9)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_78" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2009/03.html">2009年3月 (4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_79" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2008/10.html">2008年10月 (27)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_80" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2008/06.html">2008年6月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_81" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2008/05.html">2008年5月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_82" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2008/04.html">2008年4月 (4)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_83" class="listitem" href="http://www.cnblogs.com/qq78292959/archive/2008/03.html">2008年3月 (2)</a>
+				</li>
+			
+				</ul>
+			
+	
+		<h1 class="catListTitle">编程</h1>
+		
+				<ul>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_0" class="listitem" href="http://www.cnblogs.com/huxi/category/251137.html">AstralWind</a>
+				</li>
+			<li class="c_b_p_link_desc">非常好的python博文</li>
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_1" class="listitem" href="http://oss.org.cn/kernel-book/ccfaq/" rel="nofollow">C 语言常见问题集</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_2" class="listitem" href="http://www.cnblogs.com/chio/" rel="nofollow">c/c++博客(chio)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_3" class="listitem" href="http://bbs.chinaunix.net/" rel="nofollow">ChinaUnix</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_4" class="listitem" href="http://www.cnblogs.com/coderzh/category/133952.html">CoderZh的技术博客</a>
+				</li>
+			<li class="c_b_p_link_desc">非常好的python文章，Python天天美味系列</li>
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_5" class="listitem" href="http://highscalability.com/all-time-favorites/" rel="nofollow">high scalability</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_6" class="listitem" href="http://blog.csdn.net/g5dsk" rel="nofollow">HoNooD的Blog</a>
+				</li>
+			<li class="c_b_p_link_desc">有很多好的C++ on windows文章</li>
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_7" class="listitem" href="http://www.icodelogic.com/" rel="nofollow">ian的个人博客</a>
+				</li>
+			<li class="c_b_p_link_desc">python、django、爬虫、android</li>
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_8" class="listitem" href="http://www.cnblogs.com/itech/category/170012.html">iTech--Python</a>
+				</li>
+			<li class="c_b_p_link_desc">很全的python参考博客</li>
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_9" class="listitem" href="http://www.itpub.net/" rel="nofollow">ITPUB</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_10" class="listitem" href="http://www.cnblogs.com/mydomain/" rel="nofollow">Just Steps</a>
+				</li>
+			<li class="c_b_p_link_desc">linux c/c++、shell等编程</li>
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_11" class="listitem" href="http://www.opsers.org/server/" rel="nofollow" target="_blank">linux服务器</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_12" class="listitem" href="http://www.opsers.org/base/" rel="nofollow" target="_blank">linux基础</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_13" class="listitem" href="http://oss.org.cn/ossdocs/gnu_linux/kernel-api/" rel="nofollow">Linux内核API手册（Kernel API）</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_14" class="listitem" href="http://lxr.oss.org.cn/source/" rel="nofollow">Linux内核源码在线阅读（LXR）</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_15" class="listitem" href="http://oss.org.cn/kernel-book/ldd3/index.html" rel="nofollow">Linux设备驱动开发指南</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_16" class="listitem" href="http://blog.nosqlfan.com/" rel="nofollow">NoSqlFan</a>
+				</li>
+			<li class="c_b_p_link_desc">redis、mongdb</li>
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_17" class="listitem" href="http://us3.php.net/manual/zh/index.php" rel="nofollow">PHP手册</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_18" class="listitem" href="http://www.php100.com/" rel="nofollow">PHP资源分享门户</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_19" class="listitem" href="http://www.cnblogs.com/pylemon/category/296366.html">python学习blog</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_20" class="listitem" href="http://blog.csdn.net/nrc_douningbo/article/category/572703">Qt - 窦宁波 的专栏</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_21" class="listitem" href="http://blog.sina.com.cn/s/articlelist_1904166683_1_1.html" rel="nofollow">qt博客</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_22" class="listitem" href="http://blog.csdn.net/binghuiliang" rel="nofollow">Steven.Leong的专栏</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_23" class="listitem" href="http://blog.csdn.net/wuzhekai1985?viewmode=contents" rel="nofollow">wuzhekai的专栏</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_24" class="listitem" href="http://hi.baidu.com/new/shenhuanyu09" rel="nofollow">点点星光（测试）</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_25" class="listitem" href="http://andyblog.sinaapp.com/?cat=5" rel="nofollow">读书笔记</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_26" class="listitem" href="http://www.cppblog.com/biao/" rel="nofollow">逛奔的蜗牛(c++/qt)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_27" class="listitem" href="http://hudeyong926.iteye.com/category/72514">航空母舰</a>
+				</li>
+			<li class="c_b_p_link_desc">mysql</li>
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_28" class="listitem" href="http://blog.csdn.net/v_JULY_v" rel="nofollow">结构之法 算法之道</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_29" class="listitem" href="http://oss.org.cn/?action-viewnews-itemid-3646" rel="nofollow">开源技术手册黄页</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_30" class="listitem" href="http://www.dataguru.cn/" rel="nofollow">炼数成金</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_31" class="listitem" href="http://www.ccvita.com/" rel="nofollow">平凡的世界</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_32" class="listitem" href="http://oss.org.cn/kernel-book/index.htm" rel="nofollow">深入分析Linux内核源码</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_33" class="listitem" href="http://blog.csdn.net/fbd2011" rel="nofollow">小米饭团</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_34" class="listitem" href="http://www.cnblogs.com/benshan/archive/2013/01/19/2867244.html">一宁</a>
+				</li>
+			<li class="c_b_p_link_desc">mysql</li>
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_35" class="listitem" href="http://www.cnblogs.com/wiki-royzhang/category/466578.html">自动化测试</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_2_Link_36" class="listitem" href="http://blog.csdn.net/cutesource?viewmode=contents" rel="nofollow">走向架构师之路</a>
+				</li>
+			
+				</ul>
+			
+	
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<h3 class="catListTitle">最新评论</h3>
+<div class="RecentComment" id="RecentComments">
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/p/3760560.html#3429628">1. Re:@RequestMapping 用法详解之地址映射(转)</a></li>
+        <li class="recent_comment_body">很详细，不错</li>
+        <li class="recent_comment_author">--XeonZhao</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/p/3760702.html#3429575">2. Re:@RequestParam @RequestBody @PathVariable 等参数绑定注解详解(转)</a></li>
+        <li class="recent_comment_body">学习了！</li>
+        <li class="recent_comment_author">--XeonZhao</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/archive/2012/12/27/2835950.html#3422364">3. Re:了解负载均衡 会话保持 session同步(转)</a></li>
+        <li class="recent_comment_body">session sticky &amp; session replication 二者的优缺点呢？</li>
+        <li class="recent_comment_author">--平林新袖</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/p/4747282.html#3421841">4. Re:C/C++中的常量指针与指针常量(转)</a></li>
+        <li class="recent_comment_body">你把两个完全搞反了，指向常见的指针是：const int *pi<br>常量指针是：int *const pi</li>
+        <li class="recent_comment_author">--！！-阳光-！！</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/archive/2012/05/08/2490443.html#3397644">5. Re:ulimit -c unlimited</a></li>
+        <li class="recent_comment_body">第一行有个错别字</li>
+        <li class="recent_comment_author">--无心流泪</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/p/3760560.html#3390931">6. Re:@RequestMapping 用法详解之地址映射(转)</a></li>
+        <li class="recent_comment_body">学习了</li>
+        <li class="recent_comment_author">--wild_cat</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/archive/2012/12/27/2835950.html#3369282">7. Re:了解负载均衡 会话保持 session同步(转)</a></li>
+        <li class="recent_comment_body">学习了，  正常情况下 感觉2还是不错的</li>
+        <li class="recent_comment_author">--sosi</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/p/4047616.html#3367017">8. Re:在Eclipse添加Android兼容包( v4、v7 appcompat )(转)</a></li>
+        <li class="recent_comment_body">照着一步一步操作的，总算OK了，非常感谢</li>
+        <li class="recent_comment_author">--songshijia88888</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/p/3792481.html#3350022">9. Re:使用Apache commons-codec Base64实现加解密(转)</a></li>
+        <li class="recent_comment_body">base64好像不会用于视频加密</li>
+        <li class="recent_comment_author">--一个人的天空@</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qq78292959/archive/2008/10/13/2077113.html#3350020">10. Re:ARP欺骗的源代码</a></li>
+        <li class="recent_comment_body">这代码是很久以前转的了，可能有问题，就看个大概思路吧，想用还得改一改</li>
+        <li class="recent_comment_author">--一个人的天空@</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<h3 class="catListTitle">阅读排行榜</h3>
+<div class="RecentComment" id="TopViewPosts"> 
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/07/06/2099427.html">1. Linux下的tar压缩解压缩命令详解(141816)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/06/10/2077866.html">2. linux常用命令大全(转)(93798)</a></li><li><a href="http://www.cnblogs.com/qq78292959/p/3641972.html">3. mysql Access denied for user root@localhost错误解决方法总结(转)(91538)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2012/07/16/2593651.html">4. iOS消息推送机制的实现(69861)</a></li><li><a href="http://www.cnblogs.com/qq78292959/p/3760560.html">5. @RequestMapping 用法详解之地址映射(转)(63353)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/03/17/2076948.html">6. Java命名规范(41042)</a></li><li><a href="http://www.cnblogs.com/qq78292959/p/3761646.html">7. 在SpringMVC中使用@RequestBody注解处理json时，报出HTTP Status 415的解决方案(40537)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/07/25/2116123.html">8. Java内存泄露的理解与解决（转）(37879)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2012/03/06/2382334.html">9. mount/umount命令(37623)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2012/05/08/2490443.html">10. ulimit -c unlimited(37306)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<h3 class="catListTitle">评论排行榜</h3>
+<div class="RecentComment" id="TopCommentsPosts">
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/01/12/2076982.html">1. 用Android NDK编译FFmpeg(7)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/06/10/2077866.html">2. linux常用命令大全(转)(7)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2012/07/13/2589765.html">3. ipvs学习笔记（二）(4)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2013/02/05/2892735.html">4. 浅谈Redis数据库的键值设计(转)(3)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2012/07/16/2593651.html">5. iOS消息推送机制的实现(3)</a></li><li><a href="http://www.cnblogs.com/qq78292959/p/3760560.html">6. @RequestMapping 用法详解之地址映射(转)(3)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/01/12/2076980.html">7. Android Linux下开发环境搭建(3)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2008/10/13/2077113.html">8. ARP欺骗的源代码(2)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2010/03/24/2077064.html">9. 音频捕捉（directshow）(2)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2010/11/01/2077001.html">10. libvlc外部api的简单整理(2)</a></li></ul></div>
+</div></div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div class="RecentComment">
+	<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/07/25/2116123.html">1. Java内存泄露的理解与解决（转）(10)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/06/10/2077866.html">2. linux常用命令大全(转)(9)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/03/17/2076948.html">3. Java命名规范(6)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2012/07/20/2600865.html">4. EAX、ECX、EDX、EBX寄存器的作用(5)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2012/07/16/2593651.html">5. iOS消息推送机制的实现(5)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2011/07/06/2099427.html">6. Linux下的tar压缩解压缩命令详解(5)</a></li><li><a href="http://www.cnblogs.com/qq78292959/p/3760560.html">7. @RequestMapping 用法详解之地址映射(转)(4)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2012/12/27/2835950.html">8. 了解负载均衡 会话保持 session同步(转)(3)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2012/05/03/2481971.html">9. Qt安装—搭建VS2008+QT开发环境(转)(3)</a></li><li><a href="http://www.cnblogs.com/qq78292959/archive/2013/03/22/2975786.html">10. Python中time模块详解(转)(3)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+				</div>
+			
+		</div>
+		<!-- //右侧工具部分 -->
+		<div id="footer">
+			
+<!--done-->
+Copyright ©2016 一个人的天空@
+		</div>
+	</div>
+	<!-- right ends -->
+	<div class="clear"></div>
+	
+</div>
+
+
+
+</body></html>

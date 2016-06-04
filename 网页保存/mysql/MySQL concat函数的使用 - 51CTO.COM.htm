@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+    <title>MySQL concat函数的使用 - 51CTO.COM</title>
+    <meta name="description" content="作为MySQL函数中的代表函数，concat函数返回结果为连接参数产生的字符串，该函数可以可以连接一个或者多个字符串，极具实用价值">
+    <meta name="keywords" content="MySQL concat函数">
+    <!-- base href="http://database.51cto.com/art/201010/229348.htm" -->
+    <link rel="stylesheet" type="text/css" href="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/article_head.css">
+    <link rel="stylesheet" type="text/css" href="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/article_layout.css">
+    <script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/analytics.js" async=""></script><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/hm.js"></script><script type="text/javascript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/jquery.js"></script>
+    <script type="text/javascript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/database.js"></script>
+<script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/share.js"></script><link href="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/share_style0_16.css" rel="stylesheet"><link href="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/layout_51cto.css" type="text/css" rel="stylesheet"></head>
+<body>
+<!-- 导航 开始-->
+<!-- top start -->
+<div class="home-top" id="topx">
+    <div class="w1001 cent">
+        <div class="pdr10 fl">中国领先的IT技术网站</div>
+        <div class="pdr10 fl">|</div>
+        <div class="pdr10 fl">
+            <div class="subweb"><span class="trans">51CTO旗下网站</span><i></i>
+                <!--旗下网站-->
+                <div class="subweb-list">
+                    <a href="http://www.51cto.com/" target="_blank">51CTO.com</a>
+                    <a href="http://www.cioage.com/" target="_blank">CIOage.com</a>
+                    <a href="http://www.watchstor.com/" target="_blank">WatchStor.com</a>
+                    <a href="http://www.hc3i.cn/" target="_blank">HC3i.cn</a>
+                </div>
+                <!--旗下网站-->
+            </div>
+        </div>
+        <div class="pdr10 fl">|</div>
+        <div class="pdr10 fl"><a href="http://www.51cto.com/about/map.htm" target="_blank">地图</a></div>
+        <div class="top-r">
+        <div id="login_status" style="text-align:right;" class="login"><i></i><a href="http://home.51cto.com/index?reback=http://database.51cto.com/art/201010/229348.htm" target="_self">登录</a> <a href="http://ucenter.51cto.com/2015/register.php?reback=http://database.51cto.com/art/201010/229348.htm" target="_self">注册</a><span class="fl">|</span><a onclick="addFavorite(this.href, '51CTO! 官方站');return false;" href="http://www.51cto.com/">收藏本站</a></div>
+        </div>
+    </div>
+</div>
+<!-- top end -->
+<!-- 导航 结束-->
+
+<!-- 频道导航 -->
+<div class="top_bg">
+	<div class="wrap">
+		<div id="tonglanad" class="left"><script type="text/javascript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/ad.js"></script></div>
+		<div id="list4" class="right">
+			<ul>
+				<li id="wordlinkad1"></li>
+				<li id="wordlinkad2"></li>
+				<li id="wordlinkad3"></li>
+				<li id="wordlinkad4"></li>
+			</ul>
+		</div>
+	</div>
+	<div class="nav">
+		<a href="http://www.51cto.com/" class="logo"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/nr_logo.png" alt=""></a>
+		<ul>
+			<li><a href="http://database.51cto.com/" class="active">数据库频道</a></li>
+			<li><a href="http://www.51cto.com/">首页</a></li>
+			<li><a href="http://database.51cto.com/col/579/">资讯</a></li>
+			<li><a href="http://database.51cto.com/col/1459/">前沿技术</a></li>
+			<li><a href="http://database.51cto.com/col/578/">数据库基础</a></li>
+			<li><a href="http://database.51cto.com/col/589/">数据库管理</a></li>
+			<li><a href="http://database.51cto.com/col/587/">数据库开发</a></li>
+			<li><a href="http://netsecurity.51cto.com/col/1067/">数据库安全</a></li>
+		</ul>
+		<div class="nav-rsear">
+			<form method="post" action="http://www.51cto.com/php/search.php" name="searchform" target="_blank">
+				<input name="keyword" id="q" placeholder="输入您要搜索的内容" class="sear-1" type="text">
+				<input name="" value="" class="sear-2" type="submit">
+			</form>
+		</div>
+	</div>
+</div>
+<!-- 频道导航结束 -->
+
+<div class="main">
+    <!-- 左侧内容 -->
+    <div class="main_left">
+        <div class="wznr">
+            <h2>MySQL concat函数的使用</h2>
+            <p>作为MySQL函数中的代表函数，concat函数返回结果为连接参数产生的字符串，该函数可以可以连接一个或者多个字符串，极具实用价值</p>
+            <dl>
+                <dt><span>作者：佚名</span><span>来源：互联网</span>|<em>2010-10-11 15:08</em></dt>
+                <dd>
+                	<div class="left" style="padding-right: 10px">
+                		<a href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！" target="_self" class="bds_more1">&nbsp;收藏</a>
+                	</div>
+					<div data-bd-bind="1463738252499" class="bdsharebuttonbox left bdshare-button-style0-16" data-tag="share_2">
+						<a href="javascript:;" class="bds_more" data-cmd="more">&nbsp;&nbsp;分享</a>
+					</div>
+                </dd>
+            </dl>
+        </div>
+        <div class="zwnr">
+            <h2><a href="http://mobile.51cto.com/mobile/mdsa12/" target="_blank">51CTO 网+ 第十二期沙龙：大话数据之美_如何用数据驱动用户体验</a></h2>
+            <p>MySQL concat函数是<a href="http://database.51cto.com/art/201010/229242.htm">MySQL</a>数据库中众多的函数之一，下文将对MySQL concat函数的语法和使用进行说明，供您参考和学习。</p>
+<p>MySQL concat函数使用方法：<br>
+CONCAT(str1,str2,…)&nbsp;</p>
+<p>返回结果为连接参数产生的字符串。如有任何一个参数为NULL ，则返回值为 NULL。</p>
+<p>注意：<br>
+如果所有参数均为非二进制字符串，则结果为非二进制字符串。 <br>
+如果自变量中含有任一二进制字符串，则结果为一个二进制字符串。<br>
+一个数字参数被转化为与之相等的二进制字符串格式；若要避免这种情况，可使用显式类型 cast, 例如：<br>
+SELECT CONCAT(CAST(int_col AS CHAR), char_col)</p>
+<p>MySQL concat函数可以连接一个或者多个字符串,如</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>mysql</span><span class="tag">&gt;</span><span>&nbsp;select&nbsp;concat('10'); &nbsp;</span></span></li><li><span>+--------------+ &nbsp;</span></li><li class="alt"><span>|&nbsp;concat('10')&nbsp;| &nbsp;</span></li><li><span>+--------------+ &nbsp;</span></li><li class="alt"><span>|&nbsp;10&nbsp;&nbsp;&nbsp;| &nbsp;</span></li><li><span>+--------------+ &nbsp;</span></li><li class="alt"><span>1&nbsp;row&nbsp;in&nbsp;set&nbsp;(0.00&nbsp;sec) &nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>mysql</span><span class="tag">&gt;</span><span>&nbsp;select&nbsp;concat('11','22','33'); &nbsp;</span></li><li><span>+------------------------+ &nbsp;</span></li><li class="alt"><span>|&nbsp;concat('11','22','33')&nbsp;| &nbsp;</span></li><li><span>+------------------------+ &nbsp;</span></li><li class="alt"><span>|&nbsp;112233&nbsp;| &nbsp;</span></li><li><span>+------------------------+ &nbsp;</span></li><li class="alt"><span>1&nbsp;row&nbsp;in&nbsp;set&nbsp;(0.00&nbsp;sec) &nbsp;</span></li></ol></pre>
+<p>MySQL的concat函数在连接字符串的时候，只要其中一个是NULL,那么将返回NULL</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>mysql</span><span class="tag">&gt;</span><span>&nbsp;select&nbsp;concat('11','22',null); &nbsp;</span></span></li><li><span>+------------------------+ &nbsp;</span></li><li class="alt"><span>|&nbsp;concat('11','22',null)&nbsp;| &nbsp;</span></li><li><span>+------------------------+ &nbsp;</span></li><li class="alt"><span>|&nbsp;NULL&nbsp;&nbsp;&nbsp;| &nbsp;</span></li><li><span>+------------------------+ &nbsp;</span></li><li class="alt"><span>1&nbsp;row&nbsp;in&nbsp;set&nbsp;(0.00&nbsp;sec) &nbsp;</span></li></ol></pre>
+
+
+
+
+<p>【编辑推荐】</p>
+<p><a href="http://database.51cto.com/art/201010/229328.htm" target="_blank">MySql远程连接的实现方法</a></p>
+<p><a href="http://database.51cto.com/art/201010/229322.htm" target="_blank">MySQL主键的设计原则</a></p>
+<p><a href="http://database.51cto.com/art/201010/229308.htm" target="_blank">MySQL分区的优点</a></p>
+<p><a href="http://database.51cto.com/art/201010/229286.htm" target="_blank">教您如何修改MySQL环境变量</a></p>
+<p><a href="http://database.51cto.com/art/201010/229225.htm" target="_blank">MySQL DATEDIFF()语法介绍</a></p><div align="right">【责任编辑：<a class="ln" href="mailto:zhaokh@51cto.com">段燃</a> TEL：（010）68476606】</div><br>
+            <a href="###" class="dzdz zhan" target="_self">点赞 <span>0</span></a>
+        </div>
+        <div class="share5">
+            <ul>
+                <li><a href="http://www.51cto.com/php/search.php?keyword=MySQL%20concat%BA%AF%CA%FD" target="_blank" class="underline">MySQL concat函数</a></li>
+            </ul>
+            <dl>
+                <dt><em>分享:</em>
+<div data-bd-bind="1463738252499" class="bdsharebuttonbox bdshare-button-style0-16" data-tag="share_1">
+    <a title="分享到新浪微博" class="wb" data-cmd="tsina"></a>
+    <a title="分享到微信" class="wx" data-cmd="weixin"></a>
+    <a class="more" data-cmd="more"></a>
+</div>
+</dt>
+<script type="text/javascript">
+    window._bd_share_config = {
+        common : {
+            bdText : document.title
+        },
+        share : [{
+            "bdSize" : 16,
+        }]
+    }
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<!-- Baidu Button END -->
+            </dl>
+        </div>
+        <div class="nrdp comment">
+            <div class="comment center">
+	<div class="inner center" id="cmscmt_iframe"><div class="title"><span class="word">内容点评</span><p class="con">已有<span class="total" id="cmt_num">0</span>条评论,<span class="total" id="zan_num">0</span>次赞</p><p style="float:right; margin-top: 17px;">还可以输入<span id="uyan_tts">500</span>字</p></div><div class="frame center"><textarea value="" id="comment" onblur="window.CMSCMT.shoIntro(this);" onfocus="window.CMSCMT.hidIntro(this);" onkeydown="window.CMSCMT.checkTxt(this, 140);" onkeyup="window.CMSCMT.checkTxt(this, 140);" style="color:#7c7c7c; font-family:Microsoft Yahei;">请输入你的评论</textarea></div><div class="user"><a id="uyan_cmt_btn" onclick="window.CMSCMT.addCmt(this);" class="submit">提交</a><dl><dt class="icon"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/duface.png" alt=""></dt><dd class="btn"><span>您还没有登录！</span><span class="note">请先</span>&nbsp;<a href="http://home.51cto.com/index.php?s=/Index/index/reback/http%253A%252F%252Fdatabase.51cto.com%252Fart%252F201010%252F229348.htm" style="color:red;">登录</a>&nbsp;<span class="note">或</span>&nbsp;<a href="http://ucenter.51cto.com/reg_01.php?reback=http%253A%252F%252Fdatabase.51cto.com%252Fart%252F201010%252F229348.htm" style="color:red;">注册</a>&nbsp;</dd></dl></div><ul class="list center first" id="uyan_cmt_list"><div style="margin-top: 10px; padding-top: 10px; font-size: 12px; color: #303030; text-align: center;" id="uyan_cmt_list_warn">还没有评论内容</div></ul></div>
+</div>
+<script type="text/javascript" id="UYScript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/iframe_cmt.js" async=""></script>
+
+        </div>
+        <div class="dzk">
+            <dl><dt class="show">大家都在看</dt><dt>猜你喜欢</dt></dl>
+            <div>
+                <ul>
+                    <li class="show">
+                        <div class="djdzk" id="djdzk"><div class="m15"><a href="http://developer.51cto.com/art/201604/509941.htm"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wKioL1cYpGLjwcSSAAG82ReQq7Y983.jpg" title="距离成为一个优秀程序员 你还差这些"></a><a href="http://developer.51cto.com/art/201604/509941.htm" title="距离成为一个优秀程序员 你还差这些">距离成为一个优秀程序员 你还差这些</a></div><div class="m15"><a href="http://os.51cto.com/art/201605/510755.htm"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wKioL1cwbNXQHEcbAAC49GL1rbA916.jpg" title="九个经受严苛评测的安全Windows免费软件下载站"></a><a href="http://os.51cto.com/art/201605/510755.htm" title="九个经受严苛评测的安全Windows免费软件下载站">九个经受严苛评测的安全Windows免费软件下载站</a></div><div class="m15"><a href="http://mdsa.51cto.com/art/201605/510598.htm"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wKioL1cr9V3z_hZ7AAZwZIjZLD4724.jpg" title="你讨厌百度，翻墙上Google就能解决一切问题？"></a><a href="http://mdsa.51cto.com/art/201605/510598.htm" title="你讨厌百度，翻墙上Google就能解决一切问题？">你讨厌百度，翻墙上Google就能解决一切问题？</a></div><div><a href="http://developer.51cto.com/art/201604/509939.htm"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wKioL1cYi9fgVBvuAADZcniwvVM726.jpg" title="聚效广告张烨：基于Docker和Mesos的服务可靠性保障实践"></a><a href="http://developer.51cto.com/art/201604/509939.htm" title="聚效广告张烨：基于Docker和Mesos的服务可靠性保障实践">聚效广告张烨：基于Docker和Mesos的服务可靠性保障实践</a></div></div>
+                    </li>
+                    <li>
+                        <div class="djdzk" id="cnxh">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 文章左侧结束 -->
+    <!-- 文章右侧 -->
+    <div class="wrap_right">
+        <div></div>
+        <div class="mtgg m30"><script type="text/javascript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/ad_002.js"></script></div>
+        <div></div>
+        <div class="bjtj m30">
+            <h2><span>编辑推荐</span></h2>
+            <dl><dt>热点</dt><dd><a href="http://database.51cto.com/art/201212/373189.htm" title="维基逃离MySQL 力挺开源数据库">维基逃离MySQL 力挺开源数据库</a></dd></dl><dl><dt>头条</dt><dd><a href="http://database.51cto.com/art/201211/364565.htm" title="架构师眼中的MySQL开发模式">架构师眼中的MySQL开发模式</a></dd></dl><dl><dt>热点</dt><dd><a href="http://database.51cto.com/art/201207/347025.htm" title="BigQuery企业级大数据分析平台">BigQuery企业级大数据分析平台</a></dd></dl><dl><dt>头条</dt><dd><a href="http://database.51cto.com/art/201203/324475.htm" title="Centos下MySQL Proxy安装及测试">Centos下MySQL Proxy安装及测试</a></dd></dl><dl><dt>头条</dt><dd><a href="http://database.51cto.com/database/lunhuishangsheng/" title="数据库的轮回">数据库的轮回</a></dd></dl>
+        </div>
+        <div></div>
+        <div class="news m30">
+            <dl><dt class="show">24H热文</dt><dt>一周话题</dt><dt>本月最赞</dt></dl>
+            <ul><li class="show"><a href="http://database.51cto.com/art/201205/335411.htm" title="一个小时内学习SQLite数据库">一个小时内学习SQLite数据库</a><a href="http://database.51cto.com/art/201507/483093.htm" title="如何用Redis实现微博关注关系">如何用Redis实现微博关注关系</a><a href="http://database.51cto.com/art/201407/445934.htm" title="数据库SQL优化大总结之" 百万级数据库优化方案="">数据库SQL优化大总结之 百万级数据库优化方案</a><a href="http://database.51cto.com/art/201005/202402.htm" title="MySQL" insert="" into语句的正确用法="">MySQL INSERT INTO语句的正确用法</a><a href="http://database.51cto.com/art/201009/224039.htm" title="SQL语句中UPDATE的三种用法">SQL语句中UPDATE的三种用法</a><a href="http://database.51cto.com/art/201510/495076.htm" title="Oracle11g在linux系统下开机自启动设置">Oracle11g在linux系统下开机自启动设置</a><a href="http://database.51cto.com/art/201011/234549.htm" title="MySQL添加字段和修改字段的方法">MySQL添加字段和修改字段的方法</a><a href="http://database.51cto.com/art/200904/118737.htm" title="详解Oracle的几种分页查询语句">详解Oracle的几种分页查询语句</a></li><li><a href="http://database.51cto.com/art/201205/335411.htm" title="一个小时内学习SQLite数据库">一个小时内学习SQLite数据库</a><a href="http://database.51cto.com/art/201407/445934.htm" title="数据库SQL优化大总结之" 百万级数据库优化方案="">数据库SQL优化大总结之 百万级数据库优化方案</a><a href="http://database.51cto.com/art/201507/483093.htm" title="如何用Redis实现微博关注关系">如何用Redis实现微博关注关系</a><a href="http://database.51cto.com/art/201005/202402.htm" title="MySQL" insert="" into语句的正确用法="">MySQL INSERT INTO语句的正确用法</a><a href="http://database.51cto.com/art/201009/224039.htm" title="SQL语句中UPDATE的三种用法">SQL语句中UPDATE的三种用法</a><a href="http://database.51cto.com/art/201011/234549.htm" title="MySQL添加字段和修改字段的方法">MySQL添加字段和修改字段的方法</a><a href="http://database.51cto.com/art/201505/477692.htm" title="几款开源的图形化Redis客户端管理软件推荐">几款开源的图形化Redis客户端管理软件推荐</a><a href="http://database.51cto.com/art/201510/494469.htm" title="Oracle胜诉Rimini" street="" 第三方服务何去何从="">Oracle胜诉Rimini Street 第三方服务何去何从</a></li><li><a href="http://database.51cto.com/art/201205/335411.htm" title="一个小时内学习SQLite数据库">一个小时内学习SQLite数据库</a><a href="http://database.51cto.com/art/201504/473116.htm" title="一个20秒SQL慢查询优化的经历与处理方案">一个20秒SQL慢查询优化的经历与处理方案</a><a href="http://database.51cto.com/art/201507/483463.htm" title="MySQL" 高可用架构在业务层面的分析研究="">MySQL 高可用架构在业务层面的分析研究</a><a href="http://database.51cto.com/art/201407/445934.htm" title="数据库SQL优化大总结之" 百万级数据库优化方案="">数据库SQL优化大总结之 百万级数据库优化方案</a><a href="http://database.51cto.com/art/201005/202402.htm" title="MySQL" insert="" into语句的正确用法="">MySQL INSERT INTO语句的正确用法</a><a href="http://database.51cto.com/art/201009/224039.htm" title="SQL语句中UPDATE的三种用法">SQL语句中UPDATE的三种用法</a><a href="http://database.51cto.com/art/201011/234549.htm" title="MySQL添加字段和修改字段的方法">MySQL添加字段和修改字段的方法</a><a href="http://database.51cto.com/art/201510/494469.htm" title="Oracle胜诉Rimini" street="" 第三方服务何去何从="">Oracle胜诉Rimini Street 第三方服务何去何从</a></li></ul>
+        </div>
+        <div></div>
+        <div class="spkc m30">
+            <h2><span>视频课程</span><a href="http://edu.51cto.com/">+更多</a></h2>
+            
+            <dl>
+                <dt><a href="http://edu.51cto.com/course/course_id-5979.html"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/71adc998989f557de08927772d13ad7d0fe8c3.jpg" title="屏幕录像软件OCam入门实战视频课程" alt="屏幕录像软件OCam入门实战视频课程" height="80px" width="100px"></a><span></span></dt>
+                <dd>
+                    <h3><a href="http://edu.51cto.com/course/course_id-5979.html" target="_blank" title="屏幕录像软件OCam入门实战视频课程">屏幕录像软件OCam入门实战视频课程</a></h3>
+                    <h4><span class="fl">讲师：<em><a href="http://edu.51cto.com/lecturer/user_id-9754490.html" target="_blank">杨璞</a></em></span><span class="fr"><em>2</em>人学习过</span></h4>
+                </dd>
+            </dl>
+            
+            <dl>
+                <dt><a href="http://edu.51cto.com/course/course_id-5975.html"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/b306b7f46ca6176370a434d7b099d4cd618961.jpg" title="Wireshark抓包分析【基础-进阶-实战】视频课程" alt="Wireshark抓包分析【基础-进阶-实战】视频课程" height="80px" width="100px"></a><span></span></dt>
+                <dd>
+                    <h3><a href="http://edu.51cto.com/course/course_id-5975.html" target="_blank" title="Wireshark抓包分析【基础-进阶-实战】视频课程">Wireshark抓包分析【基础-进阶-实战】视频课</a></h3>
+                    <h4><span class="fl">讲师：<em><a href="http://edu.51cto.com/lecturer/user_id-744135.html" target="_blank">郭主任</a></em></span><span class="fr"><em>24</em>人学习过</span></h4>
+                </dd>
+            </dl>
+            
+            <dl>
+                <dt><a href="http://edu.51cto.com/course/course_id-5974.html"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/e82af71382e4df62e0b918e6bb34854983becf.JPG" title="WB2 Windows启动进阶视频课程" alt="WB2 Windows启动进阶视频课程" height="80px" width="100px"></a><span></span></dt>
+                <dd>
+                    <h3><a href="http://edu.51cto.com/course/course_id-5974.html" target="_blank" title="WB2 Windows启动进阶视频课程">WB2 Windows启动进阶视频课程</a></h3>
+                    <h4><span class="fl">讲师：<em><a href="http://edu.51cto.com/lecturer/user_id-4157106.html" target="_blank">孙宇彤</a></em></span><span class="fr"><em>12</em>人学习过</span></h4>
+                </dd>
+            </dl>
+            
+        </div>
+        <div></div>
+        <div class="rmzw m30">
+            <h2><span>热门职位</span><a href="http://gaozhao.51cto.com/">+更多</a></h2>
+            <div id="rmzw"><dl><dt><a href="http://gaozhao.51cto.com/job/view/id-2521.html" target="_blank"> ETL开发工程师 </a></dt><dd><h3>全职/1-3年/本科</h3><span>7k-13k</span><a href="http://gaozhao.51cto.com/company/view/id-563.html" target="_blank">文思海辉</a></dd></dl><dl><dt><a href="http://gaozhao.51cto.com/job/view/id-1447.html" target="_blank"> 数据库开发/管理工程师 </a></dt><dd><h3>全职/1-3年/本科</h3><span>8k-15k</span><a href="http://gaozhao.51cto.com/company/view/id-406.html" target="_blank">广州惠侨科技</a></dd></dl><dl><dt><a href="http://gaozhao.51cto.com/job/view/id-2975.html" target="_blank"> Oracle数据库工程师 </a></dt><dd><h3>全职/3-5年/本科</h3><span>8k-15k</span><a href="http://gaozhao.51cto.com/company/view/id-600.html" target="_blank">益海信息</a></dd></dl><dl><dt><a href="http://gaozhao.51cto.com/job/view/id-3152.html" target="_blank"> 数据库开发工程师 </a></dt><dd><h3>全职/不限/本科</h3><span>8k-10k</span><a href="http://gaozhao.51cto.com/company/view/id-559.html" target="_blank">中软国际</a></dd></dl><dl><dt><a href="http://gaozhao.51cto.com/job/view/id-3092.html" target="_blank"> ORACLE DBA </a></dt><dd><h3>全职/5-10年/本科</h3><span>20k-60k</span><a href="http://gaozhao.51cto.com/company/view/id-125.html" target="_blank">华为</a></dd></dl></div>
+        </div>
+        <div></div>
+        <div class="zxzt m30">
+            <h2><span>最新专题</span><a href="http://database.51cto.com/speclist/484">+更多</a></h2>
+            <dl>
+                <dt><a href="http://database.51cto.com/art/201407/444810.htm" title="漫谈机器学习算法"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wKiom1O6TN2B4LEJAAAXdmJw3ns067.jpg" alt="漫谈机器学习算法" title="漫谈机器学习算法"></a></dt>
+                <dd>
+                    <a href="http://database.51cto.com/art/201407/444810.htm" title="漫谈机器学习算法">漫谈机器学习算法</a>
+                    <h3><a href="http://www.51cto.com/php/search.php?keyword=%BB%FA%C6%F7%D1%A7%CF%B0">机器学习</a></h3>
+                </dd>
+            </dl><dl>
+                <dt><a href="http://database.51cto.com/art/201405/440672.htm" title="数据可视化，你的选择"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wKioL1OFebui5LsuAAAVtPwMmbE948.jpg" alt="数据可视化，你的选择" title="数据可视化，你的选择"></a></dt>
+                <dd>
+                    <a href="http://database.51cto.com/art/201405/440672.htm" title="数据可视化，你的选择">数据可视化，你的选择</a>
+                    <h3><a href="http://www.51cto.com/php/search.php?keyword=%CA%FD%BE%DD%BF%C9%CA%D3%BB%AF">数据可视化</a></h3>
+                </dd>
+            </dl><dl>
+                <dt><a href="http://database.51cto.com/art/201404/435698.htm" title="Spark部署与实践"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wKiom1NOMU3ScB6hAAAbDwuGUTY713.jpg" alt="Spark部署与实践" title="Spark部署与实践"></a></dt>
+                <dd>
+                    <a href="http://database.51cto.com/art/201404/435698.htm" title="Spark部署与实践">Spark部署与实践</a>
+                    <h3><a href="http://www.51cto.com/php/search.php?keyword=Spark">Spark</a></h3>
+                </dd>
+            </dl><dl>
+                <dt><a href="http://database.51cto.com/art/201404/434829.htm" title="揭秘你不知道的分布式计算框架Mesos"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wKiom1M7xVaxYJ9pAAANjQnXRC4793.jpg" alt="揭秘你不知道的分布式计算框架Mesos" title="揭秘你不知道的分布式计算框架Mesos"></a></dt>
+                <dd>
+                    <a href="http://database.51cto.com/art/201404/434829.htm" title="揭秘你不知道的分布式计算框架Mesos">揭秘你不知道的分布式计算框架Mesos</a>
+                    <h3><a href="http://www.51cto.com/php/search.php?keyword=Hadoop">Hadoop</a></h3>
+                </dd>
+            </dl>
+        </div>
+        <div></div>
+        <div id="jcpl"><div class="jcpl m30"><h2><span>精彩评论</span></h2><dl><dt><a href="http://home.51cto.com/index.php?s=/space/3539145"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/avatar_002.gif" height="45px" width="45px"></a></dt><dd><a href="http://home.51cto.com/index.php?s=/space/3539145"></a><h3><a href="http://home.51cto.com/index.php?s=/space/3539145">zvc3013</a>评论了：<a href="http://developer.51cto.com/art/201605/510486.htm">我经历的IT公司面试及离职感受</a></h3><h4>是我理解错了吗？6年10份工作</h4></dd></dl><dl><dt><a href="http://home.51cto.com/index.php?s=/space/8758728"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/avatar.gif" height="45px" width="45px"></a></dt><dd><a href="http://home.51cto.com/index.php?s=/space/8758728"></a><h3><a href="http://home.51cto.com/index.php?s=/space/8758728">s微尘</a>评论了：<a href="http://developer.51cto.com/art/201602/505817.htm">十年，我终于离开了360</a></h3><h4>写的还是可以 、没有那么波澜壮阔，也没有那么精彩、只是十年，想想都好遥远；人生短暂，殊死一搏；不求成功，只求痛快！给自己尽点力，点燃生命的激情，挺好！加油！
+话说最后一个段落是在打广告么。。。</h4></dd></dl><dl><dt><a href="http://home.51cto.com/index.php?s=/space/8282931"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/avatar_002.jpeg" height="45px" width="45px"></a></dt><dd><a href="http://home.51cto.com/index.php?s=/space/8282931"></a><h3><a href="http://home.51cto.com/index.php?s=/space/8282931">麦林泡泡</a>评论了：<a href="http://mdsa.51cto.com/art/201605/510598.htm">你讨厌百度，翻墙上Google就能解决一切问题？</a></h3><h4>只
+能说，谷歌没有在中国的时候，所有黑锅都让百度来背吧，这又能怎样呢。毕竟谷歌不在国内，毕竟大多数人看不到谷歌，就算很多人说谷歌垃圾，但正因为看不
+到，才会认为，这都是百度找来的托，当然，我认为谷歌搜索的质量，尤其是文档这部分，比百度好一些，对于学习这部分，谷歌的帮助还是很大的。只是不明白，
+为何会被ban掉，或许我们应该花更多的钱，才能享受到知识吧。“花钱来享受知识”，多么好的比喻，哈哈哈。 
+什么时候可以免费享受知识，我是说，除了51cto学院的免费课程，百度上什么时候可以搜到如同国外那般有质量的知识。</h4></dd></dl><dl><dt><a href="http://home.51cto.com/index.php?s=/space/11558428"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/avatar.jpeg" height="45px" width="45px"></a></dt><dd><a href="http://home.51cto.com/index.php?s=/space/11558428"></a><h3><a href="http://home.51cto.com/index.php?s=/space/11558428">Katrinan</a>评论了：<a href="http://news.51cto.com/art/201508/489745.htm">产品经理必备的13款工具</a></h3><h4>不全啊！！！常用的还有
+mybase(知识管理工具),EDraw Max(流程图模板)等等。
+http://www.8kvv.com 上面特别全，建议看看</h4></dd></dl></div></div>
+        <div></div>
+        <div class="news m30">
+            <dl><dt class="show">精选博文</dt><dt>论坛热帖</dt><dt>下载排行</dt></dl>
+            <div>
+                <ul>
+                    <li class="show">
+                        <a href="http://zhaisj.blog.51cto.com/219066/566230/" target="_blank" title="云计算服务推动口令破译技术走向新时代">云计算服务推动口令破译技术走向新时</a><a href="http://byteh.blog.51cto.com/141786/566125/" target="_blank" title="老大与老二的定位">老大与老二的定位</a><a href="http://2844337.blog.51cto.com/2834337/566089/" target="_blank" title="修炼！修炼！">修炼！修炼！</a><a href="http://sunjibin.blog.51cto.com/918334/566088/" target="_blank" title="项目经理的超越（一）你超越了吗？">项目经理的超越（一）你超越了吗？</a><a href="http://oldboy.blog.51cto.com/2561410/566053/" target="_blank" title="运维老鸟闲谈运维工作与做人做事">运维老鸟闲谈运维工作与做人做事</a>
+                    </li>
+                    <li>
+                        <a href="http://bbs.51cto.com/thread-1348818-1.html" target="_blank" title="php实现网站插件机制的方法">php实现网站插件机制的方法</a><a href="http://bbs.51cto.com/thread-1348821-1.html" target="_blank" title="分享：运维知识体系-V0.6">分享：运维知识体系-V0.6</a><a href="http://bbs.51cto.com/thread-1348827-1.html" target="_blank" title="从业近三年，我未曾放弃。">从业近三年，我未曾放弃。</a><a href="http://bbs.51cto.com/thread-1348957-1.html" target="_blank" title="【分享】PowerShell 如何实现多进程操作">【分享】PowerShell 如何实现多进程</a><a href="http://bbs.51cto.com/thread-1356949-1.html" target="_blank" title="又是一年，网管梳理。4年回首。下一步走精">又是一年，网管梳理。4年回首。下一</a>
+                    </li>
+                    <li>
+                        <a href="http://down.51cto.com/data/713818/" target="_blank" title="BGP协议">BGP协议</a><a href="http://down.51cto.com/data/713817/" target="_blank" title="RuoshuiNews">RuoshuiNews</a><a href="http://down.51cto.com/data/713816/" target="_blank" title="零基础入门学习汇编语言第一章0103">零基础入门学习汇编语言第一章0103</a><a href="http://down.51cto.com/data/713815/" target="_blank" title="SBJson解析库">SBJson解析库</a><a href="http://down.51cto.com/data/713814/" target="_blank" title="ASIRequestDemo">ASIRequestDemo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div></div>
+        <div class="ds m30">
+            <h2><span>读 书 </span><a href="http://book.51cto.com/">+更多</a></h2>
+            <dl>
+                
+                <dt><a href="http://book.51cto.com/art/200708/53445.htm" title="非常网管——网络工程案例"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/113748352.jpg" height="144px" width="98px"></a></dt>
+                <dd><h3><a href="http://book.51cto.com/art/200708/53445.htm" title="非常网管——网络工程案例">非常网管——网络工程案例</a></h3>
+                    本书面向企业网络应用需求，详细介绍了Windows网络互联解决方案、中小企业共享上网解决方案、基于ISA Server 2006的代理服务器与防火墙解决...
+                </dd>
+                
+            </dl>
+        </div>
+        <div></div>
+        <div class="dydy">
+            <dl>
+                <dt><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/dydy.jpg" alt=""></dt>
+                <dd>
+                    <h3>订阅51CTO邮刊</h3>
+                    <h4><a href="http://news.51cto.com/col/1323/">点击这里查看样刊</a></h4>
+                    <a href="http://home.51cto.com/index.php?s=/Subscribe"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/ljdy.jpg" alt="订阅51CTO邮刊"></a>
+                </dd>
+            </dl>
+        </div>
+        <div></div>
+    </div>
+    <!-- 文章右侧结束 -->
+    </div>
+<div style="width:1002px; margin:0 auto;">
+<script type="text/javascript">
+    /*960*90 创建于 2015-11-05文章页 旗下网站上方通栏*/
+    var cpro_id = "u2386966";
+</script>
+<script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/c.js" type="text/javascript"></script>
+</div>
+<div class="footer_nav">
+   <div class="wrap">
+       <h2>51CTO旗下网站：</h2>
+       <a href="http://www.51cto.com/">领先的IT技术网站 51CTO</a>|<a href="http://www.watchstor.com/">领先的中文存储媒体 WatchStor</a>|
+       <a href="http://www.cioage.com/">中国首个CIO网站 CIOage </a>|<a href="http://www.hc3i.cn/">中国首家数字医疗网站 HC3i</a>          
+   </div>
+</div>
+<div id="ft"><div id="foot" align="center"><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/copy_right.js"></script>Copyright&#169;2005-2016 <a href="http://www.51cto.com/">51CTO.COM</a> 版权所有 未经许可 请勿转载<div style="display:none;"><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/h.js" type="text/javascript"></script></div></div></div>
+<div class="clk"><a class="ewm" href="###" target="_self"><img src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wxwx.jpg" style="display: none;"></a><a class="yjk" href="#comment" target="_self"></a><a class="topx" href="#topx" target="_self"></a></div>
+<script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/count.js"></script><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/count_002.htm"></script><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/scroll.js"></script>
+
+
+
+
+<script type="text/javascript">var artid = 229348</script>
+<script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/index.htm" charset="utf-8"></script>
+<script type="text/javascript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/article.js"></script>
+<script type="text/javascript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/article_ajax.js"></script>
+<script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/count.htm" type="text/javascript"></script>
+<script type="text/javascript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/favorbox.js"></script>
+<!--  一大波JS来袭 -->
+<div id="MyMoveAd" style="display:none">
+    <span id="pinglun"><script type="text/javascript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/getArtCount.htm"></script>1</span>
+	<span id="tonglan"><script type="text/javascript" src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/ad.js"></script></span>
+	<span id="wordlink_1"><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wordlink1.js"></script></span>
+	<span id="wordlink_2"><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wordlink2.js"></script></span>
+	<span id="wordlink_3"><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wordlink3.js"></script></span>
+	<span id="wordlink_4"><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/wordlink4.js"></script></span>
+	<span id="wordlink"><script src="MySQL%20concat%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%20-%2051CTO.COM_files/ad_003.js"></script></span>
+</div>
+<script type="text/javascript">
+var thistid=229348;
+//收藏按钮
+var favor_url = 'http://database.51cto.com/art/201010/229348.htm';
+var favor_title = 'MySQL concat函数的使用';  
+document.getElementById('tonglanad').innerHTML=document.getElementById('tonglan').innerHTML;
+</script>
+<!-- 结束 -->
+
+
+</body></html>

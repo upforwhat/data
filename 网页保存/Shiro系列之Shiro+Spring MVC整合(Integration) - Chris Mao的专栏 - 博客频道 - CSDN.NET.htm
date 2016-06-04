@@ -1,0 +1,1222 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>   
+   
+
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <title>Shiro系列之Shiro+Spring MVC整合(Integration) - Chris Mao的专栏
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="近段时间业余在学node.js，租了个阿里云准备搭建后端，想用node.js，偶尔得知react-native可以在不同平台跑，js在iOS和android上都可以运行ok，今天就简单学习下react-native。(这里的开发环境是mac，windows和linux可能会有所不同，而且跑ios也需要mac的)。安装react-native  首先是安装react-native了，这里首先是已经安装" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+      <script type="text/javascript" src="http://static.blog.csdn.net/scripts/jquery-version.js"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/css/index.css">        <!--new top-->
+    
+      <!-- ad begin -->
+         <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/tracking.js"></script>
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/skin-blue/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/chris_mao/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+</head>
+<body>
+    <!-- 广告位开始 -->
+        <ins data-revive-zoneid="149" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/chris_mao">Chris Mao的专栏</a></h2>
+            <h3>Good cooking takes time. If you are made to wait, it is to server you better, and to please you.</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+            
+                <li id="btnContents"><a href="http://blog.csdn.net/chris_mao?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/chris_mao?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/chris_mao/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "chris_mao";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/chris_mao";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://edu.csdn.net/huiyiCourse/detail/111
+">
+<font color=red>【免费公开课】C语言指针与汇编内存地址
+</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://blog.csdn.net/blogdevteam/article/details/51198465">
+<font color=blue>有奖试读—漫话程序员面试求职、升职加薪、创业与生活</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://huiyi.csdn.net/activity/product/goods_list?project_id=2928">
+<font color=red>chinapub读书会第8期：程序员代码面试揭秘</font></a>
+&nbsp;&nbsp;&nbsp;
+
+
+</font></a>
+</div>                        </div>
+                        
+
+
+
+<!-- 广告位开始 -->
+<ins data-revive-zoneid="72" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+<!-- 广告位结束 -->
+
+  
+<link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/search-service/main.js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0" />
+<link rel="stylesheet" href="http://static.blog.csdn.net/css/category.css?v=1.0" />
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+
+ <script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/replace.min.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+          
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/chris_mao/article/details/49288251">
+        Shiro系列之Shiro+Spring MVC整合(Integration)            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/shiro' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">shiro</a><a href='http://www.csdn.net/tag/spring%20mvc' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">spring mvc</a><a href='http://www.csdn.net/tag/java' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">java</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2015-10-21 00:54</span>
+            <span class="link_view" title="阅读次数">14085人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(4)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('Shiro系列之Shiro+Spring MVC整合(Integration)','49288251');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(49288251,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody"  style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            var lib = eval("("+$("#lib").attr("value")+")");
+            var html = "";
+            if (lib.err == 0) {
+                $.each(lib.data, function (i) {
+                    var obj = lib.data[i];
+                    //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                    html += ' <a href="' + obj.url + '" target="_blank">';
+                    html += ' <img src="' + obj.logo + '">';
+                    html += ' <em><b>' + obj.name + '</b></em>';
+                    html += ' </a>';
+                });
+                if (html != "") {
+                    setTimeout(function () {
+                        $("#lib").html(html);
+                        /*
+                        var testhtml = "";
+                        testhtml += '<a href="#">';
+                        testhtml += '<img src="http://img.knowledge.csdn.net/upload/base/1455589744328_328.jpg">';
+                        testhtml += '<em>Android知识库</em>';
+                        testhtml += '</a>';
+                        $(".embody_c").html(testhtml);
+                        */
+                        $("#embody").show();
+                    }, 100);
+                }
+            }          
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('5837607','chris_mao','top','49288251');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">JAVA<em>（27）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/chris_mao/article/category/5837607"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_5837607">                            
+                            </ul>
+                        </div>
+                    </label>                    
+                    <label  onclick="GetCategoryArticles('5891217','chris_mao','top','49288251');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">Shiro<em>（2）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/chris_mao/article/category/5891217"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_5891217">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+    <script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>  
+        <div   class="bog_copyright">         
+            <p  class="copyright_p" >版权声明：本文为博主原创文章，转载请注明出处。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+<h1 data-mce-style="text-align: center;" style="line-height: 1.5em; margin: 0px 0px 0.5em; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; text-align: center;">Shiro系列之Shiro+Spring MVC整合</h1><h2 style="line-height: 1.5em; margin: 0px 0px 0.5em; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif;">第一步，Shiro Filter</h2><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;">在web.xml文件中增加以下代码，确保Web项目中需要权限管理的URL都可以被Shiro拦截过滤。</p><pre name="code" class="xml" style="font-size: 14px; margin: 0px 5px 5px 15px; border: 1px solid rgb(204, 204, 204); padding: 3px; line-height: 21px; background: rgb(250, 250, 250);">&lt;!-- Shiro Filter --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;targetFilterLifecycle&lt;/param-name&gt;
+            &lt;param-value&gt;true&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;</pre><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;">通常将这段代码中的filter-mapping放在所有filter-mapping之前，以达到shiro是第一个对web请求进行拦截过滤之目的。这里的fileter-name应该要和第二步中配置的java bean的id一致。</p><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;">&nbsp;</p><h2 style="line-height: 1.5em; margin: 0px 0px 0.5em; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif;">第二步，配置各种Java Bean</h2><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;">在root-context.xml文件中配置Shiro</p><pre name="code" class="xml" style="font-size: 14px; margin: 0px 5px 5px 15px; border: 1px solid rgb(204, 204, 204); padding: 3px; line-height: 21px; background: rgb(250, 250, 250);">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+
+	&lt;!-- Root Context: defines shared resources visible to all other web components --&gt;
+
+	&lt;!-- dataSource --&gt;
+	&lt;bean id=&quot;dataSource&quot;
+		class=&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;&gt;
+		&lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;
+		&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://127.0.0.1:3306/etao_java&quot; /&gt;
+		&lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;
+		&lt;property name=&quot;password&quot; value=&quot;cope9020&quot; /&gt;
+	&lt;/bean&gt;
+
+	&lt;bean id=&quot;lifecycleBeanPostProcessor&quot; class=&quot;org.apache.shiro.spring.LifecycleBeanPostProcessor&quot;&gt;&lt;/bean&gt;
+
+	&lt;!-- 数据库保存的密码是使用MD5算法加密的，所以这里需要配置一个密码匹配对象 --&gt;
+	&lt;bean id=&quot;credentialsMatcher&quot; class=&quot;org.apache.shiro.authc.credential.Md5CredentialsMatcher&quot;&gt;&lt;/bean&gt;
+
+	&lt;!-- 缓存管理 --&gt;
+	&lt;bean id=&quot;cacheManager&quot; class=&quot;org.apache.shiro.cache.MemoryConstrainedCacheManager&quot;&gt;&lt;/bean&gt;
+
+	&lt;!-- 
+	  使用Shiro自带的JdbcRealm类
+      指定密码匹配所需要用到的加密对象
+	  指定存储用户、角色、权限许可的数据源及相关查询语句
+	 --&gt;
+	&lt;bean id=&quot;jdbcRealm&quot; class=&quot;org.apache.shiro.realm.jdbc.JdbcRealm&quot;&gt;
+        &lt;property name=&quot;credentialsMatcher&quot; ref=&quot;credentialsMatcher&quot;&gt;&lt;/property&gt;
+		&lt;property name=&quot;permissionsLookupEnabled&quot; value=&quot;true&quot;&gt;&lt;/property&gt;
+		&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/property&gt;
+		&lt;property name=&quot;authenticationQuery&quot;
+			value=&quot;SELECT password FROM sec_user WHERE user_name = ?&quot;&gt;&lt;/property&gt;
+		&lt;property name=&quot;userRolesQuery&quot;
+			value=&quot;SELECT role_name from sec_user_role left join sec_role using(role_id) left join sec_user using(user_id) WHERE user_name = ?&quot;&gt;&lt;/property&gt;
+		&lt;property name=&quot;permissionsQuery&quot;
+			value=&quot;SELECT permission_name FROM sec_role_permission left join sec_role using(role_id) left join sec_permission using(permission_id) WHERE role_name = ?&quot;&gt;&lt;/property&gt;
+	&lt;/bean&gt;
+
+	&lt;!-- Shiro安全管理器 --&gt;
+	&lt;bean id=&quot;securityManager&quot; class=&quot;org.apache.shiro.web.mgt.DefaultWebSecurityManager&quot;&gt;
+		&lt;property name=&quot;realm&quot; ref=&quot;jdbcRealm&quot;&gt;&lt;/property&gt;
+		&lt;property name=&quot;cacheManager&quot; ref=&quot;cacheManager&quot;&gt;&lt;/property&gt;
+	&lt;/bean&gt;
+
+	&lt;!-- 
+	   Shiro主过滤器本身功能十分强大，其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行
+	   Web应用中，Shiro可控制的Web请求必须经过Shiro主过滤器的拦截，Shiro对基于Spring的Web应用提供了完美的支持 
+	--&gt;
+	&lt;bean id=&quot;shiroFilter&quot; class=&quot;org.apache.shiro.spring.web.ShiroFilterFactoryBean&quot;&gt;
+		&lt;!-- Shiro的核心安全接口，这个属性是必须的 --&gt;
+		&lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;&gt;&lt;/property&gt;
+		&lt;!-- 要求登录时的链接(登录页面地址)，非必须的属性，默认会自动寻找Web工程根目录下的&quot;/login.jsp&quot;页面 --&gt;
+		&lt;property name=&quot;loginUrl&quot; value=&quot;/security/login&quot;&gt;&lt;/property&gt;
+		&lt;!-- 登录成功后要跳转的连接(本例中此属性用不到，因为登录成功后的处理逻辑在LoginController里硬编码) --&gt;
+		&lt;!-- &lt;property name=&quot;successUrl&quot; value=&quot;/&quot; &gt;&lt;/property&gt; --&gt;
+		&lt;!-- 用户访问未对其授权的资源时，所显示的连接 --&gt;
+		&lt;property name=&quot;unauthorizedUrl&quot; value=&quot;/&quot;&gt;&lt;/property&gt;
+		&lt;property name=&quot;filterChainDefinitions&quot;&gt;
+			&lt;value&gt;
+				/security/*=anon
+				/tag=authc
+			&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+
+	&lt;!-- 
+	   开启Shiro的注解(如@RequiresRoles，@RequiresPermissions)，需借助SpringAOP扫描使用Shiro注解的类，
+	   并在必要时进行安全逻辑验证
+	--&gt;
+	&lt;!--
+	&lt;bean
+		class=&quot;org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator&quot;&gt;&lt;/bean&gt;
+	&lt;bean
+		class=&quot;org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor&quot;&gt;
+		&lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;&gt;&lt;/property&gt;
+	&lt;/bean&gt;
+	--&gt;
+&lt;/beans&gt;</pre><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;">上述代码中已经对每个java bean的用途做了详细的注释说明，这里仅对FilterChain过滤链的定义详细阐述一下：</p><ul style="margin: 0px 0px 1.5em; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px;"><li style="margin: 0px 0px 0.25em 30px; padding: 0px;"><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;">测试用例中对/security/*的访问是不需要认证控制的，这主要是用于用户登录和退出的</span></li><li style="margin: 0px 0px 0.25em 30px; padding: 0px;"><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;">测试用例中对/tag的访问是需要认证控制的，就是说只有通过认证的用户才可以访问该资源。如</span><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;">果用户直接在地址栏中访问http://localhost:8880/learning/tag，系统会自动跳转至登录页面，要求用户先进行身份认证。</span></li></ul><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;"><strong><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;">完成这两步之后，我们可以Run一下程序，如果可以看到以下页面，就表明我们的配置文件没有错误，Shiro和Spring MVC的整合已经完成了。后继的步骤可以视为是对整合后的框进行的一个测试。</span></strong></p><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;"><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;"><br /><img src="http://dl2.iteye.com/upload/attachment/0112/4838/40bf8905-6f08-3be4-9b0b-0dfd9d9b7661.png" alt="" width="407" height="109" data-mce-src="http://dl2.iteye.com/upload/attachment/0112/4838/40bf8905-6f08-3be4-9b0b-0dfd9d9b7661.png" style="border: 0px; cursor: default;" /><br /></span></p><h2 style="line-height: 1.5em; margin: 0px 0px 0.5em; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif;"><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;">第三步，编写登录页面和后台代码</span></h2><pre name="code" class="html" style="font-size: 14px; margin: 0px 5px 5px 15px; border: 1px solid rgb(204, 204, 204); padding: 3px; line-height: 21px; background: rgb(250, 250, 250);">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+	pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot;%&gt;
+
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;title&gt;Login Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;h1&gt;login page&lt;/h1&gt;
+	&lt;form id=&quot;&quot; action=&quot;dologin&quot; method=&quot;post&quot;&gt;
+		&lt;label&gt;User Name&lt;/label&gt; &lt;input tyep=&quot;text&quot; name=&quot;userName&quot;
+			maxLength=&quot;40&quot; /&gt; &lt;label&gt;Password&lt;/label&gt;&lt;input type=&quot;password&quot;
+			name=&quot;password&quot; /&gt; &lt;input type=&quot;submit&quot; value=&quot;login&quot; /&gt;
+	&lt;/form&gt;
+	&lt;%--用于输入后台返回的验证错误信息 --%&gt;
+	&lt;P&gt;&lt;c:out value=&quot;${message }&quot; /&gt;&lt;/P&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;"><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;"><br /><img src="http://dl2.iteye.com/upload/attachment/0112/4840/4f26351c-059b-359a-a7e1-567738ae31e5.png" alt="" width="560" height="125" data-mce-src="http://dl2.iteye.com/upload/attachment/0112/4840/4f26351c-059b-359a-a7e1-567738ae31e5.png" style="border: 0px; cursor: default;" /><br />&nbsp;</span></p><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;"><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;">后台登录代码</span></p><pre name="code" class="java" style="font-size: 14px; margin: 0px 5px 5px 15px; border: 1px solid rgb(204, 204, 204); padding: 3px; line-height: 21px; background: rgb(250, 250, 250);">	/**
+	 * 实际的登录代码
+	 * 如果登录成功，跳转至首页；登录失败，则将失败信息反馈对用户
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = &quot;/dologin&quot;)
+	public String doLogin(HttpServletRequest request, Model model) {
+		String msg = &quot;&quot;;
+		String userName = request.getParameter(&quot;userName&quot;);
+		String password = request.getParameter(&quot;password&quot;);
+		System.out.println(userName);
+		System.out.println(password);
+		UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+		token.setRememberMe(true);
+		Subject subject = SecurityUtils.getSubject();
+		try {
+			subject.login(token);
+			if (subject.isAuthenticated()) {
+				return &quot;redirect:/&quot;;
+			} else {
+				return &quot;login&quot;;
+			}
+		} catch (IncorrectCredentialsException e) {
+			msg = &quot;登录密码错误. Password for account &quot; + token.getPrincipal() + &quot; was incorrect.&quot;;
+			model.addAttribute(&quot;message&quot;, msg);
+			System.out.println(msg);
+		} catch (ExcessiveAttemptsException e) {
+			msg = &quot;登录失败次数过多&quot;;
+			model.addAttribute(&quot;message&quot;, msg);
+			System.out.println(msg);
+		} catch (LockedAccountException e) {
+			msg = &quot;帐号已被锁定. The account for username &quot; + token.getPrincipal() + &quot; was locked.&quot;;
+			model.addAttribute(&quot;message&quot;, msg);
+			System.out.println(msg);
+		} catch (DisabledAccountException e) {
+			msg = &quot;帐号已被禁用. The account for username &quot; + token.getPrincipal() + &quot; was disabled.&quot;;
+			model.addAttribute(&quot;message&quot;, msg);
+			System.out.println(msg);
+		} catch (ExpiredCredentialsException e) {
+			msg = &quot;帐号已过期. the account for username &quot; + token.getPrincipal() + &quot;  was expired.&quot;;
+			model.addAttribute(&quot;message&quot;, msg);
+			System.out.println(msg);
+		} catch (UnknownAccountException e) {
+			msg = &quot;帐号不存在. There is no user with username of &quot; + token.getPrincipal();
+			model.addAttribute(&quot;message&quot;, msg);
+			System.out.println(msg);
+		} catch (UnauthorizedException e) {
+			msg = &quot;您没有得到相应的授权！&quot; + e.getMessage();
+			model.addAttribute(&quot;message&quot;, msg);
+			System.out.println(msg);
+		}
+		return &quot;login&quot;;
+	}</pre><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;"><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;">如果输入不存在的用户名或是错误的密码界面上会有相应的提示信息。<br /><img src="http://dl2.iteye.com/upload/attachment/0112/4842/8fc1cf11-7989-36f1-a787-3d9339228942.png" alt="" width="518" height="109" data-mce-src="http://dl2.iteye.com/upload/attachment/0112/4842/8fc1cf11-7989-36f1-a787-3d9339228942.png" style="border: 0px; cursor: default;" /></span></p><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;">&nbsp;</p><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;"><span data-mce-style="line-height: 1.5;" style="line-height: 1.5;"><br /><img src="http://dl2.iteye.com/upload/attachment/0112/4844/961b62fd-404b-3c82-8f86-7a5c838c2f50.png" alt="" width="507" height="138" data-mce-src="http://dl2.iteye.com/upload/attachment/0112/4844/961b62fd-404b-3c82-8f86-7a5c838c2f50.png" style="border: 0px; cursor: default;" /><br />&nbsp;登录成功后，会转至首页，并显示出当前用户名。<br /></span></p><p style="padding-top: 0px; padding-bottom: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; line-height: 21px; margin-top: 0px !important; margin-bottom: 0px !important;"><br /><img src="http://dl2.iteye.com/upload/attachment/0112/4846/308a019c-4e36-334f-b244-c78ca8155ab0.png" alt="" width="483" height="181" data-mce-src="http://dl2.iteye.com/upload/attachment/0112/4846/308a019c-4e36-334f-b244-c78ca8155ab0.png" style="border: 0px; cursor: default;" /><br />&nbsp;</p>   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css" />
+
+    
+<!--172.16.140.12-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+        <div id="digg" ArticleId="49288251">
+            <dl id="btnDigg" class="digg digg_disable">
+               
+                 <dt>顶</dt>
+                <dd>2</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/chris_mao/article/details/49254663';">上一篇</span><a href="/chris_mao/article/details/49254663" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">Mybatis系列目录篇</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/chris_mao/article/details/49452523';">下一篇</span><a href="/chris_mao/article/details/49452523" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">RESTful Web API中的Http协议语义</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article"  style="display:none">
+                <h4>我的同类文章</h4>
+                <div class="similar_c"style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('5837607','chris_mao','foot','49288251');">JAVA<em>（27）</em></span>
+                                </label>
+                                <label class="">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('5891217','chris_mao','foot','49288251');">Shiro<em>（2）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141"  style="max-height:195px;">
+                        <a href="http://blog.csdn.net" style="display:none">http://blog.csdn.net</a>
+                        <ul class="similar_list fl">                          
+                        </ul>
+
+                        <ul class="similar_list fr">                           
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+    <script  type="text/javascript">
+        $(function () {
+            GetCategoryArticles('5837607', 'chris_mao','foot','49288251');
+        });
+    </script>
+      
+</div>
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/chris_mao/svc/GetSuggestContent/49288251",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ <link rel="stylesheet" href="http://static.blog.csdn.net/css/replace.css"/>
+<div id="relate" data-mod="popu_218"  class="tracking-ad">
+        <div class="relate_t">
+            <h3><span>参考知识库</span></h3>
+        </div>
+        <div class="relate_c">
+        </div>
+</div>
+ 
+
+<dl class="blog-ass-articl" id="res-relatived" > 
+    <div class="embody embody_b" id="libkeyparent"  style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "49288251",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    </div>  
+
+    
+     <div id="res"  data-mod="popu_36"  class="tracking-ad" style="width: 42%;float: left;margin-right: 30px;"></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'Shiro系列之Shiro+Spring MVC整合(Integration)' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+    <div id="ad_cen">        
+<!-- 广告位开始 -->
+<ins data-revive-zoneid="71" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+<!-- 广告位结束 -->    </div>  
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '49288251';
+    var commentscount = 4;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  language="javascript" type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/chris_mao/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+ <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/async_new.js"></script>      
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/chris_mao" target="_blank">
+    <img src="http://avatar.csdn.net/8/B/7/1_chris_mao.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/chris_mao" class="user_name" target="_blank">chris_mao</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=chris_mao','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                       <div class="ico_expert"  onclick="javascript:location='http://blog.csdn.net/experts/rule.html'" title="CSDN认证专家" style="cursor:pointer;width:60px;height:60px;background:url('http://c.csdnimg.cn/jifen/images/xunzhang/xunzhang/bokezhuanjiamiddle.png') no-repeat" ></div>
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>244361次</span></li>
+    <li>积分：<span>3616</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog5.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：3616 </div>
+        </span>  </li>
+    <li>排名：<span>第5636名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>106篇</span></li>
+    <li>转载：<span>18篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>91条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/chris_mao/article/category/483390" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Ext</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/754937" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Excel技巧类</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/342679" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Delphi</a><span>(21)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/343661" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">PHP</a><span>(26)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/882901" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Python</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/418406" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Web编程</a><span>(17)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/1886411" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">微信开发</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/341436" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">XML</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/341435" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据库</a><span>(29)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/5794757" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">设计模式</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/346506" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">软件工程</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/393106" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">随笔杂谈</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/5837607" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JAVA</a><span>(28)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/5847143" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Mybatis</a><span>(14)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/5891217" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Shiro</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/6187102" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracel EBS OM</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/6208972" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracel</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/6208973" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle EBS</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/6208974" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle EBS Configuration</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/6208975" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle EBS WSH</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/chris_mao/article/category/6208976" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle EBS QP</a><span>(0)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/chris_mao/article/month/2015/12">2015年12月</a><span>(1)</span></li><li><a href="/chris_mao/article/month/2015/11">2015年11月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2015/10">2015年10月</a><span>(13)</span></li><li><a href="/chris_mao/article/month/2015/09">2015年09月</a><span>(7)</span></li><li><a href="/chris_mao/article/month/2015/06">2015年06月</a><span>(1)</span></li><li><a href="/chris_mao/article/month/2015/05">2015年05月</a><span>(6)</span></li><li><a href="/chris_mao/article/month/2015/04">2015年04月</a><span>(3)</span></li><li><a href="/chris_mao/article/month/2014/02">2014年02月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2012/05">2012年05月</a><span>(1)</span></li><li><a href="/chris_mao/article/month/2011/11">2011年11月</a><span>(1)</span></li><li><a href="/chris_mao/article/month/2011/09">2011年09月</a><span>(6)</span></li><li><a href="/chris_mao/article/month/2011/06">2011年06月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2011/05">2011年05月</a><span>(1)</span></li><li><a href="/chris_mao/article/month/2010/11">2010年11月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2009/12">2009年12月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2009/09">2009年09月</a><span>(1)</span></li><li><a href="/chris_mao/article/month/2009/07">2009年07月</a><span>(1)</span></li><li><a href="/chris_mao/article/month/2009/06">2009年06月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2009/04">2009年04月</a><span>(1)</span></li><li><a href="/chris_mao/article/month/2009/03">2009年03月</a><span>(3)</span></li><li><a href="/chris_mao/article/month/2009/02">2009年02月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2008/12">2008年12月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2008/11">2008年11月</a><span>(7)</span></li><li><a href="/chris_mao/article/month/2008/10">2008年10月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2008/06">2008年06月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2008/05">2008年05月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2008/04">2008年04月</a><span>(1)</span></li><li><a href="/chris_mao/article/month/2008/03">2008年03月</a><span>(4)</span></li><li><a href="/chris_mao/article/month/2008/02">2008年02月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2008/01">2008年01月</a><span>(6)</span></li><li><a href="/chris_mao/article/month/2007/12">2007年12月</a><span>(2)</span></li><li><a href="/chris_mao/article/month/2007/11">2007年11月</a><span>(16)</span></li><li><a href="/chris_mao/article/month/2007/10">2007年10月</a><span>(20)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/chris_mao/article/details/19030311" title="微信开发 -- 自定义菜单">微信开发 -- 自定义菜单</a><span>(18785)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/49288251" title="Shiro系列之Shiro+Spring MVC整合(Integration)">Shiro系列之Shiro+Spring MVC整合(Integration)</a><span>(13927)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/4238454" title="使用jQuery实现DIV弹出效果">使用jQuery实现DIV弹出效果</a><span>(8991)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/6773311" title="Python随笔之Django安装">Python随笔之Django安装</a><span>(7967)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/19028881" title="微信开发接入">微信开发接入</a><span>(6627)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/2147745" title="关系代数五种基本操作和四程组合操作">关系代数五种基本操作和四程组合操作</a><span>(6270)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/3941529" title="使用jQuery在Div中加载其他页面">使用jQuery在Div中加载其他页面</a><span>(5673)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/4236237" title="jQuery实现折叠效果">jQuery实现折叠效果</a><span>(5083)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/1843347" title="PHP如何将表单提交给自己">PHP如何将表单提交给自己</a><span>(4666)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/1861592" title="Delphi中的继承机制">Delphi中的继承机制</a><span>(4298)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/chris_mao/article/details/4238454" title="使用jQuery实现DIV弹出效果">使用jQuery实现DIV弹出效果</a><span>(10)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/1862017" title="自己写的一些Delphi常用函数">自己写的一些Delphi常用函数</a><span>(8)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/1840526" title="Delphi中编写自定义组件">Delphi中编写自定义组件</a><span>(6)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/49618507" title="Mybatis系列番外篇之多参数">Mybatis系列番外篇之多参数</a><span>(5)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/3302501" title="Ext面向对象开发实践">Ext面向对象开发实践</a><span>(4)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/1825500" title="SQL Server2000 Collection排序规则">SQL Server2000 Collection排序规则</a><span>(4)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/4236237" title="jQuery实现折叠效果">jQuery实现折叠效果</a><span>(4)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/49288251" title="Shiro系列之Shiro+Spring MVC整合(Integration)">Shiro系列之Shiro+Spring MVC整合(Integration)</a><span>(4)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/48741031" title="Java数据分页">Java数据分页</a><span>(3)</span>
+</li>
+<li>
+<a href="/chris_mao/article/details/49254663" title="Mybatis系列目录篇">Mybatis系列目录篇</a><span>(3)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/evan_man/article/details/51328628" 
+target="_blank">*EventBus的使用与深入学习</a></li>
+<li><a href="http://blog.csdn.net/xuehuayous/article/details/51324656" 
+target="_blank">*Android 拍照、选择图片并裁剪</a></li>
+<li><a href="http://blog.csdn.net/u013831257/article/details/50784565" 
+
+target="_blank">* 安卓自定义View进阶-Path基本操作</a></li>
+<li><a 
+
+href="http://blog.csdn.net/je930502/article/details/50650231"target="_blank">*Ceph架构</a></li>
+<li><a href="http://blog.csdn.net/gj19890923/article/details/51333899" 
+target="_blank">*neutron-server的启动流程(一)</a></li>
+<li><a href="http://blog.csdn.net/xueshanhaizi/article/details/51321382" target="_blank">*Android事件分发机制浅析</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/chris_mao/article/details/48836039#comments">Mybatis系列（六）接口式编程</a>
+    <p style="margin:0px;"><a href="/wangmouperson" class="user_name">wangmouperson</a>:
+赞
+    </p>
+    </li>
+    <li>
+   
+         <a href="/chris_mao/article/details/49254663#comments">Mybatis系列目录篇</a>
+    <p style="margin:0px;"><a href="/douyh" class="user_name">douyh</a>:
+Mybatis系列目录篇，谢谢分享
+    </p>
+    </li>
+    <li>
+   
+         <a href="/chris_mao/article/details/49288251#comments">Shiro系列之Shiro+Spring MVC整合(Integration)</a>
+    <p style="margin:0px;"><a href="/ASEN0216" class="user_name">ASEN0216</a>:
+很好，学习了
+    </p>
+    </li>
+    <li>
+   
+         <a href="/chris_mao/article/details/49288251#comments">Shiro系列之Shiro+Spring MVC整合(Integration)</a>
+    <p style="margin:0px;"><a href="/qq_34222393" class="user_name">qq_34222393</a>:
+为什么我复制第一步代码 老是显示文档格式后正确填写呢
+    </p>
+    </li>
+    <li>
+   
+         <a href="/chris_mao/article/details/49288251#comments">Shiro系列之Shiro+Spring MVC整合(Integration)</a>
+    <p style="margin:0px;"><a href="/frankcheng5143" class="user_name">frankcheng5143</a>:
+写的很好
+    </p>
+    </li>
+    <li>
+   
+         <a href="/chris_mao/article/details/49188699#comments">Shiro系列之Shiro+Mysql实现用户认证(Authentication)</a>
+    <p style="margin:0px;"><a href="/chris_mao" class="user_name">chris_mao</a>:
+@q1335882:谢谢！知识分享，共同进步。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/chris_mao/article/details/49188699#comments">Shiro系列之Shiro+Mysql实现用户认证(Authentication)</a>
+    <p style="margin:0px;"><a href="/q1335882" class="user_name">q1335882</a>:
+看了您的文章 感觉您好厉害，每篇文章都是深夜。。。辛苦了 新人点赞
+    </p>
+    </li>
+    <li>
+   
+         <a href="/chris_mao/article/details/2587897#comments">使用JavaScript获取不同时区的时间</a>
+    <p style="margin:0px;"><a href="/YJGFNN" class="user_name">YJGFNN</a>:
+貌似时区+30 或者时区+45的都有问题
+    </p>
+    </li>
+    <li>
+   
+         <a href="/chris_mao/article/details/49618507#comments">Mybatis系列番外篇之多参数</a>
+    <p style="margin:0px;"><a href="/u012150168" class="user_name">u012150168</a>:
+配置有误
+    </p>
+    </li>
+    <li>
+   
+         <a href="/chris_mao/article/details/1825397#comments">XML与CSS</a>
+    <p style="margin:0px;"><a href="/u013035612" class="user_name">u013035612</a>:
+很不错的教程，学习啦。
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+ </div>   
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/cnick/cnick.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=250811"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/JavaScript1.js"></script>
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+    <script type="text/javascript" src="http://js.tongji.linezing.com/1/tongji.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+   
+    <link href="http://c.csdnimg.cn/comm_ask/css/ask_float_block.css" type="text/css" rel="stylesheet" />
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/wmd.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/showdown.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/prettify.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/apps/ask_float_block.js'></script>
+   
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+</body>
+</html>   
+ 

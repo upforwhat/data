@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script charset="utf-8" src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/cm.txt"></script><script src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/analytics.js" async=""></script><script src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/encoder.js" type="text/javascript"></script><script charset="utf-8" src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/id.php"></script>
+<meta charset="utf-8">
+<title>MySQL全文检索初探 - bourneli - 博客园</title>
+<link type="text/css" rel="stylesheet" href="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/bundle-darkgreentrip.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/bourneli/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/bourneli/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/bourneli/wlwmanifest.xml">
+<script src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'bourneli', cb_enable_mathjax=false;</script>
+<script src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.js" type="text/javascript"></script>
+<script src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/m.js"></script></head>
+<body><link type="text/css" rel="stylesheet" href="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jiathis_share.css"><div style="height: auto; position: fixed; z-index: 100000000; top: 150px; right: 0px; overflow: hidden; width: 20px;" class="jiathis_style"><table cellpadding="0" cellspacing="0"><tbody style="background:transparent"><tr><td style="background:transparent"><img src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/r.gif" style="cursor:pointer;" onmouseover="$CKE.over()" onclick="$CKE.center(this)"></td><td><div><div class="jiadiv_01"><div style="width:100%;background:#F2F2F2;border-bottom:1px solid #E5E5E5;line-height:180%;padding-left:5px;font-size:12px"><table width="100%"><tbody><tr class="jt_sharetitle"><td style="text-align:left;font-size:14px;font-weight:bold;color:#000000;" align="left">分享到</td><td style="text-align:right;" align="right"><img src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/img_exit.gif" style="opacity:0.5;filter:alpha(opacity=50);margin:0 10px;cursor:pointer;" onclick="$CKE.shareClose();" align="absmiddle" border="0"></td></tr></tbody></table></div><div class="jiadiv_02" style="width:100%;" id="jiathis_sers"><a href="javascript:;" onclick="jiathis_sendto('qzone');return false;" class="jiatitle"><span class="jtico jtico_qzone">QQ空间</span></a><a href="javascript:;" onclick="jiathis_sendto('tsina');return false;" class="jiatitle"><span class="jtico jtico_tsina">微博</span></a><a href="javascript:;" onclick="jiathis_sendto('tqq');return false;" class="jiatitle"><span class="jtico jtico_tqq">腾讯微博</span></a><a href="javascript:;" onclick="jiathis_sendto('renren');return false;" class="jiatitle"><span class="jtico jtico_renren">人人网</span></a><a href="javascript:;" onclick="jiathis_sendto('weixin');return false;" class="jiatitle"><span class="jtico jtico_weixin">微信</span></a><a href="javascript:;" onclick="jiathis_sendto('ishare');return false;" class="jiatitle"><span class="jtico jtico_ishare">一键分享</span></a><a href="javascript:;" onclick="$CKE.center(this);return false;" class="jiatitle"><span class="jtico jtico_jiathis">查看更多(96)</span></a><div style="clear:both"></div></div><div class="ckepopBottom" style="width:100%;"><div style="float:right;font-size:11px;margin:0 5px 0 0;"><img src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/img_012.gif" align="absmiddle" border="0"><a href="http://www.jiathis.com/index2" style="color:#333333;padding:0 3px;" class="link_01" target="_blank">JiaThis</a></div><div style="clear:both"></div></div></div></div></td></tr></tbody></table></div><iframe style="position: fixed; display: none;" frameborder="0"></iframe><div style="height: auto; position: absolute; z-index: 100000000; display: none; top: 50%; left: 50%; overflow: auto;" class="jiathis_style"><div style="border:10px solid #7F7F7F; width:300px;"><div class="jiadiv_01" style="width:300px;"><div style="background:#F2F2F2;line-height:100%;height:30px;overflow:hidden;width:300px;"><table style="margin:5px 0 0 0;" width="100%"><tbody><tr class="jt_sharetitle" style="line-height:20px!important;"><td style="text-align:left;font-size:12px;" align="left">分享到各大网站</td><td align="right"><img src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/img_exit.gif" style="margin:0 4px;cursor:pointer;" onclick="$CKE.centerClose();" border="0"></td></tr></tbody></table></div><div class="searchTxtCont"><div style="background:url(http://v3.jiathis.com/code_mini/images/img_so.gif) no-repeat center;height:30px; width:281px"><form onsubmit="return false;"><input class="searchTxt" name="" onclick="this.value='';this.style.color='#000';" value="输入网站名或拼音缩写" onkeyup="$CKE.choose(this);" type="text"></form></div></div><div id="jiathis_sharelist" class="jiadiv_02" style="width:300px;height:300px;overflow-y:auto;"><a href="javascript:;" onclick="jiathis_sendto('weixin');return false;" class="jiatitle"><span class="jtico jtico_weixin">微信</span><input value="weixin,微信,wx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('tsina');return false;" class="jiatitle"><span class="jtico jtico_tsina">微博</span><input value="tsina,微博,xlwb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('cqq');return false;" class="jiatitle"><span class="jtico jtico_cqq">QQ好友</span><input value="cqq,QQ好友,cqq" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('qzone');return false;" class="jiatitle"><span class="jtico jtico_qzone">QQ空间</span><input value="qzone,QQ空间,qqkj" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('copy');return false;" class="jiatitle"><span class="jtico jtico_copy">复制网址</span><input value="copy,复制网址,fzwz" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('fav');return false;" class="jiatitle"><span class="jtico jtico_fav">收藏夹</span><input value="fav,收藏夹,scj" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('print');return false;" class="jiatitle"><span class="jtico jtico_print">打印</span><input value="print,打印,dy" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('email');return false;" class="jiatitle"><span class="jtico jtico_email">邮件</span><input value="email,邮件,yj" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('renren');return false;" class="jiatitle"><span class="jtico jtico_renren">人人网</span><input value="renren,人人网,rrw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('kaixin001');return false;" class="jiatitle"><span class="jtico jtico_kaixin001">开心网</span><input value="kaixin001,开心网,kxw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('evernote');return false;" class="jiatitle"><span class="jtico jtico_evernote">印象笔记</span><input value="evernote,印象笔记,evernote" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('linkedin');return false;" class="jiatitle"><span class="jtico jtico_linkedin">领英</span><input value="linkedin,领英,linkedin" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('feixin');return false;" class="jiatitle"><span class="jtico jtico_feixin">飞信</span><input value="feixin,飞信,fx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('douban');return false;" class="jiatitle"><span class="jtico jtico_douban">豆瓣</span><input value="douban,豆瓣,db" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('twitter');return false;" class="jiatitle"><span class="jtico jtico_twitter">Twitter</span><input value="twitter,Twitter,twitter" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('fb');return false;" class="jiatitle"><span class="jtico jtico_fb">Facebook</span><input value="fb,Facebook,facebook" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('ishare');return false;" class="jiatitle"><span class="jtico jtico_ishare">一键分享</span><input value="ishare,一键分享,yjfx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('ujian');return false;" class="jiatitle"><span class="jtico jtico_ujian">猜你喜欢</span><input value="ujian,猜你喜欢,cnxh" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('yixin');return false;" class="jiatitle"><span class="jtico jtico_yixin">易信</span><input value="yixin,易信,yx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('huaban');return false;" class="jiatitle"><span class="jtico jtico_huaban">花瓣网</span><input value="huaban,花瓣网,hbw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('tqq');return false;" class="jiatitle"><span class="jtico jtico_tqq">腾讯微博</span><input value="tqq,腾讯微博,txwb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('googleplus');return false;" class="jiatitle"><span class="jtico jtico_googleplus">Google+</span><input value="googleplus,Google+,googlej" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('alibaba');return false;" class="jiatitle"><span class="jtico jtico_alibaba">阿里巴巴</span><input value="alibaba,阿里巴巴,albb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('xiaoyou');return false;" class="jiatitle"><span class="jtico jtico_xiaoyou">朋友网</span><input value="xiaoyou,朋友网,pyw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('sdonote');return false;" class="jiatitle"><span class="jtico jtico_sdonote">麦库记事</span><input value="sdonote,麦库记事,mkjs" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('baidu');return false;" class="jiatitle"><span class="jtico jtico_baidu">百度搜藏</span><input value="baidu,百度搜藏,bdsc" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('gmail');return false;" class="jiatitle"><span class="jtico jtico_gmail">Gmail邮箱</span><input value="gmail,Gmail邮箱,gmailyx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('ydnote');return false;" class="jiatitle"><span class="jtico jtico_ydnote">有道云笔记</span><input value="ydnote,有道云笔记,ydybj" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('tianya');return false;" class="jiatitle"><span class="jtico jtico_tianya">天涯社区</span><input value="tianya,天涯社区,tysq" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('tieba');return false;" class="jiatitle"><span class="jtico jtico_tieba">百度贴吧</span><input value="tieba,百度贴吧,bdtb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('qingbiji');return false;" class="jiatitle"><span class="jtico jtico_qingbiji">轻笔记</span><input value="qingbiji,轻笔记,qbj" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('tifeng');return false;" class="jiatitle"><span class="jtico jtico_tifeng">凤凰微博</span><input value="tifeng,凤凰微博,fhwb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('fanfou');return false;" class="jiatitle"><span class="jtico jtico_fanfou">饭否</span><input value="fanfou,饭否,ff" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('mingdao');return false;" class="jiatitle"><span class="jtico jtico_mingdao">明道</span><input value="mingdao,明道,md" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('douban9dian');return false;" class="jiatitle"><span class="jtico jtico_douban9dian">豆瓣9点</span><input value="douban9dian,豆瓣9点,db9d" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('google');return false;" class="jiatitle"><span class="jtico jtico_google">谷歌</span><input value="google,谷歌,gg" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('buzz');return false;" class="jiatitle"><span class="jtico jtico_buzz">谷歌Buzz</span><input value="buzz,谷歌Buzz,ggbuzz" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('youdao');return false;" class="jiatitle"><span class="jtico jtico_youdao">有道书签</span><input value="youdao,有道书签,ydsq" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('qq');return false;" class="jiatitle"><span class="jtico jtico_qq">QQ书签</span><input value="qq,QQ书签,qqsq" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('msn');return false;" class="jiatitle"><span class="jtico jtico_msn">MSN</span><input value="msn,MSN,msn" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('pinterest');return false;" class="jiatitle"><span class="jtico jtico_pinterest">Pinterest</span><input value="pinterest,Pinterest,pinterest" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('duitang');return false;" class="jiatitle"><span class="jtico jtico_duitang">堆糖</span><input value="duitang,堆糖,dt" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('tyaolan');return false;" class="jiatitle"><span class="jtico jtico_tyaolan">摇篮微博</span><input value="tyaolan,摇篮微博,ylwb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('hi');return false;" class="jiatitle"><span class="jtico jtico_hi">百度空间</span><input value="hi,百度空间,bdkj" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('hotmail');return false;" class="jiatitle"><span class="jtico jtico_hotmail">Hotmail邮箱</span><input value="hotmail,Hotmail邮箱,hotmailyx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('xqw');return false;" class="jiatitle"><span class="jtico jtico_xqw">雪球</span><input value="xqw,雪球,xqw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('hexun');return false;" class="jiatitle"><span class="jtico jtico_hexun">和讯</span><input value="hexun,和讯,hx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('139mail');return false;" class="jiatitle"><span class="jtico jtico_139mail">139邮箱</span><input value="139mail,139邮箱,139yx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('189mail');return false;" class="jiatitle"><span class="jtico jtico_189mail">189邮箱</span><input value="189mail,189邮箱,189yx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('189cn');return false;" class="jiatitle"><span class="jtico jtico_189cn">翼友圈</span><input value="189cn,翼友圈,yyq" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('tpeople');return false;" class="jiatitle"><span class="jtico jtico_tpeople">人民微博</span><input value="tpeople,人民微博,rmwb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('txinhua');return false;" class="jiatitle"><span class="jtico jtico_txinhua">新华微博</span><input value="txinhua,新华微博,xhwb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('translate');return false;" class="jiatitle"><span class="jtico jtico_translate">谷歌翻译</span><input value="translate,谷歌翻译,ggfy" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('tuita');return false;" class="jiatitle"><span class="jtico jtico_tuita">推他</span><input value="tuita,推他,tt" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('mop');return false;" class="jiatitle"><span class="jtico jtico_mop">猫扑推客</span><input value="mop,猫扑推客,mptk" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('meilishuo');return false;" class="jiatitle"><span class="jtico jtico_meilishuo">美丽说</span><input value="meilishuo,美丽说,mls" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('mogujie');return false;" class="jiatitle"><span class="jtico jtico_mogujie">蘑菇街</span><input value="mogujie,蘑菇街,mgj" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('ganniu');return false;" class="jiatitle"><span class="jtico jtico_ganniu">赶牛网</span><input value="ganniu,赶牛网,gnw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('poco');return false;" class="jiatitle"><span class="jtico jtico_poco">Poco网</span><input value="poco,Poco网,pocow" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('leihou');return false;" class="jiatitle"><span class="jtico jtico_leihou">雷猴网</span><input value="leihou,雷猴网,lhw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('thexun');return false;" class="jiatitle"><span class="jtico jtico_thexun">和讯微博</span><input value="thexun,和讯微博,hxwb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('dream163');return false;" class="jiatitle"><span class="jtico jtico_dream163">游戏江湖</span><input value="dream163,游戏江湖,yxjh" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('jcrb');return false;" class="jiatitle"><span class="jtico jtico_jcrb">法律微博</span><input value="jcrb,法律微博,flwb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('tumblr');return false;" class="jiatitle"><span class="jtico jtico_tumblr">Tumblr</span><input value="tumblr,Tumblr,tumblr" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('reddit');return false;" class="jiatitle"><span class="jtico jtico_reddit">Reddit</span><input value="reddit,Reddit,reddit" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('instapaper');return false;" class="jiatitle"><span class="jtico jtico_instapaper">Instapaper</span><input value="instapaper,Instapaper,instapaper" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('pocket');return false;" class="jiatitle"><span class="jtico jtico_pocket">Pocket</span><input value="pocket,Pocket,pocket" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('caimi');return false;" class="jiatitle"><span class="jtico jtico_caimi">财迷</span><input value="caimi,财迷,cm" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('iwo');return false;" class="jiatitle"><span class="jtico jtico_iwo">WO+分享</span><input value="iwo,WO+分享,iwo" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('waakee');return false;" class="jiatitle"><span class="jtico jtico_waakee">挖客网</span><input value="waakee,挖客网,wkw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('cyzone');return false;" class="jiatitle"><span class="jtico jtico_cyzone">创业邦</span><input value="cyzone,创业邦,cyb" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('99earth');return false;" class="jiatitle"><span class="jtico jtico_99earth">救救地球</span><input value="99earth,救救地球,jjdq" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('chouti');return false;" class="jiatitle"><span class="jtico jtico_chouti">抽屉网</span><input value="chouti,抽屉网,ctw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('dig24');return false;" class="jiatitle"><span class="jtico jtico_dig24">递客网</span><input value="dig24,递客网,dkw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('yijee');return false;" class="jiatitle"><span class="jtico jtico_yijee">易集网</span><input value="yijee,易集网,yjw" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('pdfonline');return false;" class="jiatitle"><span class="jtico jtico_pdfonline">Pdf在线转换</span><input value="pdfonline,Pdf在线转换,pdfzxzh" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('printfriendly');return false;" class="jiatitle"><span class="jtico jtico_printfriendly">友好打印</span><input value="printfriendly,友好打印,yhdy" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('w3c');return false;" class="jiatitle"><span class="jtico jtico_w3c">W3c验证</span><input value="w3c,W3c验证,w3cyz" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('bitly');return false;" class="jiatitle"><span class="jtico jtico_bitly">Bit.ly</span><input value="bitly,Bit.ly,bitly" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('digg');return false;" class="jiatitle"><span class="jtico jtico_digg">Digg</span><input value="digg,Digg,digg" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('mailru');return false;" class="jiatitle"><span class="jtico jtico_mailru">Mail.ru</span><input value="mailru,Mail.ru,mail.ru" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('diigo');return false;" class="jiatitle"><span class="jtico jtico_diigo">Diigo</span><input value="diigo,Diigo,diigo" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('friendfeed');return false;" class="jiatitle"><span class="jtico jtico_friendfeed">FriendFeed</span><input value="friendfeed,FriendFeed,friendfeed" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('myspace');return false;" class="jiatitle"><span class="jtico jtico_myspace">Myspace</span><input value="myspace,Myspace,myspace" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('mixx');return false;" class="jiatitle"><span class="jtico jtico_mixx">Mixx</span><input value="mixx,Mixx,mixx" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('netlog');return false;" class="jiatitle"><span class="jtico jtico_netlog">NetLog</span><input value="netlog,NetLog,netlog" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('netvibes');return false;" class="jiatitle"><span class="jtico jtico_netvibes">Netvibes</span><input value="netvibes,Netvibes,netvibes" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('phonefavs');return false;" class="jiatitle"><span class="jtico jtico_phonefavs">Phonefavs</span><input value="phonefavs,Phonefavs,phonefavs" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('pingfm');return false;" class="jiatitle"><span class="jtico jtico_pingfm">Ping.fm</span><input value="pingfm,Ping.fm,ping.fm" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('plaxo');return false;" class="jiatitle"><span class="jtico jtico_plaxo">Plaxo</span><input value="plaxo,Plaxo,plaxo" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('delicious');return false;" class="jiatitle"><span class="jtico jtico_delicious">Delicious</span><input value="delicious,Delicious,delicious" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('wong');return false;" class="jiatitle"><span class="jtico jtico_wong">Mister Wong</span><input value="wong,Mister Wong,misterwong" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('stumbleupon');return false;" class="jiatitle"><span class="jtico jtico_stumbleupon">Stumbleupon</span><input value="stumbleupon,Stumbleupon,stumbleupon" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('plurk');return false;" class="jiatitle"><span class="jtico jtico_plurk">Plurk</span><input value="plurk,Plurk,plurk" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('funp');return false;" class="jiatitle"><span class="jtico jtico_funp">Funp</span><input value="funp,Funp,funp" type="hidden"></a><a href="javascript:;" onclick="jiathis_sendto('myshare');return false;" class="jiatitle"><span class="jtico jtico_myshare">Myshare</span><input value="myshare,Myshare,myshare" type="hidden"></a><div style="clear:both"></div></div><div class="centerBottom"><div style="float:left;font-size:10px;"><a href="http://www.jiathis.com/help/html/what-is-jiathis" class="link_01" style="color:#333333;display:none;" target="_blank">这是什么工具?</a></div><div style="float:right;font-size:11px;margin:0 10px 0 0;"><img src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/img_012.gif" align="absmiddle" border="none">&nbsp;<a href="http://www.jiathis.com/index2" style="color:#333333;" class="link_01" target="_blank">JiaThis</a></div><div style="clear:both"></div></div></div></div></div><iframe src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jiathis_utility.htm" style="display: none;" frameborder="0"></iframe>
+<a name="top"></a>
+<div id="page_begin_html"><!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END --></div><script>load_page_begin_html();</script>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/bourneli/"><img id="blogLogo" src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/bourneli/">bourneli(李伯韬)的技术博客</a></h1>
+<h2>博客搬家了，新的日志会在<a href="http://bourneli.github.io/"><strong>一数一世界</strong></a>更新！</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/bourneli/">首页</a></li>
+<li><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://msg.cnblogs.com/send/bourneli">联系</a></li>
+<li><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/bourneli/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/bourneli/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			
+<span id="stats_post_count">随笔 - 119&nbsp; </span>
+<span id="stats_article_count">文章 - 17&nbsp; </span>
+<span id="stats-comment_count">评论 - 41</span>
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/bourneli/archive/2012/08/09/2630753.html">MySQL全文检索初探</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><strong>本文目的</strong></p>
+<p>最近有个项目需要对数据进行搜索功能。采用的LAMP技术开发，所以自然想到了MySQL的全文检索功能。现在将自己搜集的一些资料小结，作为备忘。</p>
+<p>&nbsp;</p>
+<p><strong>MySQL</strong><strong>引擎</strong></p>
+<p>据目前查到的资料，只有<strong>MyISAM</strong>引擎支持全文检索（full text index），查询效率高。但是有局限，不支持事务和外键。</p>
+<p>Innodb支持事务和外键，但是不支持全文检索。所以，如果需要全文检索的数据，需要使用MyISAM引擎创建表。</p>
+<p>&nbsp;</p>
+<p><strong>MySQL</strong><strong>中文全文检索</strong></p>
+<p>很遗憾，目前mysql不支持中文全文检索。目前有两种解决方案</p>
+<blockquote>
+<ul>
+<li>方案1：使用mysql中文检索插件，个人认为可控性较差，虽然使用方便，但是如果后期插件出现问题，比较难解决。优点就是前期工作量相对较小。</li>
+<li>方案2：中文分词+GB2312编码：通过分词将原文分隔开，然后转成GB2312的二进制文本形式（如一个字，4个字节A623，这样就可以搜索单个中文）。（<em>转成</em><em>GB2312</em><em>编码是为了避免中英文混合搜索。</em><em>mysql</em><em>全文检索最小长度默认</em><em>4</em><em>（ft_min_word_len</em><em>）个字，中文是</em><em>4</em><em>个汉字，英文是</em><em>4</em><em>个字母。对于中文，基本上都是</em><em>2</em><em>子词，所以设置ft_min_word_len</em><em>为</em><em>2</em><em>，但英文中，</em><em>2</em><em>字的单词一般没有什么特殊意义，如‘</em><em>is</em><em>’，‘</em><em>do</em><em>’等，所以为了兼顾中英文语法习惯，将中文适当‘变长’，也就是转成</em><em>GB2312</em><em>的可见形式编码</em>）</li>
+<li>方案3：中文分词，ft_min_word_len设置为2，调用'repair table your_table quick',修复索引。相比方案2，此方案较节省空间。对于主要使用中文的系统而言，此方案更佳。</li>
+</ul>
+</blockquote>
+<p>&nbsp;</p>
+<p><strong>创建全文索引</strong></p>
+<p>举一个文章表（t_article）的例子，title和body作为列子，如下：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">CREATE</span> <span style="color: #0000ff;">TABLE</span><span style="color: #000000;"> `t_article` (
+`title` </span><span style="color: #0000ff;">varchar</span>(<span style="color: #800000; font-weight: bold;">100</span>) <span style="color: #0000ff;">DEFAULT</span> <span style="color: #0000ff;">NULL</span><span style="color: #000000;">,
+`body` </span><span style="color: #0000ff;">text</span><span style="color: #000000;">,
+FULLTEXT </span><span style="color: #0000ff;">KEY</span><span style="color: #000000;"> `ft_title` (`title`),
+FULLTEXT </span><span style="color: #0000ff;">KEY</span><span style="color: #000000;"> `ft_body` (`body`)
+) ENGINE</span><span style="color: #808080;">=</span>MyISAM <span style="color: #0000ff;">DEFAULT</span> CHARSET<span style="color: #808080;">=</span>latin1;</pre>
+</div>
+<p><em>P.S.: </em><em>如果有个表已经创建了全文索引，想要查看创建语法，可以使用</em><em>“SHOW CREATE TABLE talbe_name;”</em><em>这条命令显示表格的创建语句。</em></p>
+<p>注意红色高亮部分就是全文检索的语法。删除也很简单，比如删除title的全文索引，“ALTER TABLE t_article DROP INDEX ft_title;”。</p>
+<p>&nbsp;</p>
+<p><strong>使用</strong><strong>SQL</strong><strong>检索</strong></p>
+<p>比如期望对body中的数据进行全文检索，命令如下</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">SELECT</span> title, MATCH(body) AGAINST(<span style="color: #ff0000;">'</span><span style="color: #ff0000;">php and other key word</span><span style="color: #ff0000;">'</span>) <span style="color: #0000ff;">AS</span><span style="color: #000000;"> score<br>FROM t_article
+</span><span style="color: #0000ff;">WHERE</span> MATCH(body) AGAINST(<span style="color: #ff0000;">'</span><span style="color: #ff0000;">php and other key word</span><span style="color: #ff0000;">'</span>);</pre>
+</div>
+<p>注意这里的score很重要，该值代表了关键字与文本的相关性，该值一般在0到1之间，但是也可能达到4或更多。</p>
+<p>&nbsp;</p>
+<p><strong>相关资料</strong></p>
+<blockquote>
+<ul>
+<li><a href="http://devzone.zend.com/26/using-mysql-full-text-searching/">Using MySQL Full-text Searching</a></li>
+<li><a href="http://stackoverflow.com/questions/1984377/how-to-drop-this-index-in-mysql">How to drop this index in MySQL?</a></li>
+<li><a href="http://hi.baidu.com/haomao/item/7f562b1768132fdcbe904255">支持中文的MYSQL全文检索</a></li>
+<li><a href="http://blog.longwin.com.tw/2012/07/mysql-fulltext-search-howto-2012/">MySQL Fulltext Search 使用方式</a></li>
+<li><a href="http://stackoverflow.com/questions/737275/comparison-of-full-text-search-engine-lucene-sphinx-postgresql-mysql">Comparison of full text search engine - Lucene, Sphinx, Postgresql, MySQL?</a>（<em>PS: </em><em>个人理解全文检索技术产品中，</em><em>mysql</em><em>轻量级，</em><em>sphinx</em><em>中量级，</em><em>Lucence</em><em>重量级）</em></li>
+<li><span style="text-decoration: underline;"><a href="http://www.huihulu.com/blog/188">通过MySQL全文搜索实现中文的相关搜索</a></span>（<em>PS: </em><em>讲解了为什么需要将中文分词后转码，作为全文检索）</em></li>
+<li><em>如何设置ft_min_word_len参数：<a href="http://www.tipandtrick.net/2008/how-to-change-mysql-fulltext-index-minimum-and-maximum-length-of-words/">http://www.tipandtrick.net/2008/how-to-change-mysql-fulltext-index-minimum-and-maximum-length-of-words/</a></em></li>
+</ul>
+</blockquote></div><div style="display: block;" id="MySignature"><b>声明：如有转载本博文章，请注明出处。您的支持是我的动力！文章部分内容来自互联网，本人不负任何法律责任。</b></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/bourneli/tag/%E4%B8%AD%E6%96%87%20%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/">中文 全文检索</a></div>
+<div id="blog_post_info"><div id="green_channel">
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(2630753,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://msg.cnblogs.com/send/bourneli" target="_blank">联系我</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon_weibo_24.png" alt=""></a>
+<a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/bourneli/" target="_blank"><img src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/sample_face.gif" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/bourneli/">bourneli</a><br>
+<a href="http://home.cnblogs.com/u/bourneli/followees">关注 - 9</a><br>
+<a href="http://home.cnblogs.com/u/bourneli/followers">粉丝 - 92</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(2630753,'Digg')">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+	<div class="buryit" onclick="votePost(2630753,'Bury')"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/bourneli/archive/2012/08/05/2623939.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/bourneli/archive/2012/08/05/2623939.html" title="发布于2012-08-05 16:00">shm_get_var返回拷贝还是引用？</a><br><a href="http://www.cnblogs.com/bourneli/archive/2012/08/19/2646477.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/bourneli/archive/2012/08/19/2646477.html" title="发布于2012-08-19 16:00">PHP全局错误处理</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2012-08-09 18:26</span> <a href="http://www.cnblogs.com/bourneli/">bourneli</a> 阅读(<span id="post_view_count">6553</span>) 评论(<span id="post_comment_count">3</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=2630753" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2630753);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=101756,cb_entryId=2630753,cb_blogApp=currentBlogApp,cb_blogUserGuid='0ceb3c70-5a0b-e111-b7b9-842b2b196315',cb_entryCreatedDate='2012/8/9 18:26:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3164353" class="layer">#1楼</a><a name="3164353" id="comment_anchor_3164353"></a>  <span class="comment_date">2015-04-16 20:56</span> <a id="a_comment_author_3164353" href="http://home.cnblogs.com/u/170893/" target="_blank">conqweal</a> <a href="http://msg.cnblogs.com/send/conqweal" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3164353" class="blog_comment_body">胡说八道，什么叫不支持中文，5.0.9版本都支持。。<br><br>/etc/my.cnf<br><br>配置<br>[mysqld]下加入<br>ft_min_word_len=1<br><br>就可以了，别误导人，害我找了好久资料。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3164353,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3164353,'Bury',this)">反对(2)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3170323" class="layer">#2楼</a><a name="3170323" id="comment_anchor_3170323"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2015-04-25 16:38</span> <a id="a_comment_author_3170323" href="http://www.cnblogs.com/bourneli/" target="_blank">bourneli</a> <a href="http://msg.cnblogs.com/send/bourneli" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3170323" class="blog_comment_body"><a href="#3164353" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3164353);">@</a>
+conqweal<br>需要先分词，才能全文检索，ft_min_word_len=1检索的效果应该不会太好，祝你好运。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3170323,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3170323,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3288455" class="layer">#3楼</a><a name="3288455" id="comment_anchor_3288455"></a><span id="comment-maxId" style="display:none;">3288455</span><span id="comment-maxDate" style="display:none;">2015/10/20 15:47:42</span>  <span class="comment_date">2015-10-20 15:47</span> <a id="a_comment_author_3288455" href="http://home.cnblogs.com/u/392518/" target="_blank">抠脚大汉</a> <a href="http://msg.cnblogs.com/send/%E6%8A%A0%E8%84%9A%E5%A4%A7%E6%B1%89" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3288455" class="blog_comment_body"><a href="#3164353" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3164353);">@</a>
+conqweal<br>是分词，英文可以按空格分词，中文就比较麻烦了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3288455,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3288455,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login('commentform');">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block"></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/545862/" target="_blank">六年过后，团购真的要退出历史舞台了</a><br> ·  <a href="http://news.cnblogs.com/n/545861/" target="_blank">新版Chrome浏览器去掉了一个常用功能：点退格键回到之前网页</a><br> ·  <a href="http://news.cnblogs.com/n/545860/" target="_blank">腾讯创始人陈一丹捐赠25亿港币创立 “一丹奖”</a><br> ·  <a href="http://news.cnblogs.com/n/545859/" target="_blank">贝索斯可能要为自己写本书了 感恩所有帮助亚马逊的人</a><br> ·  <a href="http://news.cnblogs.com/n/545858/" target="_blank">360私有化进入最后一步？传换汇已不再是回归阻碍</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/543110/" target="_blank">架构漫谈（九）：理清技术、业务和架构的关系</a><br> ·  <a href="http://kb.cnblogs.com/page/542725/" target="_blank">架构漫谈（八）：从架构的角度看如何写好代码</a><br> ·  <a href="http://kb.cnblogs.com/page/542257/" target="_blank">架构漫谈（七）：不要空设架构师这个职位，给他实权</a><br> ·  <a href="http://kb.cnblogs.com/page/541740/" target="_blank">架构漫谈（六）：软件架构到底是要解决什么问题？</a><br> ·  <a href="http://kb.cnblogs.com/page/541188/" target="_blank">架构漫谈（五）：什么是软件</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news">“练习一万小时成天才！” - 摘自《异类》<div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/bourneli/">bourneli</a><br>园龄：<a href="http://home.cnblogs.com/u/bourneli/" title="入园时间：2011-11-10">4年6个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/bourneli/followers/">92</a><br>关注：<a href="http://home.cnblogs.com/u/bourneli/followees/">9</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger('0ceb3c70-5a0b-e111-b7b9-842b2b196315')">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" title="Calendar" cellpadding="0" cellspacing="0">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar('2012/07/01');return false;">&lt;</a></td><td align="center">2012年8月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar('2012/09/01');return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" abbr="日" scope="col" align="center">日</th><th class="CalDayHeader" abbr="一" scope="col" align="center">一</th><th class="CalDayHeader" abbr="二" scope="col" align="center">二</th><th class="CalDayHeader" abbr="三" scope="col" align="center">三</th><th class="CalDayHeader" abbr="四" scope="col" align="center">四</th><th class="CalDayHeader" abbr="五" scope="col" align="center">五</th><th class="CalDayHeader" abbr="六" scope="col" align="center">六</th></tr><tr><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center"><a href="http://www.cnblogs.com/bourneli/archive/2012/08/02.html"><u>2</u></a></td><td align="center"><a href="http://www.cnblogs.com/bourneli/archive/2012/08/03.html"><u>3</u></a></td><td class="CalWeekendDay" align="center">4</td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/bourneli/archive/2012/08/05.html"><u>5</u></a></td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td align="center"><a href="http://www.cnblogs.com/bourneli/archive/2012/08/09.html"><u>9</u></a></td><td align="center">10</td><td class="CalWeekendDay" align="center">11</td></tr><tr><td class="CalWeekendDay" align="center">12</td><td align="center">13</td><td align="center">14</td><td align="center">15</td><td align="center">16</td><td align="center">17</td><td class="CalWeekendDay" align="center">18</td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/bourneli/archive/2012/08/19.html"><u>19</u></a></td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td align="center">23</td><td align="center">24</td><td class="CalWeekendDay" align="center">25</td></tr><tr><td class="CalWeekendDay" align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td></tr><tr><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+
+<div id="widget_my_google" class="div_my_zzk"><input name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk" type="text">&nbsp;<input onclick="google_go()" value="谷歌搜索" class="btn_my_zzk" type="button"></div>
+</div>
+</div>
+
+</div><div id="sidebar_recentposts" class="sidebar-block">
+<div class="catListEssay">
+<h3 class="catListTitle">最新随笔</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/bourneli/p/4536778.html">1. Spark随机深林扩展—OOB错误评估和变量权重</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4473976.html">2. Spark随机森林实现学习</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4456109.html">3. RDD分区2GB限制</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4394271.html">4. Spark使用总结与分享</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4320878.html">5. Spark核心—RDD初探</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4216750.html">6. 机器学习技法--学习笔记04--Soft SVM</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4202423.html">7. 机器学习技法--学习笔记03--Kernel技巧</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4199990.html">8. 机器学习基石--学习笔记02--Hard Dual SVM</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4198839.html">9. 机器学习基石--学习笔记01--linear hard SVM</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4106605.html">10. 特征工程(Feature Enginnering)学习记要</a></li>
+</ul>
+</div>
+</div><div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/bourneli/tag/coursera/">coursera</a>(4)</li><li><a href="http://www.cnblogs.com/bourneli/tag/C%2FC%2B%2B/">C/C++</a>(3)</li><li><a href="http://www.cnblogs.com/bourneli/tag/%E5%86%B3%E7%AD%96%E6%A0%91/">决策树</a>(2)</li><li><a href="http://www.cnblogs.com/bourneli/tag/data%20analysis/">data analysis</a>(2)</li><li><a href="http://www.cnblogs.com/bourneli/tag/dlopen/">dlopen</a>(1)</li><li><a href="http://www.cnblogs.com/bourneli/tag/jsoncpp/">jsoncpp</a>(1)</li><li><a href="http://www.cnblogs.com/bourneli/tag/k%20fold/">k fold</a>(1)</li><li><a href="http://www.cnblogs.com/bourneli/tag/MapReduce/">MapReduce</a>(1)</li><li><a href="http://www.cnblogs.com/bourneli/tag/MOOC/">MOOC</a>(1)</li><li><a href="http://www.cnblogs.com/bourneli/tag/singleton/">singleton</a>(1)</li><li><a href="http://www.cnblogs.com/bourneli/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类<span style="font-size:11px;font-weight:normal">(92)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/bourneli/category/462559.html">C/C++(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/bourneli/category/493498.html">R(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/bourneli/category/387855.html">Web前端开发(26)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/bourneli/category/473282.html">大数据(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/bourneli/category/645934.html">机器学习(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/bourneli/category/417847.html">数据分析&amp;挖掘(42)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案<span style="font-size:11px;font-weight:normal">(119)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/bourneli/archive/2015/05.html">2015年5月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/bourneli/archive/2015/04.html">2015年4月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/bourneli/archive/2015/03.html">2015年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/bourneli/archive/2015/01.html">2015年1月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/bourneli/archive/2014/11.html">2014年11月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/bourneli/archive/2014/09.html">2014年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/bourneli/archive/2014/08.html">2014年8月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/bourneli/archive/2014/04.html">2014年4月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/bourneli/archive/2014/03.html">2014年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/bourneli/archive/2013/10.html">2013年10月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/bourneli/archive/2013/09.html">2013年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/bourneli/archive/2013/08.html">2013年8月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/bourneli/archive/2013/07.html">2013年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/bourneli/archive/2013/06.html">2013年6月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/bourneli/archive/2013/04.html">2013年4月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/bourneli/archive/2013/03.html">2013年3月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/bourneli/archive/2013/02.html">2013年2月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/bourneli/archive/2013/01.html">2013年1月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/bourneli/archive/2012/12.html">2012年12月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/bourneli/archive/2012/11.html">2012年11月 (17)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/bourneli/archive/2012/10.html">2012年10月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/bourneli/archive/2012/09.html">2012年9月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/bourneli/archive/2012/08.html">2012年8月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/bourneli/archive/2012/07.html">2012年7月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_24" href="http://www.cnblogs.com/bourneli/archive/2012/06.html">2012年6月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_25" href="http://www.cnblogs.com/bourneli/archive/2012/05.html">2012年5月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_26" href="http://www.cnblogs.com/bourneli/archive/2012/04.html">2012年4月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_27" href="http://www.cnblogs.com/bourneli/archive/2012/03.html">2012年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_28" href="http://www.cnblogs.com/bourneli/archive/2012/02.html">2012年2月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_29" href="http://www.cnblogs.com/bourneli/archive/2012/01.html">2012年1月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_30" href="http://www.cnblogs.com/bourneli/archive/2011/12.html">2011年12月 (6)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_articlecategory" class="catListArticleCategory sidebar-block">
+<h3 class="catListTitle">文章分类<span style="font-size:11px;font-weight:normal">(23)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/bourneli/category/351563.html">apache</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_1" href="http://www.cnblogs.com/bourneli/category/346024.html">C/C++</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_2" href="http://www.cnblogs.com/bourneli/category/388809.html">gbk(1)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_3" href="http://www.cnblogs.com/bourneli/category/350198.html">gtest&amp;gmock</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_4" href="http://www.cnblogs.com/bourneli/category/383637.html">js(2)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_5" href="http://www.cnblogs.com/bourneli/category/351564.html">LAMP(2)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_6" href="http://www.cnblogs.com/bourneli/category/346026.html">Linux(4)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_7" href="http://www.cnblogs.com/bourneli/category/351562.html">mysql(3)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_8" href="http://www.cnblogs.com/bourneli/category/351561.html">php(2)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_9" href="http://www.cnblogs.com/bourneli/category/392619.html">shell(4)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_10" href="http://www.cnblogs.com/bourneli/category/350197.html">单元测试</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_11" href="http://www.cnblogs.com/bourneli/category/400407.html">多进程(1)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_12" href="http://www.cnblogs.com/bourneli/category/422326.html">工作感悟(1)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_13" href="http://www.cnblogs.com/bourneli/category/346025.html">开源软件</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_14" href="http://www.cnblogs.com/bourneli/category/346027.html">设计模式</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_15" href="http://www.cnblogs.com/bourneli/category/389173.html">数据库事务</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_16" href="http://www.cnblogs.com/bourneli/category/349857.html">字符编码(3)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_articlearchive" class="catListArticleArchive sidebar-block">
+<h3 class="catListTitle">文章档案<span style="font-size:11px;font-weight:normal">(17)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_3_Link_0" href="http://www.cnblogs.com/bourneli/archives/2013/08.html" rel="nofollow">2013年8月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_3_Link_1" href="http://www.cnblogs.com/bourneli/archives/2013/01.html" rel="nofollow">2013年1月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_3_Link_2" href="http://www.cnblogs.com/bourneli/archives/2012/10.html" rel="nofollow">2012年10月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_3_Link_3" href="http://www.cnblogs.com/bourneli/archives/2012/09.html" rel="nofollow">2012年9月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_3_Link_4" href="http://www.cnblogs.com/bourneli/archives/2012/08.html" rel="nofollow">2012年8月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_3_Link_5" href="http://www.cnblogs.com/bourneli/archives/2012/07.html" rel="nofollow">2012年7月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_3_Link_6" href="http://www.cnblogs.com/bourneli/archives/2012/06.html" rel="nofollow">2012年6月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_3_Link_7" href="http://www.cnblogs.com/bourneli/archives/2012/04.html" rel="nofollow">2012年4月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_links500022" class="catList sidebar-block">
+<h3 class="catListTitle">友情链接</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_4_Link_0" href="http://www.r-bloggers.com/" rel="nofollow">R博客（英文）</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_1" href="http://www.r-china.net/portal.php" rel="nofollow">R中文网</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_2" href="http://eletva.com/tower/" rel="nofollow">TOWER -- 思想，智慧，人生</a> </li>
+<li class="c_b_p_link_desc">DM，Hadoop</li>
+<li><a id="CatList_LinkList_4_Link_3" href="http://xccds1977.blogspot.com/" rel="nofollow">数据科学与R语言</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_4" href="http://cos.name/" rel="nofollow">统计之都</a> </li>
+<li class="c_b_p_link_desc">统计学中文论坛</li>
+<li><a id="CatList_LinkList_4_Link_5" href="http://innerbrilliant.sinaapp.com/" rel="nofollow">小虫织网</a> </li>
+<li class="c_b_p_link_desc">郑纪blog</li>
+<li><a id="CatList_LinkList_4_Link_6" href="http://bourneli.github.io/" rel="nofollow">一数一世界</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	177269
+	</li>
+	<li class="liRank">
+		排名 -	943
+	</li>
+</ul>
+</div>
+
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/bourneli/p/4394271.html#3361851">1. Re:Spark使用总结与分享</a></li>
+        <li class="recent_comment_body">很不错的分析，目前正在看LearningSpark的原著，刚好看到partitionBy这里不太明白呢</li>
+        <li class="recent_comment_author">--迪伦上校</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/bourneli/p/4394271.html#3315146">2. Re:Spark使用总结与分享</a></li>
+        <li class="recent_comment_body">楼主，spark sql 通过自定义bean来实现创建表，需要序列化，而这个序列化应该是十分消耗内存的，有没有什么方法解决。</li>
+        <li class="recent_comment_author">--骁枫</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/bourneli/archive/2012/08/09/2630753.html#3288455">3. Re:MySQL全文检索初探</a></li>
+        <li class="recent_comment_body">@conqweal是分词，英文可以按空格分词，中文就比较麻烦了...</li>
+        <li class="recent_comment_author">--抠脚大汉</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/bourneli/p/3645049.html#3273857">4. Re:kmeans聚类理论篇</a></li>
+        <li class="recent_comment_body">请问附件在哪里呢？谢谢</li>
+        <li class="recent_comment_author">--fanfan123</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/bourneli/archive/2012/09/08/2677005.html#3260960">5. Re:Linux上使用gtest</a></li>
+        <li class="recent_comment_body">亲测可行！</li>
+        <li class="recent_comment_author">--www点elesos点com</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/bourneli/archive/2013/03/15/2961568.html">1. 决策树学习笔记整理(60304)</a></li><li><a href="http://www.cnblogs.com/bourneli/p/3645049.html">2. kmeans聚类理论篇(18011)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2013/01/21/2869327.html">3. Django静态文件配置(12027)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2012/07/06/2579893.html">4. PHP多进程处理并行处理任务实例(10497)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2012/10/12/2721634.html">5. PHP判断键值数组是否存在，使用empty或isset或array_key_exists(10428)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/bourneli/archive/2012/07/06/2579893.html">1. PHP多进程处理并行处理任务实例(5)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2012/10/30/2746996.html">2. 数据挖掘学习05 - 使用R对文本进行hierarchical cluster并验证结果(4)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2012/09/08/2677005.html">3. Linux上使用gtest(4)</a></li><li><a href="http://www.cnblogs.com/bourneli/p/4394271.html">4. Spark使用总结与分享(3)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2012/09/08/2676981.html">5. PHPUnit学习05---Mock使用进阶(3)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/bourneli/archive/2013/03/15/2961568.html">1. 决策树学习笔记整理(7)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2012/04/02/2429829.html">2. 5分钟回忆正则表达式(3)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2011/12/30/unp.html">3. epoll学习(2)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2013/01/04/2844736.html">4. Piwik学习 -- 插件开发(2)</a></li><li><a href="http://www.cnblogs.com/bourneli/archive/2012/11/08/2761120.html">5. 数据挖掘学习08 - 实验：使用R评估kmeans聚类的最优K(2)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2016 bourneli
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<!--PageEndHtml Block Begin-->
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript" src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jiathis_r.js" charset="utf-8"></script><script src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ckepop.js" charset="utf-8"></script><script src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ckecenterpop.js" charset="utf-8"></script><script type="text/javascript" src="MySQL%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%88%9D%E6%8E%A2%20-%20bourneli%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/plugin.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<!--PageEndHtml Block End-->
+
+
+</body></html>

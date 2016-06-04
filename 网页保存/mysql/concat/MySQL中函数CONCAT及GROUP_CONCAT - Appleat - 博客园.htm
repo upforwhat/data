@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MySQL中函数CONCAT及GROUP_CONCAT - Appleat - 博客园</title>
+<link type="text/css" rel="stylesheet" href="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/bundle-KJC.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/appleat/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/appleat/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/appleat/wlwmanifest.xml">
+<script src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/analytics.js" async=""></script><script src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'appleat', cb_enable_mathjax=false;</script>
+<script src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.js" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<table class="Framework" cellpadding="0" cellspacing="0" width="100%">
+	<tbody><tr>
+		<td colspan="3">
+			
+<div id="top">
+<table cellpadding="10" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="nowrap">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/appleat/">荷塘月色</a></h1>
+			
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub">
+	<div id="sub-right">
+<div class="BlogStats">posts - 5, comments - 0, trackbacks - 0, articles - 1</div></div>
+	
+&nbsp;
+<a id="Header1_MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</a>&nbsp;:: 
+<a id="Header1_MyLinks1_MyHomeLink" href="http://www.cnblogs.com/appleat/">首页</a>&nbsp;::
+<a id="Header1_MyLinks1_NewPostLink" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a>&nbsp;::
+<a id="Header1_MyLinks1_ContactLink" accesskey="9" rel="nofollow" href="http://msg.cnblogs.com/send/Appleat">联系</a>&nbsp;::
+<a id="Header1_MyLinks1_Syndication" href="http://www.cnblogs.com/appleat/rss">订阅</a>
+<a id="Header1_MyLinks1_XMLLink" class="XMLLink" href="http://www.cnblogs.com/appleat/rss"><img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/xml.gif" alt="订阅"></a>&nbsp;::
+<a id="Header1_MyLinks1_Admin" rel="nofollow" href="http://i.cnblogs.com/">管理</a>
+
+</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+			<div id="leftmenu">
+            	
+		            <div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" title="Calendar" cellpadding="0" cellspacing="0">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar('2016/05/01');return false;">&lt;</a></td><td align="center">2016年6月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar('2016/07/01');return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" abbr="日" scope="col" align="center">日</th><th class="CalDayHeader" abbr="一" scope="col" align="center">一</th><th class="CalDayHeader" abbr="二" scope="col" align="center">二</th><th class="CalDayHeader" abbr="三" scope="col" align="center">三</th><th class="CalDayHeader" abbr="四" scope="col" align="center">四</th><th class="CalDayHeader" abbr="五" scope="col" align="center">五</th><th class="CalDayHeader" abbr="六" scope="col" align="center">六</th></tr><tr><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center">2</td><td class="CalTodayDay" align="center">3</td><td class="CalWeekendDay" align="center">4</td></tr><tr><td class="CalWeekendDay" align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center">10</td><td class="CalWeekendDay" align="center">11</td></tr><tr><td class="CalWeekendDay" align="center">12</td><td align="center">13</td><td align="center">14</td><td align="center">15</td><td align="center">16</td><td align="center">17</td><td class="CalWeekendDay" align="center">18</td></tr><tr><td class="CalWeekendDay" align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td align="center">23</td><td align="center">24</td><td class="CalWeekendDay" align="center">25</td></tr><tr><td class="CalWeekendDay" align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td align="center">30</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td></tr><tr><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+		            
+<div id="cell">
+<img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2"><h3>公告</h3>
+<div id="news">
+	<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/appleat/">Appleat</a><br>园龄：<a href="http://home.cnblogs.com/u/appleat/" title="入园时间：2010-03-18">6年2个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/appleat/followers/">2</a><br>关注：<a href="http://home.cnblogs.com/u/appleat/followees/">0</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger('730f2609-5f32-df11-ba8f-001cf0cd104b')">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+</div>
+
+	            
+	            <div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="cell">
+<img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk" type="text">&nbsp;<input onclick="zzk_go()" value="找找看" id="btnZzk" class="btn_my_zzk" type="button"></div>
+<div id="widget_my_google" class="div_my_zzk"><input name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk" type="text">&nbsp;<input onclick="google_go()" value="谷歌搜索" class="btn_my_zzk" type="button"></div>
+</div></div><div id="sidebar_shortcut" class="sidebar-block">
+<div id="cell">
+<img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2">
+<h3>常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/appleat/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/appleat/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/appleat/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/appleat/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/appleat/tag/" title="我的博客的标签列表">我的标签</a></li>
+<li><a id="itemListLink" onclick="this.blur();WarpClass('itemListLink', 'itemListLin_con');return false;" href="#">更多链接</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block">
+<div id="cell">
+<img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2">
+<h3>我的标签</h3>
+<div id="MyTag">
+<ul>
+<li><a href="http://www.cnblogs.com/appleat/tag/concat/">concat</a>(1)</li><li><a href="http://www.cnblogs.com/appleat/tag/CSS/">CSS</a>(1)</li><li><a href="http://www.cnblogs.com/appleat/tag/group_concat/">group_concat</a>(1)</li><li><a href="http://www.cnblogs.com/appleat/tag/mysql/">mysql</a>(1)</li><li><a href="http://www.cnblogs.com/appleat/tag/spring%20hessian%20webservice/">spring hessian webservice</a>(1)</li><li><a href="http://www.cnblogs.com/appleat/tag/spring%20%E4%BA%8B%E5%8A%A1/">spring 事务</a>(1)</li>
+</ul>
+</div>
+</div></div><div id="sidebar_categories">
+		<div id="cell">
+		<img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2"><h3>随笔分类</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/appleat/category/378957.html">css &amp; html(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/appleat/category/378959.html">java</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/appleat/category/378956.html">javascript</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/appleat/category/410570.html">mysql(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/appleat/category/378960.html">spring(3)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/appleat/category/378961.html">struts2</a>
+				</li>
+			
+				</ul>
+			</div>
+	
+		<div id="cell">
+		<img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2"><h3>随笔档案</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/appleat/archive/2012/09.html">2012年9月 (1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/appleat/archive/2012/05.html">2012年5月 (3)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/appleat/archive/2012/04.html">2012年4月 (1)</a>
+				</li>
+			
+				</ul>
+			</div>
+	
+		<div id="cell">
+		<img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2"><h3>文章分类</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/appleat/category/375909.html">jQuery(1)</a>
+				</li>
+			
+				</ul>
+			</div>
+	</div><div style="display: none;" id="recent_comments_wrap">
+    <div id="cell">
+        <img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2">
+        <h3>最新评论</h3>
+        <div class="RecentComment">
+            <div id="RecentCommentsBlock"></div>
+        </div>
+    </div>
+</div>
+<div id="topview_posts_wrap">
+    <div id="cell">
+        <img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2">
+        <h3>阅读排行榜</h3>
+        <div class="RecentComment">
+            <div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/appleat/archive/2012/09/03/2669033.html">1. MySQL中函数CONCAT及GROUP_CONCAT(14979)</a></li><li><a href="http://www.cnblogs.com/appleat/archive/2012/05/08/2490228.html">2. Spring中配置事务的几种方式(2856)</a></li><li><a href="http://www.cnblogs.com/appleat/archive/2012/05/22/2512756.html">3. ibatis的log4配置(757)</a></li><li><a href="http://www.cnblogs.com/appleat/archive/2012/05/09/2491535.html">4. ie6中DIV最小高度(49)</a></li><li><a href="http://www.cnblogs.com/appleat/archive/2012/04/28/2475095.html">5. spring 中 通过 Hessian 使用webService(22)</a></li></ul></div>
+        </div>
+    </div>
+</div><div style="display: none;" id="topfeedback_posts_wrap">
+    <div id="cell">
+        <img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2">
+        <h3>评论排行榜</h3>
+        <div class="RecentComment">
+            <div id="TopFeedbackPostsBlock"></div>
+        </div>
+    </div>    
+</div>
+<div id="sidebar_topdiggedposts" class="sidebar-block"><div style="display: none;" id="topdigg_posts_wrap">
+<div id="cell">
+<img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon-group.jpg" align="left" hspace="5" vspace="2"><h3>推荐排行榜</h3>
+<div class="RecentComment">
+	<div id="TopDiggPostsBlock"></div>
+</div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+		</td>
+		<td class="MainCell">
+			<div id="main">
+				
+<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				<a id="cb_post_title_url" class="singleposttitle" href="http://www.cnblogs.com/appleat/archive/2012/09/03/2669033.html">MySQL中函数CONCAT及GROUP_CONCAT</a>
+			</h2>
+ 			Posted on <span id="post-date">2012-09-03 16:36</span> <a href="http://www.cnblogs.com/appleat/">Appleat</a> 阅读(<span id="post_view_count">14980</span>) 评论(<span id="post_comment_count">0</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=2669033" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2669033);return false;">收藏</a>
+			<script type="text/javascript">var allowComments=false,isLogined=false,cb_blogId=112655,cb_entryId=2669033,cb_blogApp=currentBlogApp,cb_blogUserGuid='730f2609-5f32-df11-ba8f-001cf0cd104b',cb_entryCreatedDate='2012/9/3 16:36:00';loadViewCount(cb_entryId);</script>
+			
+		</div>
+		<div class="postbody"><div id="cnblogs_post_body"><p><span>一、CONCAT（）函数</span><br><span>CONCAT（）函数用于将多个字符串连接成一个字符串。</span><br><span>使用数据表Info作为示例，其中SELECT id,name FROM info LIMIT 1;的返回结果</span><span>为</span><br>+----+--------+<br>| id | name&nbsp;&nbsp;&nbsp;|<br>+----+--------+<br>|&nbsp;&nbsp;1 | BioCyc |<br>+----+--------+<br><span>1、语法及使用特点：</span><br><span>CONCAT(str1,str2,…)&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><br><span>返回结果为连接参数产生的字符串。如有任何一个参数为NULL ，则返回值为 NULL。可以有一个</span><span>或多个参数。</span><br><br><span>2、使用示例：</span><br><span>SELECT CONCAT(id, ‘，’, name) AS con FROM info LIMIT 1;返回结</span><span>果为</span><br><span>+----------+</span><br><span>| con&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>+----------+</span><br><span>| 1,BioCyc |</span><br><span>+----------+</span><br><br><span>SELECT CONCAT(‘My’, NULL, ‘QL’);返回结果为</span><br><span>+--------------------------+</span><br><span>| CONCAT('My', NULL, 'QL') |</span><br><span>+--------------------------+</span><br><span>| NULL&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>+--------------------------+</span><br><br><span>3、如何指定参数之间的分隔符</span><br><span>使用函数CONCAT_WS（）。使用语法为：CONCAT_WS(separator,str1,str2,…)</span><br><span>CONCAT_WS()
+ 代表 CONCAT With Separator 
+，是CONCAT()的特殊形式。第一个参数是其它参数的分隔符。分隔符的位置放在要连接的两个字符串之间。分隔符可以是一个字符串，也可以是其它参数。
+如果分隔符为 NULL，则结果为 NULL。函数会忽略任何分隔符参数后的 NULL 值。但是CONCAT_WS()不会忽略任何空字符串。 
+(然而会忽略所有的 NULL）。</span><br><br><span>如SELECT CONCAT_WS('_',id,name) AS con_ws FROM info LIMIT 1;返回结果为</span><br><span>+----------+</span><br><span>| con_ws&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>+----------+</span><br><span>| 1_BioCyc |</span><br><span>+----------+</span><br><br><span>SELECT CONCAT_WS(',','First name',NULL,'Last Name');返回结果为</span><br><span>+----------------------------------------------+</span><br><span>| CONCAT_WS(',','First name',NULL,'Last Name') |</span><br><span>+----------------------------------------------+</span><br><span>| First name,Last Name&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>+----------------------------------------------+</span><br><br><span>二、GROUP_CONCAT（）函数</span><br><span>GROUP_CONCAT函数返回一个字符串结果，该结果由分组中的值连接组合而成。</span><br><span>使用表info作为示例，其中语句SELECT locus,id,journal FROM info WHERE locus IN('AB086827','AF040764');的返回结果为</span><br><span>+----------+----+--------------------------+</span><br><span>| locus&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;| id | journal&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>+----------+----+--------------------------+</span><br><span>| AB086827 |&nbsp;</span><span>&nbsp;1 | Unpublished&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>| AB086827 |&nbsp;</span><span>&nbsp;2 | Submitted (20-JUN-2002)&nbsp;</span><span>&nbsp;|</span><br><span>| AF040764 | 23 | Unpublished&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>| AF040764 | 24 | Submitted (31-DEC-1997)&nbsp;</span><span>&nbsp;|</span><br><span>+----------+----+--------------------------+</span><br><br><span>1、使用语法及特点：</span><br><span>GROUP_CONCAT([DISTINCT] expr [,expr ...]</span><br><span>[ORDER BY {unsigned_integer | col_name | formula} [ASC | DESC] [,col ...]]</span><br><span>[SEPARATOR str_val])</span><br><span>在 MySQL 中，你可以得到表达式结合体的连结值。通过使用 DISTINCT 可以排除重</span><span>复值。如果希望对结果中的值进行排序，可以使用 ORDER BY 子句。</span><br><span>SEPARATOR 是一个字符串值，它被用于插入到结果值中。缺省为一个逗号 (",")，可以通过指定 SEPARATOR "" 完全地移除这个分隔符。</span><br><span>可以通过变量 group_concat_max_len 设置一个最大的长度。在运行时执行的句法如下： SET [SESSION | GLOBAL] group_concat_max_len = unsigned_integer;</span><br><span>如果最大长度被设置，结果值被剪切到这个最大长度。如果分组的字符过长，可以对系统参数进行设置：SET @@global.group_concat_max_len=40000;</span><br><br><span>2、使用示例：</span><br><span>语句 SELECT locus,GROUP_CONCAT(id) FROM info WHERE locus IN('AB086827','AF040764') GROUP BY locus; 的返回结果为</span><br><span>+----------+------------------+</span><br><span>| locus&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;| GROUP_CONCAT(id) |</span><br><span>+----------+------------------+</span><br><span>| AB086827 | 1,2&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>| AF040764 | 23,24&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>+----------+------------------+</span><br><br><span>语句 SELECT locus,GROUP_CONCAT(distinct id ORDER BY id</span><span>&nbsp;DESC SEPARATOR '_') FROM info WHERE locus IN('AB086827','AF040764') GROUP BY locus;的返回结果为</span><br><span>+----------+----------------------------------------------------------+</span><br><span>| locus&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;| GROUP_CONCAT(distinct id ORDER BY id DESC SEPARATOR</span><span>&nbsp;'_')&nbsp;</span><span>|</span><br><span>+----------+----------------------------------------------------------+</span><br><span>| AB086827 | 2_1&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>| AF040764 | 24_23&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>+----------+----------------------------------------------------------+</span><br><br><span>语
+句SELECT locus,GROUP_CONCAT(concat_ws(', ',id,journal) ORDER BY id DESC 
+SEPARATOR '. ') FROM info WHERE locus IN('AB086827','AF040764') GROUP BY
+ locus;的返回结果为</span><br><span>+----------+--------------------------------------------------------------------------+</span><br><span>| locus&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;| GROUP_CONCAT(concat_ws(', ',id,journal) ORDER BY id DESC SEPARATOR '. ') |</span><br><span>+----------+--------------------------------------------------------------------------+</span><br><span>| AB086827 | 2, Submitted (20-JUN-2002). 1, Unpublished&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>| AF040764 | 24, Submitted (31-DEC-1997) . 23, Unpublished&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;|</span><br><span>+----------+--------------------------------------------------------------------------+</span></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/appleat/category/410570.html">mysql</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/appleat/tag/mysql/">mysql</a>, <a href="http://www.cnblogs.com/appleat/tag/concat/">concat</a>, <a href="http://www.cnblogs.com/appleat/tag/group_concat/">group_concat</a></div>
+<div id="blog_post_info"><div id="green_channel">
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(2669033,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://msg.cnblogs.com/send/Appleat" target="_blank">联系我</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon_weibo_24.png" alt=""></a>
+<a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/appleat/" target="_blank"><img src="MySQL%E4%B8%AD%E5%87%BD%E6%95%B0CONCAT%E5%8F%8AGROUP_CONCAT%20-%20Appleat%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/u120708.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/appleat/">Appleat</a><br>
+<a href="http://home.cnblogs.com/u/appleat/followees">关注 - 0</a><br>
+<a href="http://home.cnblogs.com/u/appleat/followers">粉丝 - 2</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(2669033,'Digg')">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+	<div class="buryit" onclick="votePost(2669033,'Bury')"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/appleat/archive/2012/05/22/2512756.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/appleat/archive/2012/05/22/2512756.html" title="发布于2012-05-22 09:33">ibatis的log4配置</a><br></div>
+</div>
+
+</div>
+	</div></div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container">（评论功能已被禁用）</div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block"></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/546659/" target="_blank">Kickstarter游戏融资总额超32亿 电玩12亿</a><br> ·  <a href="http://news.cnblogs.com/n/546658/" target="_blank">连续第七个财季利润下滑，回归A股借壳上市或是搜房网的最后一搏</a><br> ·  <a href="http://news.cnblogs.com/n/546657/" target="_blank">高晓松：对互联网很敬仰 实现了知识分子呼吁了100年的“德赛先生”</a><br> ·  <a href="http://news.cnblogs.com/n/546656/" target="_blank">微软CEO纳德拉：予力每一位中国开发者，去改变世界</a><br> ·  <a href="http://news.cnblogs.com/n/546655/" target="_blank">HoloLens五月更新后都有哪些改善？</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/536334/" target="_blank">高效编程之道：好好休息</a><br> ·  <a href="http://kb.cnblogs.com/page/545476/" target="_blank">快速学习者的高效学习策略</a><br> ·  <a href="http://kb.cnblogs.com/page/545784/" target="_blank">一个前端的自我修养</a><br> ·  <a href="http://kb.cnblogs.com/page/543110/" target="_blank">架构漫谈（九）：理清技术、业务和架构的关系</a><br> ·  <a href="http://kb.cnblogs.com/page/542725/" target="_blank">架构漫谈（八）：从架构的角度看如何写好代码</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			
+<p id="footer">
+	Powered by: 
+	<br>
+	
+	<a id="Footer1_Hyperlink3" name="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br>
+	Copyright © Appleat
+</p>
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+</body></html>

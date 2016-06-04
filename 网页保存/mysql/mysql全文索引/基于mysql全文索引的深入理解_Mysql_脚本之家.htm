@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta http-equiv="content-type" content="text/html; charset=gbk"><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/changyan.js" charset="utf-8" type="text/javascript"></script>
+<meta charset="gb2312">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform">
+<title>基于mysql全文索引的深入理解_Mysql_脚本之家</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+<meta name="keywords" content="mysql,索引">
+<meta name="description" content="本篇文章是对mysql全文索引进行了详细的分析介绍，需要的朋友参考下">
+<link rel="alternate" media="only screen and(max-width: 640px)" href="http://m.jb51.net/article/37738.htm">
+<meta http-equiv="mobile-agent" content="format=html5; url=http://m.jb51.net/article/37738.htm">
+<meta http-equiv="mobile-agent" content="format=xhtml; url=http://m.jb51.net/article/37738.htm">
+<script type="text/javascript">
+var tougao="jingxian";var lmname="Mysql";
+(function(){if(/Android|webOS|iPhone|iPad|Windows Phone|iPod|BlackBerry|SymbianOS|Nokia|Mobile/i.test(navigator.userAgent)){window.location.href="http://m.jb51.net/article/37738.htm"}})();
+</script>
+<link type="text/css" href="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/base.css" rel="stylesheet">
+<link type="text/css" href="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/common.css" rel="stylesheet">
+<script type="text/javascript" src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/jquery.js"></script>
+<script type="text/javascript" src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/base.js"></script>
+<script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/version-v3.js" charset="UTF-8" type="text/javascript"></script><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/cookie.js" charset="UTF-8" type="text/javascript"></script><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/adapter.js" charset="UTF-8" type="text/javascript"></script><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/cyrHH3dwi.js" charset="UTF-8" type="text/javascript"></script><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/version.js" charset="UTF-8" type="text/javascript"></script><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/cookie_002.js" charset="UTF-8" type="text/javascript"></script><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/cyrHH3dwi_002.js" charset="UTF-8" type="text/javascript"></script><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/event.js" charset="UTF-8" type="text/javascript"></script><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/sea.js" charset="UTF-8" type="text/javascript"></script><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/app-build.js" charset="UTF-8" type="text/javascript"></script><link href="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/upload-img.css" type="text/css" rel="stylesheet"><style id="changyanCss">#SOHUCS{clear:both;min-height:320;_height:320px;overflow:visible;}#SOHUCS iframe{width:100%;min-height:320px;_height:320px;}</style><link href="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/changyan2.css" rel="stylesheet" charset="utf-8"><link href="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/default.css" rel="stylesheet" charset="utf-8"><script src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/main.js" charset="UTF-8" type="text/javascript"></script></head>
+<body>
+<!--head Star -->
+<div id="head">
+  <div class="toolBar">
+  <div class="main">
+    <!--topNav Star -->
+    <div class="topNav clearfix">
+      <ul class="navList fl">
+        <li>
+          <div class="one"><a href="http://www.jb51.net/" target="_blank">脚本之家</a></div>
+        </li>
+        <li>
+          <div class="one"><a href="http://www.jb51.net/softs/" target="_blank">软件下载<i class="icon"></i></a></div>
+          <div class="two">
+<a href="http://www.jb51.net/softs/android.html" target="_blank">android软件</a> <a href="http://www.jb51.net/softs/mac.html" target="_blank">MAC软件</a> <a href="http://www.jb51.net/qudong/" target="_blank">驱动下载</a> <a href="http://www.jb51.net/fonts/" target="_blank">字体下载</a> <a href="http://www.jb51.net/dll/" target="_blank">DLL下载</a> </div>
+</li>
+        <li>
+          <div class="one"><a href="http://www.jb51.net/codes/" target="_blank">源码下载<i class="icon"></i></a></div>
+          <div class="two"> <a href="http://www.jb51.net/codes/asp.html" target="_blank">asp源码</a> <a href="http://www.jb51.net/codes/php.html" target="_blank">php源码</a> <a href="http://www.jb51.net/codes/aspnet.html" target="_blank">asp.net源码</a> <a href="http://www.jb51.net/codes/jsp.html" target="_blank">jsp源码</a> <a href="http://www.jb51.net/codes/editor.html" target="_blank">网页编辑器</a> <a href="http://www.jb51.net/codes/list123_1.html" target="_blank">数据库管理</a> <a href="http://www.jb51.net/codes/list124_1.html" target="_blank">常用组件</a> <a href="http://www.jb51.net/jiaoben/" target="_blank">脚本下载</a></div>
+        </li>
+        <li>
+          <div class="one"><a href="http://tools.jb51.net/" target="_blank">在线工具<i class="icon"></i></a></div>
+          <div class="two"> <a href="http://www.jb51.net/shouce/" target="_blank">在线手册</a> <a href="http://www.jb51.net/tools/cssyasuo.shtml" target="_blank">CSS格式化</a> <a href="http://tools.jb51.net/tools/js_geshihua.asp" target="_blank">JS格式化</a> <a href="http://www.jb51.net/tools/html-js.htm" target="_blank">Html转化为Js</a> <a href="http://tools.jb51.net/regex/javascript" target="_blank">js正则表达式</a>
+</div>
+        </li>
+        <li>
+          <div class="one"><a href="http://www.jb51.net/w3school/" target="_blank">网页教程基础</a></div>
+        </li>
+			<li>
+          <div class="one"><a href="http://s.jb51.net/" target="_blank">服务器常用软件</a></div>
+        </li>
+		<li>
+          <div class="one"><a href="http://m.jb51.net/" target="_blank">手机版</a></div>
+          <div class="two"><img src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/m.png" data-baiduimageplus-ignore=""></div>     
+        </li>
+        <li class="watch">
+          <div class="one"><a href="http://weibo.com/jb51net" target="_blank" rel="nofollow"><i class="icon"></i>关注微信</a></div>
+          <div class="two"><img src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/weixin_200.gif" data-baiduimageplus-ignore=""></div>
+        </li>
+      </ul>
+      <div class="navUser mt5 fr" id="jb51_topbar"> </div>
+    </div>
+    <!--topNav End -->
+  </div>
+</div>
+
+  <div class="main clearfix">
+    <div class="mtb10 clearfix">
+      <div class="logo"><a href="http://www.jb51.net/"><img src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/logo.gif" title="脚本之家" alt="脚本之家"></a></div>
+      <div class="logom fl"><span id="logo_m" class="jbTestPos"></span></div>
+      <div class="logor fr"><span id="logo_r" class="jbTestPos"></span></div>
+    </div>
+<!-- 导航-->
+<div class="nav_top clearfix">
+<ul>
+<li><a href="http://www.jb51.net/web/">网页制作</a></li>
+<li><a href="http://www.jb51.net/list/index_1.htm">网络编程</a></li>
+<li><a href="http://www.jb51.net/list/index_96.htm">脚本专栏</a></li>
+<li><a href="http://www.jb51.net/jiaoben/">脚本下载</a></li>
+<li><a href="http://www.jb51.net/list/index_104.htm">数据库</a></li>
+<li><a href="http://www.jb51.net/cms/">CMS教程</a></li>
+<li><a href="http://www.jb51.net/books/">电子书籍</a></li>
+<li><a href="http://www.jb51.net/pingmian/">平面设计</a></li>
+<li><a href="http://www.jb51.net/media/">媒体动画</a></li>
+<li><a href="http://www.jb51.net/os/">操作系统</a></li>
+<li><a href="http://www.jb51.net/yunying/">网站运营</a></li>
+<li><a href="http://www.jb51.net/hack/">网络安全</a></li>
+<li class="last"><a href="http://www.jb51.net/shouce/">在线手册</a></li>
+
+</ul>
+</div>
+
+<!--导航结束-->
+<div class="subnav clearfix">
+<ul><li><a href="http://www.jb51.net/list/list_113_1.htm" title="MsSql">MsSql</a></li>
+<li><a href="http://www.jb51.net/list/list_112_1.htm" title="Mysql">Mysql</a></li>
+<li><a href="http://www.jb51.net/list/list_252_1.htm" title="mariadb">mariadb</a></li>
+<li><a href="http://www.jb51.net/list/list_154_1.htm" title="oracle">oracle</a></li>
+<li><a href="http://www.jb51.net/list/list_155_1.htm" title="DB2">DB2</a></li>
+<li><a href="http://www.jb51.net/list/list_236_1.htm" title="mssql2008">mssql2008</a></li>
+<li><a href="http://www.jb51.net/list/list_210_1.htm" title="mssql2005">mssql2005</a></li>
+<li><a href="http://www.jb51.net/list/list_215_1.htm" title="SQLite">SQLite</a></li>
+<li><a href="http://www.jb51.net/list/list_224_1.htm" title="PostgreSQL">PostgreSQL</a></li>
+<li><a href="http://www.jb51.net/list/list_239_1.htm" title="MongoDB">MongoDB</a></li>
+<li><a href="http://www.jb51.net/list/list_242_1.htm" title="Redis">Redis</a></li>
+<li><a href="http://www.jb51.net/list/list_105_1.htm" title="Access">Access</a></li>
+<li><a href="http://www.jb51.net/list/list_132_1.htm" title="数据库文摘">数据库文摘</a></li>
+<li><a href="http://www.jb51.net/list/list_133_1.htm" title="数据库其它">数据库其它</a></li>
+</ul>
+</div>
+<div class="NavBar clearfix ptb10">
+<div class="fl w690">
+<div class="box mb15 mt10"><i class="icon"></i>您的位置：<a href="http://www.jb51.net/">首页</a> → <a href="http://www.jb51.net/list/index_104.htm" title="数据库">数据库</a> → <a href="http://www.jb51.net/list/list_112_1.htm" title="Mysql">Mysql</a> → 正文内容 mysql 索引</div>
+</div>
+<div class="fr w300"><div class="search">
+<form action="http://so.jb51.net/cse/search" target="_blank">
+    <input name="s" value="10520733385329581432" type="hidden">
+    <input name="ie" value="gbk" type="hidden">
+    <input name="q" class="key_input" placeholder="请输入关键词" type="text">
+    <input value="搜索" class="c_btn" type="submit">
+</form></div></div>
+  </div>
+</div>
+<!--head End -->
+<div class="main mb10 clearfix">
+<div class="clearfix"><span id="tonglan1" class="jbTestPos"></span></div>
+</div>
+
+<!--content Star -->
+<div id="contents">
+ <div class="main clearfix">
+      <div class="w690 fl">
+      <div class="article-content border">
+      <div class="title">
+            <h1 class="YaHei">基于mysql全文索引的深入理解</h1>
+            <p>作者：  字体：[<a href="javascript:turnbig()">增加</a> <a href="javascript:turnsmall()">减小</a>] 类型：转载 时间：2013-06-02<a href="#comments"> 我要评论</a></p>
+        </div>
+        <div class="art_desc mt10"><div id="art_demo">本篇文章是对mysql全文索引进行了详细的分析介绍，需要的朋友参考下</div></div>
+        <div class="lbd clearfix"><span id="art_up" class="jbTestPos"></span></div>
+        <div id="content">
+前言：本文简单讲述全文索引的应用实例，MYSQL演示版本5.5.24。<br>Q:全文索引适用于什么场合？<br>A:全文索引是目前实现大数据搜索的关键技术。<br>至于更详细的介绍请自行百度，本文不再阐述。<br>--------------------------------------------------------------------------------<br><strong><font style="COLOR: #ff0000">一、如何设置？<br></font></strong>
+<p><img alt="" src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/201306022108512.jpg" height="23" width="1081"><br><br>如图点击结尾处的{全文搜索}即可设置全文索引，不同MYSQL版本名字可能不同。<br><br><strong><font style="COLOR: #ff0000">二、设置条件<br></font></strong>1.表的存储引擎是MyISAM，默认存储引擎InnoDB不支持全文索引（新版本MYSQL5.6的InnoDB支持全文索引）<br>2.字段类型：char、varchar和text<br><br><strong><font style="COLOR: #ff0000">三、配置<br></font></strong>my.ini配置文件中添加<br># MySQL全文索引查询关键词最小长度限制<br>[mysqld]<br>ft_min_word_len = 1<br>保存后重启MYSQL，执行SQL语句<br></p><div class="codetitle"><span><a style="CURSOR: pointer" data="2277" class="copybut" id="copybut2277" onclick="doCopy('code2277')"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code2277"><br>SHOW VARIABLES<br></div><br>查看ft_min_word_len是否设置成功，如果没设置成功请确保<br>1.确认my.ini正确配置，注意不要搞错my.ini的位置<br>2.确认mysql已经重启，实在不行重启电脑<br>其他相关配置请自行百度。<br><strong><font style="COLOR: #ff0000">注：</font>重新设置配置后，已经设置的索引需要重新设置生成索引<br></strong>&nbsp;<br><strong><font style="COLOR: #ff0000">四、SQL语法<br></font>首先生成temp表<br></strong><div class="codetitle"><span><a style="CURSOR: pointer" data="93991" class="copybut" id="copybut93991" onclick="doCopy('code93991')"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code93991"><br>CREATE TABLE IF NOT EXISTS `temp` (<br>&nbsp; `id` int(11) NOT NULL AUTO_INCREMENT,<br>&nbsp; `char` char(50) NOT NULL,<br>&nbsp; `varchar` varchar(50) NOT NULL,<br>&nbsp; `text` text NOT NULL,<br>&nbsp; PRIMARY KEY (`id`),<br>&nbsp; FULLTEXT KEY `char` (`char`),<br>&nbsp; FULLTEXT KEY `varchar` (`varchar`),<br>&nbsp; FULLTEXT KEY `text` (`text`)<br>) ENGINE=MyISAM&nbsp; DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;<br>INSERT INTO `temp` (`id`, `char`, `varchar`, `text`) VALUES<br>(1, 'a bc 我 知道 1 23', 'a bc 我 知道 1 23', 'a bc 我 知道 1 23');<br></div><br>搜索`char`字段 'a' 值<br><div class="codetitle"><span><a style="CURSOR: pointer" data="71965" class="copybut" id="copybut71965" onclick="doCopy('code71965')"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code71965"><br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('a')<br></div><br><strong>但是你会发现查询无结果？！<br></strong>这时你也许会想：哎呀怎么回事，我明明按照步骤来做的啊，是不是那里漏了或者错了？<br>你不要着急，做程序是这样的，出错总是有的，静下心来，着急是不能解决问题的。<br><br>如果一个关键词在50%的数据出现，那么这个词会被当做无效词。<br>如果你想去除50%的现在请使用IN BOOLEAN MODE搜索<br><div class="codetitle"><span><a style="CURSOR: pointer" data="11486" class="copybut" id="copybut11486" onclick="doCopy('code11486')"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code11486"><br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('a' IN BOOLEAN MODE)<br></div><br>这样就可以查询出结果了，但是我们不推荐使用。<br>全文索引的搜索模式的介绍自行百度。<br><br>我们先加入几条无用数据已解除50%限制<br><div class="codetitle"><span><a style="CURSOR: pointer" data="92923" class="copybut" id="copybut92923" onclick="doCopy('code92923')"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code92923"><br>INSERT INTO&nbsp; `temp` (<br>`id` ,<br>`char` ,<br>`varchar` ,<br>`text`<br>)<br>VALUES (<br>NULL ,&nbsp; '7',&nbsp; '7',&nbsp; '7'<br>), (<br>NULL ,&nbsp; '7',&nbsp; '7',&nbsp; '7'<br>), (<br>NULL ,&nbsp; 'a,bc,我,知道,1,23',&nbsp; 'a,bc,我,知道,1,23',&nbsp; 'a,bc,我,知道,1,23'<br>), (<br>NULL ,&nbsp; 'x',&nbsp; 'x',&nbsp; 'x'<br>);<br></div><br>这时你执行以下SQL语句都可以查询到数据<br><div class="codetitle"><span><a style="CURSOR: pointer" data="75169" class="copybut" id="copybut75169" onclick="doCopy('code75169')"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code75169"><br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('a');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('bc');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('我');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('知道');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('1');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('23');<br></div><br>以下SQL搜索不到数据<br><div class="codetitle"><span><a style="CURSOR: pointer" data="1873" class="copybut" id="copybut1873" onclick="doCopy('code1873')"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code1873"><br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('b');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('c');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('知');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('道');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('2');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('3');<br></div><br>如果搜索多个词，请用空格或者逗号隔开<br><div class="codetitle"><span><a style="CURSOR: pointer" data="21763" class="copybut" id="copybut21763" onclick="doCopy('code21763')"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code21763"><br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('a x');<br>SELECT * FROM `temp` WHERE MATCH(`char`) AGAINST ('a,x');<br></div><br>上面的SQL都可以查询到三条数据<br><br><strong><font style="COLOR: #ff0000">五、分词<br></font></strong>看到这里你应该发现我们字段里的值也是分词，不能直接插入原始数据。<br><strong>全文索引应用流程：<br></strong><font style="COLOR: #ff0000">1.接收数据-数据分词-入库<br>2.接收数据-数据分词-查询<br></font>现在有个重要的问题：怎么对数据分词？<br>数据分词一般我们会使用一些成熟免费的分词系统，当然如果你有能力也可以自己做分词系统，这里我们推荐使用SCWS分词插件。<br><strong>首先下载<br></strong><font style="COLOR: #ff0000">1.php_scws.dll&nbsp; 注意对应版本<br>2.XDB词典文件<br>3.规则集文件<br></font><strong><a href="http://www.xunsearch.com/scws/download.php" target="_blank">下载地址<br></a></strong>&nbsp;<br><strong><font style="COLOR: #ff0000">安装scws<br></font></strong>1.先建一个文件夹，位置不限，但是最好不要中文路径。<br>2.解压{规则集文件}，把xdb、三个INI文件全部扔到 D:\scws<br>3.把php_scws.dll复制到你的PHP目录下的EXT文件夹里面<br>4.在 php.ini 的末尾加入以下几行：<br>[scws]<br><br>; 注意请检查 php.ini 中的 extension_dir 的设定值是否正确, 否则请将 extension_dir 设为空，<br>; 再把 php_scws.dll 指定为绝对路径。<br><br>extension = php_scws.dll<br>scws.default.charset = utf8<br>scws.default.fpath = "D:\scws"<br><strong><font style="COLOR: #ff0000">5.重启你的服务器<br></font>测试<br></strong><div class="codetitle"><span><a style="CURSOR: pointer" data="88651" class="copybut" id="copybut88651" onclick="doCopy('code88651')"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code88651"><br>$str="测试中文分词";<br>$so = scws_new();<br>$so-&gt;send_text($str);<br>$temp=$so-&gt;get_result();<br>$so-&gt;close();<br>var_dump($temp);<br></div><br>如果安装未成功，请参照官方说明文档<br>--------------------------------------------------------------------------------<br>这样我们就可以使用全文索引技术了。<br><p></p>
+
+
+</div><!--endmain-->
+<div class="art_xg">
+<h4>您可能感兴趣的文章:</h4><ul><li><a href="http://www.jb51.net/article/32149.htm" title="mysql 添加索引 mysql 如何创建索引" target="_blank">mysql 添加索引 mysql 如何创建索引</a></li><li><a href="http://www.jb51.net/article/18929.htm" title="MySQL 创建索引(Create Index)的方法和语法结构及例子" target="_blank">MySQL 创建索引(Create Index)的方法和语法结构及例子</a></li><li><a href="http://www.jb51.net/article/34037.htm" title="MySQL 主键与索引的联系与区别分析" target="_blank">MySQL 主键与索引的联系与区别分析</a></li><li><a href="http://www.jb51.net/article/75030.htm" title="MySQL中主键索引与聚焦索引之概念的学习教程" target="_blank">MySQL中主键索引与聚焦索引之概念的学习教程</a></li></ul>
+</div>
+<div class="lbd clearfix">
+<span id="art_down" class="jbTestPos"></span>
+</div>
+<div id="shoucang"></div>
+<div class="tags mt10">
+<strong>Tags：</strong><a href="http://img.jb51.net/tag/mysql/1.htm" target="_blank" title="搜索关于mysql的文章">mysql</a> <a href="http://img.jb51.net/tag/%CB%F7%D2%FD/1.htm" target="_blank" title="搜索关于索引的文章">索引</a> 
+</div>
+<div class="relatedarticle clearfix mt5">
+<h2>相关文章</h2>
+<ul><li><span>2012-01-01</span><a href="http://www.jb51.net/article/29446.htm" title="MySQL prepare语句的SQL语法" target="_blank">MySQL prepare语句的SQL语法</a></li><li><span>2014-08-08</span><a href="http://www.jb51.net/article/53397.htm" title="mysql 中如何取得汉字字段的各汉字首字母" target="_blank">mysql 中如何取得汉字字段的各汉字首字母</a></li><li><span>2015-05-05</span><a href="http://www.jb51.net/article/66951.htm" title="使用innodb_force_recovery解决MySQL崩溃无法重启问题" target="_blank">使用innodb_force_recovery解决MySQL崩溃无法重启问题</a></li><li><span>2015-09-09</span><a href="http://www.jb51.net/article/71894.htm" title="傻瓜式用Eclipse连接MySQL数据库" target="_blank">傻瓜式用Eclipse连接MySQL数据库</a></li><li><span>2008-04-04</span><a href="http://www.jb51.net/article/14322.htm" title="mysql 分页优化解析" target="_blank">mysql 分页优化解析</a></li><li><span>2014-01-01</span><a href="http://www.jb51.net/article/45844.htm" title="linux服务器清空MySQL的history历史记录 删除mysql操作记录" target="_blank">linux服务器清空MySQL的history历史记录 删除mysql操作记录</a></li><li><span>2016-05-05</span><a href="http://www.jb51.net/article/83643.htm" title="图文详解mysql5.7安装教程" target="_blank">图文详解mysql5.7安装教程</a></li><li><span>2015-05-05</span><a href="http://www.jb51.net/article/65639.htm" title="在C#和MySQL中存取中文字符时避免乱码的方法" target="_blank">在C#和MySQL中存取中文字符时避免乱码的方法</a></li><li><span>2013-03-03</span><a href="http://www.jb51.net/article/35027.htm" title="服务器不支持 MySql 数据库的解决方法" target="_blank">服务器不支持 MySql 数据库的解决方法</a></li><li><span>2011-03-03</span><a href="http://www.jb51.net/article/26476.htm" title="不使用MySQL数据库的五个给力理由解析" target="_blank">不使用MySQL数据库的五个给力理由解析</a></li></ul>
+</div>
+<div class="lbd clearfix mt5">
+<span id="art_down2" class="jbTestPos"></span>
+</div>
+<a href="#comments"></a>
+<div id="comments">
+<h2>最新评论</h2>
+<div class="pd5"><div style="width: 100%; height: auto;" id="SOHUCS" sid="art_37738"><div id="SOHU_MAIN"><div id="SOHU-comment-main" class="sohu-comment-wrapper"><div id="article_info_sohu">        <div class="reset-g clear-g section-title-w  section-title-logoutStyle">
+            <div class="title-join-w">
+                <div class="join-wrap-w join-wrap-b"><strong class="wrap-name-w wrap-name-b">评论</strong><span class="wrap-join-w wrap-join-b">(<em class="join-strong-gw join-strong-bg">0</em><span node-type="involved">人参与</span><i class="gap-b">，</i><em class="join-strong-gw join-strong-bg">0</em><span node-type="comments">条评论</span>)</span></div>
+            </div>
+            <div class="title-user-w">
+                <div style="display: none;" node-type="sohu-pact" class="title-link-w"><a href="http://zt.pinglun.sohu.com/s2014/sljyhgy/index.shtml" target="_blank">搜狐“我来说两句”用户公约</a></div>
+            </div>
+        </div>
+        </div><div id="login_sohu"></div><div id="comment_sohu"><div node-type="cbox-wrapper" class="reset-g section-cbox-w"><div style="width:1px;height:1px;overflow:hidden;"><img src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/vcode.jpg" style="visibility:hidden;width:1px;height:1px;"></div><div class="clear-g cbox-block-w">
+            <div class="block-head-w">
+                <div class="head-img-w">
+                                        <a node-type="user-avatar" href="javascript:void(0)" target="_self"><img src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/pic42_null.gif" onerror="SOHUCS.isImgErr(this)" alt="" height="42" width="42"></a>
+                    </div>
+                <!--
+                -->
+            </div>
+        <div class="block-post-w block-post-default-e"><div class="post-wrap-w post-wrap-b"><div class="wrap-area-w"><div class="area-textarea-w" style="position:relative;zoom:1;z-index:9;"><textarea name="" class="textarea-fw textarea-bf">来说两句吧...</textarea></div></div><div class="clear-g wrap-action-w wrap-action-b"><div class="action-function-w action-function-b relative-z-w"><ul class="clear-g"><li class="function-face-w"><a href="javascript:void(0)" class="effect-w" title="表情"><i class="face-b"></i></a></li><li class="function-uploadimg-w"><a href="javascript:void(0)" class="effect-w" title="上传图片"><i class="uploadimg-b"></i></a><div class="uploadimg-file-w"><input class="file-fw" id="img_upload" name="file" accept="image/*" type="file"></div><div class="img-btn-cover" style="width:40px;height:40px;margin-top:-40px;z-index:-1;position: relative;"></div></li><!--<li class="function-at-w"><a href="javascript:void(0)" class="effect-w"><i class="at-b"></i></a></li>--></ul></div><div class="clear-g action-issue-w"><div class="issue-btn-w"><a href="javascript:void(0)"><button class="btn-fw btn-bf btn-fw-main">发布</button></a></div></div></div></div>
+                                    <div node-type="login-list" class="post-login-w">
+                <ul class="clear-g">
+                                                            <li style="display:block">
+                        <div class="login-wrap-w login-wrap-b">
+                            <a data-key="sina" target="_self" href="javascript:;" title="新浪微博" alt="新浪微博">
+                                <span class="wrap-icon-w icon30-sina-b"></span><span class="wrap-name-w wrap-name-b">微博登录</span>
+                            </a>
+                        </div>
+                    </li>
+                                        <li style="display:block">
+                        <div class="login-wrap-w login-wrap-b">
+                            <a data-key="qq" target="_self" href="javascript:;" title="QQ" alt="QQ">
+                                <span class="wrap-icon-w icon30-qq-b"></span><span class="wrap-name-w wrap-name-b">QQ登录</span>
+                            </a>
+                        </div>
+                    </li>
+                                        <li>
+                        <div class="login-wrap-w login-wrap-b login-wrap-phone-b">
+                            <a data-key="phone" target="_self" href="javascript:void(0)">
+                                <span class="wrap-icon-w icon30-phone-b"></span><span class="wrap-name-w wrap-name-b">手机登录</span>
+                            </a>
+                        </div>
+                    </li>
+                    </ul>
+            </div>
+            </div></div><div node-type="prompt-no-privilege" class="cbox-prompt-w" style="display: none;">
+            <span class="prompt-empty-w prompt-empty-b">等级不够，发表评论升至指定级别才能获得该特权。详情请参见<a node-type="privilege-intro" href="javascript:;">等级说明</a>。</span>
+        </div></div></div><div id="list_sort_sohu"></div><div topicid="562158151" id="list_sohu">
+        <div class="reset-g section-list-w">
+            <div class="list-comment-empty-w">
+                <div class="empty-prompt-w"><span class="prompt-null-w prompt-null-b">还没有评论，快来抢沙发吧！</span></div>
+            </div>
+        </div></div><div id="list_hot"></div><div id="page_sohu"></div><div id="more_list_sohu"></div><div id="powerby_sohu">        <div class="reset-g section-service-w">
+            <div class="service-wrap-w service-wrap-b"><a node-type="powered-by" href="http://changyan.sohu.com/?from=changyan" target="_blank">Powered by 畅言</a></div>
+        </div></div></div></div></div></div>
+</div>
+      </div><!--endborder-->
+      </div><!--end fl-->
+      
+<div class="w300 fr">
+<div class="r300 clearfix"><span id="side_up" class="jbTestPos"></span></div>
+<div class="tabTitleBar mt10 bgf borderTblue">
+<div class="borderTnone pb10 YaHei">
+<h4 class="blue">大家感兴趣的内容</h4>
+<ul class="newsList newList-in">
+<li><em class="no1">1</em><a href="http://www.jb51.net/article/23876.htm" title="mysql安装图解 mysql图文安装教程(详细说明)" target="_blank">mysql安装图解 mysql图文安装教程</a></li><li><em class="no2">2</em><a href="http://www.jb51.net/article/26505.htm" title="Can''t connect to MySQL server on localhost (10061)解决方法" target="_blank">Can''t connect to MySQL server</a></li><li><em class="no3">3</em><a href="http://www.jb51.net/article/15386.htm" title="超详细mysql left join,right join,inner join用法分析" target="_blank">超详细mysql left join,right jo</a></li><li><em class="no4">4</em><a href="http://www.jb51.net/article/27458.htm" title="Mysql字符串截取函数SUBSTRING的用法说明" target="_blank">Mysql字符串截取函数SUBSTRING的</a></li><li><em class="no5">5</em><a href="http://www.jb51.net/article/23966.htm" title="MySQL日期数据类型、时间类型使用总结" target="_blank">MySQL日期数据类型、时间类型使用</a></li><li><em class="no6">6</em><a href="http://www.jb51.net/article/22734.htm" title="Mysql命令行导入sql数据" target="_blank">Mysql命令行导入sql数据</a></li><li><em class="no7">7</em><a href="http://www.jb51.net/article/39188.htm" title="windows下MySQL5.6版本安装及配置过程附有截图和详细说明" target="_blank">windows下MySQL5.6版本安装及配置</a></li><li><em class="no8">8</em><a href="http://www.jb51.net/article/25686.htm" title="MySQL数据库备份与恢复方法" target="_blank">MySQL数据库备份与恢复方法</a></li><li><em class="no9">9</em><a href="http://www.jb51.net/article/23781.htm" title="MySQL server has gone away 问题的解决方法" target="_blank">MySQL server has gone away 问题</a></li><li><em class="no10">10</em><a href="http://www.jb51.net/article/31374.htm" title="mySQL中replace的用法" target="_blank">mySQL中replace的用法</a></li>
+</ul>
+</div>
+</div>
+<div class="r300 clearfix mt10"><span id="idctu" class="jbTestPos"></span></div>
+<div class="tabTitleBar mt10 bgf borderTblue">
+<div class="borderTnone pb10 YaHei">
+<h4 class="blue">最近更新的内容</h4>
+<ul class="newsListA">
+<ul><li><a href="http://www.jb51.net/article/29771.htm" title="MYSQL性能优化分享(分库分表)" target="_blank">MYSQL性能优化分享(分库分表)</a></li><li><a href="http://www.jb51.net/article/50509.htm" title="mysql查询昨天 一周前 一月前 一年前的数据" target="_blank">mysql查询昨天 一周前 一月前 一年前的数</a></li><li><a href="http://www.jb51.net/article/46398.htm" title="mysql通过查看跟踪日志跟踪执行的sql语句" target="_blank">mysql通过查看跟踪日志跟踪执行的sql语句</a></li><li><a href="http://www.jb51.net/article/27220.htm" title="mysql 数据同步 出现Slave_IO_Running:No问题的解决方法小结" target="_blank">mysql 数据同步 出现Slave_IO_Running:No</a></li><li><a href="http://www.jb51.net/article/35937.htm" title="跟着hsp一步步学mysql优化的方法" target="_blank">跟着hsp一步步学mysql优化的方法</a></li><li><a href="http://www.jb51.net/article/65680.htm" title="分析MySQL中优化distinct的技巧" target="_blank">分析MySQL中优化distinct的技巧</a></li><li><a href="http://www.jb51.net/article/14068.htm" title="C#编写方法实例" target="_blank">C#编写方法实例</a></li><li><a href="http://www.jb51.net/article/24106.htm" title="Linux下安装Mysql多实例作为数据备份服务器实现多主到一从多实例的备份" target="_blank">Linux下安装Mysql多实例作为数据备份服务</a></li><li><a href="http://www.jb51.net/article/76405.htm" title="MySQL中几种数据统计查询的基本使用教程" target="_blank">MySQL中几种数据统计查询的基本使用教程</a></li><li><a href="http://www.jb51.net/article/41474.htm" title="Mysql插入中文变为全问号???的问题 解决方法" target="_blank">Mysql插入中文变为全问号???的问题 解决方</a></li></ul>
+</ul>
+</div>
+</div>   
+<div class="r300 clearfix mt10"><span id="idctu1" class="jbTestPos"></span></div>
+<div class="tabTitleBar mt10 bgf borderTblue">
+<div class="borderTnone pb10 YaHei">
+<h4 class="blue">常用在线小工具</h4>
+<ul class="newsListA"><span id="bctools" class="jbTestPos"></span></ul>
+</div>
+</div>
+<div class="r300 clearfix mt10" id="idctu2"><span id="idctu2" class="jbTestPos"></span></div>
+<div class="mt10 rFixedBox">
+<span id="r_2" class="jbTestPos"></span>
+</div>
+      
+      
+      </div><!--end fr-->
+      </div>
+</div><!--end content-->
+<div id="footer">
+<div class="main clearfix">
+<p>
+<a href="http://www.jb51.net/about.htm" target="_blank">关于我们</a> - 
+<a href="http://www.jb51.net/support.htm" target="_blank">广告合作</a> - 
+<a href="http://www.jb51.net/linkus.htm" target="_blank">联系我们</a> -  
+<a href="http://www.jb51.net/sm.htm" target="_blank">免责声明</a> -  
+<a href="http://www.jb51.net/sitemap.htm" target="_blank">网站地图</a> - 
+<a href="tencent://message/?uin=461478385&amp;Site=http://www.jb51.net" target="_blank">投诉建议</a> - 
+<a href="http://www.jb51.net/up.htm" target="_blank">在线投稿</a>
+</p>
+<p>&#169;CopyRight 2006-2016 JB51.Net Inc All Rights Reserved. 脚本之家 版权所有</p>
+</div>
+</div><!--end footer-->
+<link type="text/css" rel="stylesheet" href="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/shCore.css">
+<link type="text/css" rel="Stylesheet" href="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/shThemeDefault.css">
+<script type="text/javascript" src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/shCore.js"></script>
+<script type="text/javascript" src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/shAutoloader.js"></script>
+<script type="text/javascript"> 
+if (top.location != self.location)top.location=self.location;
+$('#content').find('img').each(function(){
+        var img = this;
+        if (img.width >= 650){
+            img.style.width = "650px";
+            img.style.height = "auto";
+            //$(img).removeAttr('height');
+            var aTag = document.createElement('a');
+            aTag.href = img.src;
+			aTag.target="_blank";
+            $(aTag).addClass('bPic')
+            .insertAfter(img).append(img)
+          }
+    });
+ $(window).scroll(function()
+    {	
+    	//rFixedBox跟随滚动
+    	var h = $(window).height();
+        var top = $(window).scrollTop();
+    	var rFixedBox = $('.rFixedBox').prev().offset();
+        var fixedTop = rFixedBox.top;
+		
+        if(top>=fixedTop+344)
+        {
+			var h1 = parseInt($('#content').children('.main').height());
+			if(parseInt(top) + 340 < h1){
+				$('.rFixedBox').css({'position':'fixed','top': 0});
+			}else{
+				$('.rFixedBox').css({'position':'absolute','top': h1-510});
+			}
+        }
+        else
+        {
+            $('.rFixedBox').css({'position':'static', 'top':0});   
+        }	
+       /* return true;*/
+    });
+SyntaxHighlighter.autoloader(
+	'applescript			/jslib/syntaxhighlighter/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/jslib/syntaxhighlighter/scripts/shBrushAS3.js',
+	'bash shell				/jslib/syntaxhighlighter/scripts/shBrushBash.js',
+	'coldfusion cf			/jslib/syntaxhighlighter/scripts/shBrushColdFusion.js',
+	'cpp c					/jslib/syntaxhighlighter/scripts/shBrushCpp.js',
+	'obj-c objc				/jslib/syntaxhighlighter/scripts/shBrushObjC.js',
+	'c# c-sharp csharp		/jslib/syntaxhighlighter/scripts/shBrushCSharp.js',
+	'css					/jslib/syntaxhighlighter/scripts/shBrushCss.js',
+	'delphi pascal			/jslib/syntaxhighlighter/scripts/shBrushDelphi.js',
+	'diff patch pas			/jslib/syntaxhighlighter/scripts/shBrushDiff.js',
+	'erl erlang				/jslib/syntaxhighlighter/scripts/shBrushErlang.js',
+	'groovy					/jslib/syntaxhighlighter/scripts/shBrushGroovy.js',
+	'haxe hx				/jslib/syntaxhighlighter/scripts/shBrushHaxe.js',
+	'java					/jslib/syntaxhighlighter/scripts/shBrushJava.js',
+	'jfx javafx				/jslib/syntaxhighlighter/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/jslib/syntaxhighlighter/scripts/shBrushJScript.js',
+	'perl pl				/jslib/syntaxhighlighter/scripts/shBrushPerl.js',
+	'php					/jslib/syntaxhighlighter/scripts/shBrushPhp.js',
+	'text plain				/jslib/syntaxhighlighter/scripts/shBrushPlain.js',
+	'py python				/jslib/syntaxhighlighter/scripts/shBrushPython.js',
+	'ruby rails ror rb		/jslib/syntaxhighlighter/scripts/shBrushRuby.js',
+	'scala					/jslib/syntaxhighlighter/scripts/shBrushScala.js',
+	'sql					/jslib/syntaxhighlighter/scripts/shBrushSql.js',
+	'vb vbnet				/jslib/syntaxhighlighter/scripts/shBrushVb.js',
+	'ps powershell			/jslib/syntaxhighlighter/scripts/shBrushPowerShell.js',
+	'xml xhtml xslt html	/jslib/syntaxhighlighter/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script type="text/javascript" src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/jbLoader.js"></script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<div id="tongji">
+<script type="text/javascript" src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/tongji.js"></script>
+<script>
+(function(){
+var appid = 'cyrHH3dwi',
+conf = 'prod_1dc5dc80970106099d43fe242b7465fc';
+var doc = document,
+s = doc.createElement('script'),
+h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+s.type = 'text/javascript';
+s.charset = 'utf-8';
+s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+h.insertBefore(s,h.firstChild);
+window.SCS_NO_IFRAME = true;
+})();
+</script>
+</div>
+<script type="text/javascript" src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/pl.htm"></script>
+<script type="text/javascript" charset="utf-8" src="%E5%9F%BA%E4%BA%8Emysql%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3_Mysql_%E8%84%9A%E6%9C%AC%E4%B9%8B%E5%AE%B6_files/a.js"></script>
+
+
+
+</div></body></html>
+<!-- published at 2016-5-8 23:18:44By dxycms qq:461478385  -->

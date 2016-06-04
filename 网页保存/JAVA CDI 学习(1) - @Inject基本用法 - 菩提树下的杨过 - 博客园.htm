@@ -1,0 +1,1231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JAVA CDI 学习(1) - @Inject基本用法 - 菩提树下的杨过 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/bundle-SimpleBlue.css">
+<link type="text/css" rel="stylesheet" href="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/31164.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/yjmyzz/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/yjmyzz/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/yjmyzz/wlwmanifest.xml">
+<script src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/encoder.js" type="text/javascript"></script><script src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'yjmyzz', cb_enable_mathjax=true;</script>
+<script src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.js" type="text/javascript"></script>
+<script type="text/x-mathjax-config;executed=true">MathJax.Hub.Config({
+  tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  TeX: { equationNumbers: { autoNumber: ['AMS'], useLabelIds: true } },
+  'HTML-CSS': { linebreaks: { automatic: true } },
+  SVG: { linebreaks: { automatic: true } }});</script><script src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/MathJax.js" type="text/javascript"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body><div style="display: none;" id="MathJax_Message"></div>
+<a name="top"></a>
+<!--PageBeginHtml Block Begin-->
+<script type="text/javascript" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/cnblog.js"></script>
+<div class="ajaxBg" id="ajaxBg" style="display:none">
+    </div>
+    <div class="ajaxPopUp" id="ajaxPopUp" style="display:none">
+        <div class="title" id="ajaxTitle">            
+        </div>
+        <div class="body" id="ajaxBody">           
+        </div>
+        <div class="footer">
+            <a href="javascript:void(0)" onclick="_jimmyClosePopUp()">Close(关闭)</a></div>
+    </div>
+<!--PageBeginHtml Block End-->
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/yjmyzz/">菩提树下的杨过.Net</a></div>
+<div class="subtitle"></div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/yjmyzz/">首页</a></li>
+<li id="nav_newpost"><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/yjmyzz/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/yjmyzz/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-1075&nbsp;
+文章-1&nbsp;
+评论-2388&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/yjmyzz/p/j2ee-cdi-inject.html">JAVA CDI 学习(1) - @Inject基本用法</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>CDI（Contexts and Dependency Injection 上下文依赖注入），是JAVA官方提供的依赖注入实现，可用于Dynamic Web Module中，先给3篇老外的文章，写得很不错</p>
+<p>1、<a href="http://www.byteslounge.com/tutorials/java-ee-cdi-dependency-injection-inject-tutorial" target="_blank">Java EE CDI Dependency Injection (@Inject) tutorial</a><br>2、<a href="http://www.byteslounge.com/tutorials/java-ee-cdi-producer-methods-tutorial" target="_blank">Java EE CDI Producer methods tutorial</a><br>3、<a href="http://www.byteslounge.com/tutorials/cdi-bean-scopes" target="_blank">Java EE CDI bean scopes</a></p>
+<p>此外，还有jboss官方的参考文档：<a href="http://docs.jboss.org/weld/reference/latest/en-US/html/" target="_blank">http://docs.jboss.org/weld/reference/latest/en-US/html/</a></p>
+<p>如果不想啃洋文，也可以继续往下看：</p>
+<p>一、基本的Inject注入</p>
+<p><strong>1.1</strong> 在eclipse中先创建一个常规的maven Dynamic Web项目（<a href="http://www.cnblogs.com/yjmyzz/p/3495762.html" target="_blank">不熟悉maven的，可以先看看这里</a>），下面是完整的项目截图</p>
+<p><img src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/151520084861.jpg" alt=""></p>
+<p>里面各package的代码，后面会给出。 项目的属性中，注意有几个属性要勾上（默认情况下，应该已经自动勾上了），如下图：</p>
+<p><img src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/151521113140.jpg" alt=""></p>
+<p>上图右侧的圆圈，其实就是CDI 1.0使用的先决条件。</p>
+<p>Pom.xml的内容如下:</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('ffd71b8a-f41e-4ba0-9b12-6dcc68961afa')"><img id="code_img_closed_ffd71b8a-f41e-4ba0-9b12-6dcc68961afa" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_ffd71b8a-f41e-4ba0-9b12-6dcc68961afa" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('ffd71b8a-f41e-4ba0-9b12-6dcc68961afa',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_ffd71b8a-f41e-4ba0-9b12-6dcc68961afa" class="cnblogs_code_hide">
+<pre><span style="color: #008080;">  1</span> <span style="color: #0000ff;">&lt;?</span><span style="color: #ff00ff;">xml version="1.0" encoding="UTF-8"</span><span style="color: #0000ff;">?&gt;</span>
+<span style="color: #008080;">  2</span> <span style="color: #008000;">&lt;!--</span>
+<span style="color: #008080;">  3</span> <span style="color: #008000;">    JBoss, Home of Professional Open Source
+</span><span style="color: #008080;">  4</span> <span style="color: #008000;">    Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
+</span><span style="color: #008080;">  5</span> <span style="color: #008000;">    contributors by the @authors tag. See the copyright.txt in the
+</span><span style="color: #008080;">  6</span> <span style="color: #008000;">    distribution for a full listing of individual contributors.
+</span><span style="color: #008080;">  7</span> 
+<span style="color: #008080;">  8</span> <span style="color: #008000;">    Licensed under the Apache License, Version 2.0 (the "License");
+</span><span style="color: #008080;">  9</span> <span style="color: #008000;">    you may not use this file except in compliance with the License.
+</span><span style="color: #008080;"> 10</span> <span style="color: #008000;">    You may obtain a copy of the License at
+</span><span style="color: #008080;"> 11</span> <span style="color: #008000;">    http://www.apache.org/licenses/LICENSE-2.0
+</span><span style="color: #008080;"> 12</span> <span style="color: #008000;">    Unless required by applicable law or agreed to in writing, software
+</span><span style="color: #008080;"> 13</span> <span style="color: #008000;">    distributed under the License is distributed on an "AS IS" BASIS,
+</span><span style="color: #008080;"> 14</span> <span style="color: #008000;">    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span style="color: #008080;"> 15</span> <span style="color: #008000;">    See the License for the specific language governing permissions and
+</span><span style="color: #008080;"> 16</span> <span style="color: #008000;">    limitations under the License.
+</span><span style="color: #008080;"> 17</span> <span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 18</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">project </span><span style="color: #ff0000;">xmlns</span><span style="color: #0000ff;">="http://maven.apache.org/POM/4.0.0"</span><span style="color: #ff0000;"> xmlns:xsi</span><span style="color: #0000ff;">="http://www.w3.org/2001/XMLSchema-instance"</span>
+<span style="color: #008080;"> 19</span> <span style="color: #ff0000;">    xsi:schemaLocation</span><span style="color: #0000ff;">="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 20</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span>4.0.0<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 21</span> 
+<span style="color: #008080;"> 22</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>cnblogs<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 23</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>cdi-web-sample<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 24</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>0.0.1-SNAPSHOT<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 25</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span>war<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 26</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span>cdi-web-sample<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 27</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">description</span><span style="color: #0000ff;">&gt;</span>A starter Java EE 6 webapp project for use on JBoss AS 7 / EAP 6, generated from the jboss-javaee6-webapp archetype<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">description</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 28</span> 
+<span style="color: #008080;"> 29</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">url</span><span style="color: #0000ff;">&gt;</span>http://jboss.org/jbossas<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">url</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 30</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">licenses</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 31</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">license</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 32</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span>Apache License, Version 2.0<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 33</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">distribution</span><span style="color: #0000ff;">&gt;</span>repo<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">distribution</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 34</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">url</span><span style="color: #0000ff;">&gt;</span>http://www.apache.org/licenses/LICENSE-2.0.html<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">url</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 35</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">license</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 36</span>     <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">licenses</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 37</span> 
+<span style="color: #008080;"> 38</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">properties</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 39</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Explicitly declaring the source encoding eliminates the following 
+</span><span style="color: #008080;"> 40</span> <span style="color: #008000;">            message: </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 41</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
+</span><span style="color: #008080;"> 42</span> <span style="color: #008000;">            resources, i.e. build is platform dependent! </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 43</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">project.build.sourceEncoding</span><span style="color: #0000ff;">&gt;</span>UTF-8<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">project.build.sourceEncoding</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 44</span> 
+<span style="color: #008080;"> 45</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> JBoss dependency versions </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 46</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version.jboss.maven.plugin</span><span style="color: #0000ff;">&gt;</span>7.4.Final<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version.jboss.maven.plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 47</span> 
+<span style="color: #008080;"> 48</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Define the version of the JBoss BOMs we want to import to specify 
+</span><span style="color: #008080;"> 49</span> <span style="color: #008000;">            tested stacks. </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 50</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version.jboss.bom</span><span style="color: #0000ff;">&gt;</span>1.0.7.Final<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version.jboss.bom</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 51</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Alternatively, comment out the above line, and un-comment the line
+</span><span style="color: #008080;"> 52</span> <span style="color: #008000;">            below to use version 1.0.4.Final-redhat-4 which is a release certified to
+</span><span style="color: #008080;"> 53</span> <span style="color: #008000;">            work with JBoss EAP 6. It requires you have access to the JBoss EAP 6
+</span><span style="color: #008080;"> 54</span> <span style="color: #008000;">            maven repository. </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 55</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> &lt;version.jboss.bom&gt;1.0.4.Final-redhat-4&lt;/version.jboss.bom&gt;&gt; </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 56</span> 
+<span style="color: #008080;"> 57</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> other plugin versions </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 58</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version.surefire.plugin</span><span style="color: #0000ff;">&gt;</span>2.10<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version.surefire.plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 59</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version.war.plugin</span><span style="color: #0000ff;">&gt;</span>2.1.1<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version.war.plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 60</span> 
+<span style="color: #008080;"> 61</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> maven-compiler-plugin </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 62</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">maven.compiler.target</span><span style="color: #0000ff;">&gt;</span>1.6<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">maven.compiler.target</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 63</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">maven.compiler.source</span><span style="color: #0000ff;">&gt;</span>1.6<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">maven.compiler.source</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 64</span>     <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">properties</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 65</span> 
+<span style="color: #008080;"> 66</span> 
+<span style="color: #008080;"> 67</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependencyManagement</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 68</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 69</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> JBoss distributes a complete set of Java EE 6 APIs including a Bill 
+</span><span style="color: #008080;"> 70</span> <span style="color: #008000;">                of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
+</span><span style="color: #008080;"> 71</span> <span style="color: #008000;">                of artifacts. We use this here so that we always get the correct versions 
+</span><span style="color: #008080;"> 72</span> <span style="color: #008000;">                of artifacts. Here we use the jboss-javaee-6.0-with-tools stack (you can 
+</span><span style="color: #008080;"> 73</span> <span style="color: #008000;">                read this as the JBoss stack of the Java EE 6 APIs, with some extras tools 
+</span><span style="color: #008080;"> 74</span> <span style="color: #008000;">                for your project, such as Arquillian for testing) and the jboss-javaee-6.0-with-hibernate 
+</span><span style="color: #008080;"> 75</span> <span style="color: #008000;">                stack you can read this as the JBoss stack of the Java EE 6 APIs, with extras 
+</span><span style="color: #008080;"> 76</span> <span style="color: #008000;">                from the Hibernate family of projects) </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 77</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 78</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.bom<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 79</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>jboss-javaee-6.0-with-tools<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 80</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>${version.jboss.bom}<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 81</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">type</span><span style="color: #0000ff;">&gt;</span>pom<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">type</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 82</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>import<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 83</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 84</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 85</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.bom<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 86</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>jboss-javaee-6.0-with-hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 87</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>${version.jboss.bom}<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 88</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">type</span><span style="color: #0000ff;">&gt;</span>pom<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">type</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 89</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>import<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 90</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 91</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 92</span>     <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependencyManagement</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 93</span> 
+<span style="color: #008080;"> 94</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 95</span> 
+<span style="color: #008080;"> 96</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> First declare the APIs we depend on and need for compilation. All 
+</span><span style="color: #008080;"> 97</span> <span style="color: #008000;">            of them are provided by JBoss AS 7 </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;"> 98</span> 
+<span style="color: #008080;"> 99</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Import the CDI API, we use provided scope as the API is included in 
+</span><span style="color: #008080;">100</span> <span style="color: #008000;">            JBoss AS 7 </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">101</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">102</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>javax.enterprise<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">103</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>cdi-api<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">104</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>provided<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">105</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">106</span> 
+<span style="color: #008080;">107</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Import the Common Annotations API (JSR-250), we use provided scope 
+</span><span style="color: #008080;">108</span> <span style="color: #008000;">            as the API is included in JBoss AS 7 </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">109</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">110</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.spec.javax.annotation<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">111</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>jboss-annotations-api_1.1_spec<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">112</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>provided<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">113</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">114</span> 
+<span style="color: #008080;">115</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Import the JAX-RS API, we use provided scope as the API is included 
+</span><span style="color: #008080;">116</span> <span style="color: #008000;">            in JBoss AS 7 </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">117</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">118</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.spec.javax.ws.rs<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">119</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>jboss-jaxrs-api_1.1_spec<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">120</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>provided<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">121</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">122</span> 
+<span style="color: #008080;">123</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Import the JPA API, we use provided scope as the API is included in 
+</span><span style="color: #008080;">124</span> <span style="color: #008000;">            JBoss AS 7 </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">125</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">126</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate.javax.persistence<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">127</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate-jpa-2.0-api<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">128</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>provided<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">129</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">130</span> 
+<span style="color: #008080;">131</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Import the EJB API, we use provided scope as the API is included in 
+</span><span style="color: #008080;">132</span> <span style="color: #008000;">            JBoss AS 7 </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">133</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">134</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.spec.javax.ejb<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">135</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>jboss-ejb-api_3.1_spec<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">136</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>provided<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">137</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">138</span> 
+<span style="color: #008080;">139</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> JSR-303 (Bean Validation) Implementation </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">140</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Provides portable constraints such as @Email </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">141</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Hibernate Validator is shipped in JBoss AS 7 </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">142</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">143</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">144</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate-validator<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">145</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>provided<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">146</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">exclusions</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">147</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">exclusion</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">148</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.slf4j<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">149</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>slf4j-api<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">150</span>                 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">exclusion</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">151</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">exclusions</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">152</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">153</span> 
+<span style="color: #008080;">154</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Import the JSF API, we use provided scope as the API is included in 
+</span><span style="color: #008080;">155</span> <span style="color: #008000;">            JBoss AS 7 </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">156</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">157</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.spec.javax.faces<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">158</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>jboss-jsf-api_2.1_spec<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">159</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>provided<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">160</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">161</span> 
+<span style="color: #008080;">162</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Now we declare any tools needed </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">163</span> 
+<span style="color: #008080;">164</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Annotation processor to generate the JPA 2.0 metamodel classes for 
+</span><span style="color: #008080;">165</span> <span style="color: #008000;">            typesafe criteria queries </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">166</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">167</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">168</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate-jpamodelgen<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">169</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>provided<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">170</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">171</span> 
+<span style="color: #008080;">172</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Annotation processor that raising compilation errors whenever constraint 
+</span><span style="color: #008080;">173</span> <span style="color: #008000;">            annotations are incorrectly used. </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">174</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">175</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">176</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate-validator-annotation-processor<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">177</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>provided<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">178</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">179</span> 
+<span style="color: #008080;">180</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Needed for running tests (you may also use TestNG) </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">181</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">182</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>junit<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">183</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>junit<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">184</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>test<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">185</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">186</span> 
+<span style="color: #008080;">187</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Optional, but highly recommended </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">188</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Arquillian allows you to test enterprise code such as EJBs and Transactional(JTA) 
+</span><span style="color: #008080;">189</span> <span style="color: #008000;">            JPA from JUnit/TestNG </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">190</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">191</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.arquillian.junit<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">192</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>arquillian-junit-container<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">193</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>test<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">194</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">195</span> 
+<span style="color: #008080;">196</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">197</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.arquillian.protocol<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">198</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>arquillian-protocol-servlet<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">199</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>test<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">200</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">201</span> 
+<span style="color: #008080;">202</span>     <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">203</span> 
+<span style="color: #008080;">204</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">build</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">205</span>         <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Maven will append the version to the finalName (which is the name 
+</span><span style="color: #008080;">206</span> <span style="color: #008000;">            given to the generated war, and hence the context root) </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">207</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">finalName</span><span style="color: #0000ff;">&gt;</span>${project.artifactId}<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">finalName</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">208</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">plugins</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">209</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">210</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>maven-war-plugin<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">211</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>${version.war.plugin}<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">212</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">configuration</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">213</span>                     <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Java EE 6 doesn't require web.xml, Maven needs to catch up! </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">214</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">failOnMissingWebXml</span><span style="color: #0000ff;">&gt;</span>false<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">failOnMissingWebXml</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">215</span>                 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">configuration</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">216</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">217</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> The JBoss AS plugin deploys your war to a local JBoss AS container </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">218</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> To use, run: mvn package jboss-as:deploy </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">219</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">220</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.as.plugins<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">221</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>jboss-as-maven-plugin<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">222</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>${version.jboss.maven.plugin}<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">223</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">224</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">plugins</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">225</span>     <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">build</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">226</span> 
+<span style="color: #008080;">227</span>     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">profiles</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">228</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">profile</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">229</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> The default profile skips all tests, though you can tune it to run 
+</span><span style="color: #008080;">230</span> <span style="color: #008000;">                just unit tests based on a custom pattern </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">231</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Seperate profiles are provided for running all tests, including Arquillian 
+</span><span style="color: #008080;">232</span> <span style="color: #008000;">                tests that execute in the specified container </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">233</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">id</span><span style="color: #0000ff;">&gt;</span>default<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">id</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">234</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">activation</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">235</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">activeByDefault</span><span style="color: #0000ff;">&gt;</span>true<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">activeByDefault</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">236</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">activation</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">237</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">build</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">238</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">plugins</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">239</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">240</span>                         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>maven-surefire-plugin<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">241</span>                         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>${version.surefire.plugin}<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">242</span>                         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">configuration</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">243</span>                             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">skip</span><span style="color: #0000ff;">&gt;</span>true<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">skip</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">244</span>                         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">configuration</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">245</span>                     <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">246</span>                 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">plugins</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">247</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">build</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">248</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">profile</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">249</span> 
+<span style="color: #008080;">250</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">profile</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">251</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> An optional Arquillian testing profile that executes tests in your 
+</span><span style="color: #008080;">252</span> <span style="color: #008000;">                JBoss AS instance </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">253</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> This profile will start a new JBoss AS instance, and execute the 
+</span><span style="color: #008080;">254</span> <span style="color: #008000;">                test, shutting it down when done </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">255</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Run with: mvn clean test -Parq-jbossas-managed </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">256</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">id</span><span style="color: #0000ff;">&gt;</span>arq-jbossas-managed<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">id</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">257</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">258</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">259</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.as<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">260</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>jboss-as-arquillian-container-managed<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">261</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>test<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">262</span>                 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">263</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">264</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">profile</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">265</span> 
+<span style="color: #008080;">266</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">profile</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">267</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> An optional Arquillian testing profile that executes tests in a remote 
+</span><span style="color: #008080;">268</span> <span style="color: #008000;">                JBoss AS instance </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">269</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Run with: mvn clean test -Parq-jbossas-remote </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">270</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">id</span><span style="color: #0000ff;">&gt;</span>arq-jbossas-remote<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">id</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">271</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">272</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">273</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.jboss.as<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">274</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>jboss-as-arquillian-container-remote<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">275</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>test<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">276</span>                 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">277</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">278</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">profile</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">279</span> 
+<span style="color: #008080;">280</span>         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">profile</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">281</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> When built in OpenShift the 'openshift' profile will be used when 
+</span><span style="color: #008080;">282</span> <span style="color: #008000;">                invoking mvn. </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">283</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> Use this profile for any OpenShift specific customization your app 
+</span><span style="color: #008080;">284</span> <span style="color: #008000;">                will need. </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">285</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> By default that is to put the resulting archive into the 'deployments' 
+</span><span style="color: #008080;">286</span> <span style="color: #008000;">                folder. </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">287</span>             <span style="color: #008000;">&lt;!--</span><span style="color: #008000;"> http://maven.apache.org/guides/mini/guide-building-for-different-environments.html </span><span style="color: #008000;">--&gt;</span>
+<span style="color: #008080;">288</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">id</span><span style="color: #0000ff;">&gt;</span>openshift<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">id</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">289</span>             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">build</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">290</span>                 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">plugins</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">291</span>                     <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">292</span>                         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>maven-war-plugin<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">293</span>                         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>${version.war.plugin}<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">294</span>                         <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">configuration</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">295</span>                             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">outputDirectory</span><span style="color: #0000ff;">&gt;</span>deployments<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">outputDirectory</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">296</span>                             <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">warName</span><span style="color: #0000ff;">&gt;</span>ROOT<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">warName</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">297</span>                         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">configuration</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">298</span>                     <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">plugin</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">299</span>                 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">plugins</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">300</span>             <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">build</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">301</span>         <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">profile</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">302</span> 
+<span style="color: #008080;">303</span>     <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">profiles</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">304</span> <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">project</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<span class="cnblogs_code_collapse">pom.xml</span></div>
+<p>&nbsp;</p>
+<p><strong>1.2</strong> model包下，会创建Product类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('a001871d-7655-4c90-8a88-3e6f24e407c6')"><img id="code_img_closed_a001871d-7655-4c90-8a88-3e6f24e407c6" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_a001871d-7655-4c90-8a88-3e6f24e407c6" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('a001871d-7655-4c90-8a88-3e6f24e407c6',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_a001871d-7655-4c90-8a88-3e6f24e407c6" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">package</span><span style="color: #000000;"> model;
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> Product {
+</span><span style="color: #008080;"> 4</span> 
+<span style="color: #008080;"> 5</span>     <span style="color: #0000ff;">private</span><span style="color: #000000;"> String productName;
+</span><span style="color: #008080;"> 6</span> 
+<span style="color: #008080;"> 7</span>     <span style="color: #0000ff;">private</span><span style="color: #000000;"> String productNo;
+</span><span style="color: #008080;"> 8</span> 
+<span style="color: #008080;"> 9</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> String getProductNo() {
+</span><span style="color: #008080;">10</span>         <span style="color: #0000ff;">return</span><span style="color: #000000;"> productNo;
+</span><span style="color: #008080;">11</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">12</span> 
+<span style="color: #008080;">13</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> setProductNo(String productNo) {
+</span><span style="color: #008080;">14</span>         <span style="color: #0000ff;">this</span>.productNo =<span style="color: #000000;"> productNo;
+</span><span style="color: #008080;">15</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">16</span> 
+<span style="color: #008080;">17</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> String getProductName() {
+</span><span style="color: #008080;">18</span>         <span style="color: #0000ff;">return</span><span style="color: #000000;"> productName;
+</span><span style="color: #008080;">19</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">20</span> 
+<span style="color: #008080;">21</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> setProductName(String productName) {
+</span><span style="color: #008080;">22</span>         <span style="color: #0000ff;">this</span>.productName =<span style="color: #000000;"> productName;
+</span><span style="color: #008080;">23</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">24</span> 
+<span style="color: #008080;">25</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> String toString() {
+</span><span style="color: #008080;">26</span>         <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span>.productName + " "    + <span style="color: #0000ff;">this</span><span style="color: #000000;">.productNo;
+</span><span style="color: #008080;">27</span> 
+<span style="color: #008080;">28</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">29</span> }</pre>
+</div>
+<span class="cnblogs_code_collapse">Product</span></div>
+<p>这个类其实是打酱油的</p>
+<p>&nbsp;</p>
+<p><strong>1.3</strong> service包下，建一个ProductService接口</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('8dc675b9-0765-45a9-92e8-4742a4930859')"><img id="code_img_closed_8dc675b9-0765-45a9-92e8-4742a4930859" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_8dc675b9-0765-45a9-92e8-4742a4930859" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('8dc675b9-0765-45a9-92e8-4742a4930859',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_8dc675b9-0765-45a9-92e8-4742a4930859" class="cnblogs_code_hide">
+<pre><span style="color: #008080;">1</span> <span style="color: #0000ff;">package</span><span style="color: #000000;"> service;
+</span><span style="color: #008080;">2</span> 
+<span style="color: #008080;">3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> model.Product;
+</span><span style="color: #008080;">4</span> 
+<span style="color: #008080;">5</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">interface</span><span style="color: #000000;"> ProductService {
+</span><span style="color: #008080;">6</span> 
+<span style="color: #008080;">7</span> <span style="color: #000000;">    Product getNewProduct();
+</span><span style="color: #008080;">8</span>     
+<span style="color: #008080;">9</span> }</pre>
+</div>
+<span class="cnblogs_code_collapse">ProductService </span></div>
+<p>&nbsp;</p>
+<p><strong>1.4</strong> service包下，再来几个实现</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('8ef0a36e-db62-4c89-bb26-ec94dea3f8c4')"><img id="code_img_closed_8ef0a36e-db62-4c89-bb26-ec94dea3f8c4" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_8ef0a36e-db62-4c89-bb26-ec94dea3f8c4" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('8ef0a36e-db62-4c89-bb26-ec94dea3f8c4',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_8ef0a36e-db62-4c89-bb26-ec94dea3f8c4" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">package</span><span style="color: #000000;"> service;
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.inject.Inject;
+</span><span style="color: #008080;"> 4</span> 
+<span style="color: #008080;"> 5</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> model.Product;
+</span><span style="color: #008080;"> 6</span> 
+<span style="color: #008080;"> 7</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">abstract</span> <span style="color: #0000ff;">class</span> BaseProductServiceImpl <span style="color: #0000ff;">implements</span><span style="color: #000000;"> ProductService {
+</span><span style="color: #008080;"> 8</span>     
+<span style="color: #008080;"> 9</span> <span style="color: #000000;">    @Inject
+</span><span style="color: #008080;">10</span>     <span style="color: #0000ff;">protected</span><span style="color: #000000;"> Product product;
+</span><span style="color: #008080;">11</span>     
+<span style="color: #008080;">12</span>     
+<span style="color: #008080;">13</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">abstract</span><span style="color: #000000;"> Product getNewProduct();
+</span><span style="color: #008080;">14</span> }</pre>
+</div>
+<span class="cnblogs_code_collapse">BaseProductServiceImpl</span></div>
+<p>这个是实现类的基类，注意这里私有成员上打了一个注解@Inject，表示运行时将动态注入(实例化)一个Product</p>
+<p>再来二个具体的实现类，BookProductServiceImpl生成"书籍"</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('5e06251d-c859-47e1-9584-5dce7c8bab82')"><img id="code_img_closed_5e06251d-c859-47e1-9584-5dce7c8bab82" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_5e06251d-c859-47e1-9584-5dce7c8bab82" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('5e06251d-c859-47e1-9584-5dce7c8bab82',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_5e06251d-c859-47e1-9584-5dce7c8bab82" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">package</span><span style="color: #000000;"> service;
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> annotation.Book;
+</span><span style="color: #008080;"> 4</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> model.Product;
+</span><span style="color: #008080;"> 5</span> 
+<span style="color: #008080;"> 6</span> <span style="color: #000000;">@Book
+</span><span style="color: #008080;"> 7</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span> BookProductServiceImpl <span style="color: #0000ff;">extends</span><span style="color: #000000;"> BaseProductServiceImpl {
+</span><span style="color: #008080;"> 8</span> 
+<span style="color: #008080;"> 9</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> Product getNewProduct() {
+</span><span style="color: #008080;">10</span>         product.setProductName("论程序员的自我修养"<span style="color: #000000;">);
+</span><span style="color: #008080;">11</span>         product.setProductNo("ISBN 999"<span style="color: #000000;">);
+</span><span style="color: #008080;">12</span>         <span style="color: #0000ff;">return</span><span style="color: #000000;"> product;
+</span><span style="color: #008080;">13</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">14</span> 
+<span style="color: #008080;">15</span> }</pre>
+</div>
+<span class="cnblogs_code_collapse">BookProductServiceImpl</span></div>
+<p>TelephoneProductServiceImpl生成“电话”</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('1849c9ce-c982-451d-9fca-9c1a04ae44ab')"><img id="code_img_closed_1849c9ce-c982-451d-9fca-9c1a04ae44ab" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_1849c9ce-c982-451d-9fca-9c1a04ae44ab" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('1849c9ce-c982-451d-9fca-9c1a04ae44ab',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_1849c9ce-c982-451d-9fca-9c1a04ae44ab" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">package</span><span style="color: #000000;"> service;
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> annotation.Telephone;
+</span><span style="color: #008080;"> 4</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> model.Product;
+</span><span style="color: #008080;"> 5</span> 
+<span style="color: #008080;"> 6</span> <span style="color: #000000;">@Telephone
+</span><span style="color: #008080;"> 7</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span> TeletephoneProductServiceImpl <span style="color: #0000ff;">extends</span><span style="color: #000000;"> BaseProductServiceImpl {
+</span><span style="color: #008080;"> 8</span> 
+<span style="color: #008080;"> 9</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> Product getNewProduct() {
+</span><span style="color: #008080;">10</span>         product.setProductName("NOKIA LUMIA"<span style="color: #000000;">);
+</span><span style="color: #008080;">11</span>         product.setProductNo("920"<span style="color: #000000;">);
+</span><span style="color: #008080;">12</span>         <span style="color: #0000ff;">return</span><span style="color: #000000;"> product;
+</span><span style="color: #008080;">13</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">14</span> 
+<span style="color: #008080;">15</span> }</pre>
+</div>
+<span class="cnblogs_code_collapse">TeletephoneProductServiceImpl </span></div>
+<p>可能有朋友注意到了，里面用到了二个自己写的注释@Book和@Telephone，接下来会讲到，这里先忽略</p>
+<p>&nbsp;</p>
+<p><strong>1.5</strong> controller包下，添加IndexController类</p>
+<p>为了能跟JSF的前台页面交互，这里需要添加一个Controller</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('28e24754-8d95-4361-aa73-91725629fa9f')"><img id="code_img_closed_28e24754-8d95-4361-aa73-91725629fa9f" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_28e24754-8d95-4361-aa73-91725629fa9f" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('28e24754-8d95-4361-aa73-91725629fa9f',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_28e24754-8d95-4361-aa73-91725629fa9f" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">package</span><span style="color: #000000;"> controller;
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.faces.bean.ManagedBean;
+</span><span style="color: #008080;"> 4</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.inject.Inject;
+</span><span style="color: #008080;"> 5</span> 
+<span style="color: #008080;"> 6</span> <span style="color: #0000ff;">import</span> annotation.*<span style="color: #000000;">;
+</span><span style="color: #008080;"> 7</span> <span style="color: #0000ff;">import</span> service.*<span style="color: #000000;">;
+</span><span style="color: #008080;"> 8</span> 
+<span style="color: #008080;"> 9</span> @ManagedBean(name = "Index"<span style="color: #000000;">)
+</span><span style="color: #008080;">10</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> IndexController {
+</span><span style="color: #008080;">11</span> 
+<span style="color: #008080;">12</span> <span style="color: #000000;">    @Inject
+</span><span style="color: #008080;">13</span> <span style="color: #000000;">    @Book
+</span><span style="color: #008080;">14</span>     <span style="color: #0000ff;">private</span><span style="color: #000000;"> ProductService bookProductService;
+</span><span style="color: #008080;">15</span> 
+<span style="color: #008080;">16</span> <span style="color: #000000;">    @Inject
+</span><span style="color: #008080;">17</span> <span style="color: #000000;">    @Telephone
+</span><span style="color: #008080;">18</span>     <span style="color: #0000ff;">private</span><span style="color: #000000;"> ProductService telephoneProductService;
+</span><span style="color: #008080;">19</span> 
+<span style="color: #008080;">20</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> ProductService getBookProductService() {
+</span><span style="color: #008080;">21</span>         <span style="color: #0000ff;">return</span><span style="color: #000000;"> bookProductService;
+</span><span style="color: #008080;">22</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">23</span> 
+<span style="color: #008080;">24</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> ProductService getTelephoneProductService() {
+</span><span style="color: #008080;">25</span>         <span style="color: #0000ff;">return</span><span style="color: #000000;"> telephoneProductService;
+</span><span style="color: #008080;">26</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">27</span> 
+<span style="color: #008080;">28</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">29</span> IndexController</pre>
+</div>
+<span class="cnblogs_code_collapse">IndexController </span></div>
+<p>好了，一下子搞了这么多代码，先停下来消化一下，这里我们模拟了分层架构：</p>
+<p>model - 代表了业务模型层(本例中，为了简单起见，没有细分 业务模型、实体模型、以及web中的ViewModel)</p>
+<p>service - 代表了服务层(为了简单起见，我们把接口+实现都放在一起了，实际中，可能会把这二个分开来)</p>
+<p>controller - 这是web层MVC中的控制器层</p>
+<p>当然，为了能展示最终的效果，我们会在后面加一个页面做为View层来提供UI</p>
+<p>&nbsp;</p>
+<p><strong>1.6</strong> webapp下，新建一个index.xhtml文件，内容如下：</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('27f0a92c-07f6-46cf-a56a-0e11df4a6306')"><img id="code_img_closed_27f0a92c-07f6-46cf-a56a-0e11df4a6306" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_27f0a92c-07f6-46cf-a56a-0e11df4a6306" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('27f0a92c-07f6-46cf-a56a-0e11df4a6306',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_27f0a92c-07f6-46cf-a56a-0e11df4a6306" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+<span style="color: #008080;"> 2</span> &lt;html xmlns="http://www.w3.org/1999/xhtml"
+<span style="color: #008080;"> 3</span>     xmlns:h="http://java.sun.com/jsf/html"
+<span style="color: #008080;"> 4</span>     xmlns:f="http://java.sun.com/jsf/core"
+<span style="color: #008080;"> 5</span>     xmlns:ui="http://java.sun.com/jsf/facelets"&gt;
+<span style="color: #008080;"> 6</span> 
+<span style="color: #008080;"> 7</span> &lt;h:head&gt;&lt;/h:head&gt;
+<span style="color: #008080;"> 8</span> &lt;body&gt;
+<span style="color: #008080;"> 9</span> <span style="color: #000000;">    Book:
+</span><span style="color: #008080;">10</span>     &lt;br /&gt;<span style="color: #000000;"> #{Index.bookProductService.newProduct.toString()}
+</span><span style="color: #008080;">11</span>     &lt;br /&gt;
+<span style="color: #008080;">12</span>     &lt;br /&gt;<span style="color: #000000;"> Telephone:
+</span><span style="color: #008080;">13</span>     &lt;br /&gt;<span style="color: #000000;"> #{Index.telephoneProductService.newProduct.toString()}
+</span><span style="color: #008080;">14</span> &lt;/body&gt;</pre>
+</div>
+<span class="cnblogs_code_collapse">index.xhtml</span></div>
+<p>页面里几乎没啥代码，就是调用IndexController实例中的getBookProductService、getTelephoneProductService方法，进而得到相应的"服务实现类实例"，最终输出产品信息</p>
+<p>&nbsp;</p>
+<p><strong>1.7</strong> Inject用在什么地方了？</p>
+<p>a) 
+页面显示时，IndexController里，bookProductService和telephoneProductService这二个私有成员
+上，都加了@Inject注解，所以运行时，这二个成员都能被实例化，但是问题来了，它们都是ProductService的接口类型，而这个接口有二个
+具体的实现(BookProductServiceImpl和TeletephoneProductServiceImpl)，最终运行时，应该实现化哪
+一个呢？</p>
+<p>关键在于另一个注解@Book和@Telephone，观察一下：BookProductServiceImpl类上我们也加了@Book，而
+TeletephoneProductServiceImpl上加了@Telephone，这样正好可以跟IndexControll中这二个私成成员的
+注释“匹配”上，所以最终系统知道私有成员bookProductService应该被实例化成
+BookProductServiceImpl，telephoneProductService被实例化成
+TeletephoneProductServiceImpl</p>
+<p>@Book和@Telephone的代码如下：</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('b0e9b845-b743-46b5-9020-3aab2ba0fe44')"><img id="code_img_closed_b0e9b845-b743-46b5-9020-3aab2ba0fe44" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_b0e9b845-b743-46b5-9020-3aab2ba0fe44" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('b0e9b845-b743-46b5-9020-3aab2ba0fe44',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_b0e9b845-b743-46b5-9020-3aab2ba0fe44" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">package</span><span style="color: #000000;"> annotation;
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.lang.annotation.Retention;
+</span><span style="color: #008080;"> 4</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.lang.annotation.RetentionPolicy;
+</span><span style="color: #008080;"> 5</span> 
+<span style="color: #008080;"> 6</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.inject.Qualifier;
+</span><span style="color: #008080;"> 7</span> 
+<span style="color: #008080;"> 8</span> <span style="color: #000000;">@Qualifier
+</span><span style="color: #008080;"> 9</span> <span style="color: #000000;">@Retention(RetentionPolicy.RUNTIME)
+</span><span style="color: #008080;">10</span> <span style="color: #0000ff;">public</span> @<span style="color: #0000ff;">interface</span><span style="color: #000000;"> Book {
+</span><span style="color: #008080;">11</span> 
+<span style="color: #008080;">12</span> }</pre>
+</div>
+<span class="cnblogs_code_collapse">Book</span></div>
+<div class="cnblogs_code" onclick="cnblogs_code_show('679263ee-b3cd-43c9-ba2d-b287e809c535')"><img id="code_img_closed_679263ee-b3cd-43c9-ba2d-b287e809c535" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_679263ee-b3cd-43c9-ba2d-b287e809c535" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('679263ee-b3cd-43c9-ba2d-b287e809c535',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_679263ee-b3cd-43c9-ba2d-b287e809c535" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">package</span><span style="color: #000000;"> annotation;
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.lang.annotation.Retention;
+</span><span style="color: #008080;"> 4</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.lang.annotation.RetentionPolicy;
+</span><span style="color: #008080;"> 5</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.inject.Qualifier;
+</span><span style="color: #008080;"> 6</span> 
+<span style="color: #008080;"> 7</span> <span style="color: #000000;">@Qualifier
+</span><span style="color: #008080;"> 8</span> <span style="color: #000000;">@Retention(RetentionPolicy.RUNTIME)
+</span><span style="color: #008080;"> 9</span> <span style="color: #0000ff;">public</span> @<span style="color: #0000ff;">interface</span><span style="color: #000000;"> Telephone {
+</span><span style="color: #008080;">10</span> 
+<span style="color: #008080;">11</span> }</pre>
+</div>
+<span class="cnblogs_code_collapse">Telephone</span></div>
+<p>b) BaseProductServiceImpl中，在私成成员product上加了@Inject，这样运行时，能自动实例化Product对象</p>
+<p>&nbsp;</p>
+<p><strong>1.8</strong> 运行结果</p>
+<p>jboss中部署后，浏览http://localhost:8080/cdi-web-sample/faces/index.xhtml 或http://localhost:8080/cdi-web-sample/index.jsf</p>
+<p><img src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/151634095646.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>1.9 Method(方法)注入及Constructor(构造器)注入</p>
+<p>刚才我们看到的都是在Field(成员)上注入，除了这种方式，也可以在Method或Constructor上注入</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('b6e0d412-eb87-4d82-9e74-868419b0afbb')"><img id="code_img_closed_b6e0d412-eb87-4d82-9e74-868419b0afbb" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_b6e0d412-eb87-4d82-9e74-868419b0afbb" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('b6e0d412-eb87-4d82-9e74-868419b0afbb',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_b6e0d412-eb87-4d82-9e74-868419b0afbb" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span>     <span style="color: #0000ff;">private</span><span style="color: #000000;"> Product product ;
+</span><span style="color: #008080;"> 2</span>     
+<span style="color: #008080;"> 3</span>     <span style="color: #008000;">/**</span>
+<span style="color: #008080;"> 4</span> <span style="color: #008000;">     * 演示在方法上使用@Inject注入
+</span><span style="color: #008080;"> 5</span> <span style="color: #008000;">     * </span><span style="color: #808080;">@param</span><span style="color: #008000;"> p
+</span><span style="color: #008080;"> 6</span>      <span style="color: #008000;">*/</span>
+<span style="color: #008080;"> 7</span> <span style="color: #000000;">    @Inject
+</span><span style="color: #008080;"> 8</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> setProduct(Product p){
+</span><span style="color: #008080;"> 9</span>         product =<span style="color: #000000;"> p;        
+</span><span style="color: #008080;">10</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">11</span>     
+<span style="color: #008080;">12</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> Product getProduct(){
+</span><span style="color: #008080;">13</span>         <span style="color: #0000ff;">return</span><span style="color: #000000;"> product;        
+</span><span style="color: #008080;">14</span>     }</pre>
+</div>
+<span class="cnblogs_code_collapse">Method Inject</span></div>
+<p>上面的代码即是Method注入的示例，最后来看下构造器注入，我们再新建一个ClothProductServiceImpl用于生产服装</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('dc855e1d-d91e-456c-b5db-e1fa9da35df7')"><img id="code_img_closed_dc855e1d-d91e-456c-b5db-e1fa9da35df7" class="code_img_closed" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ContractedBlock.gif" alt=""><img id="code_img_opened_dc855e1d-d91e-456c-b5db-e1fa9da35df7" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('dc855e1d-d91e-456c-b5db-e1fa9da35df7',event)" src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_dc855e1d-d91e-456c-b5db-e1fa9da35df7" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">package</span><span style="color: #000000;"> service;
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.inject.Inject;
+</span><span style="color: #008080;"> 4</span> 
+<span style="color: #008080;"> 5</span> <span style="color: #0000ff;">import</span> annotation.*<span style="color: #000000;">;
+</span><span style="color: #008080;"> 6</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> model.Product;
+</span><span style="color: #008080;"> 7</span> 
+<span style="color: #008080;"> 8</span> <span style="color: #000000;">@Cloth
+</span><span style="color: #008080;"> 9</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span> ClothProductServiceImpl <span style="color: #0000ff;">implements</span><span style="color: #000000;"> ProductService {
+</span><span style="color: #008080;">10</span> 
+<span style="color: #008080;">11</span>     <span style="color: #0000ff;">private</span><span style="color: #000000;"> Product product;
+</span><span style="color: #008080;">12</span>     
+<span style="color: #008080;">13</span>     <span style="color: #008000;">/**</span>
+<span style="color: #008080;">14</span> <span style="color: #008000;">     * 构造器注入
+</span><span style="color: #008080;">15</span> <span style="color: #008000;">     * </span><span style="color: #808080;">@param</span><span style="color: #008000;"> p
+</span><span style="color: #008080;">16</span>      <span style="color: #008000;">*/</span>
+<span style="color: #008080;">17</span> <span style="color: #000000;">    @Inject
+</span><span style="color: #008080;">18</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> ClothProductServiceImpl(Product p ){
+</span><span style="color: #008080;">19</span>         p.setProductName("A New Dress"<span style="color: #000000;">);
+</span><span style="color: #008080;">20</span>         p.setProductNo("SPRIT-001"<span style="color: #000000;">);
+</span><span style="color: #008080;">21</span>         product =<span style="color: #000000;"> p;
+</span><span style="color: #008080;">22</span>         
+<span style="color: #008080;">23</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">24</span>     
+<span style="color: #008080;">25</span>     <span style="color: #0000ff;">public</span><span style="color: #000000;"> Product getNewProduct() {        
+</span><span style="color: #008080;">26</span>         <span style="color: #0000ff;">return</span><span style="color: #000000;"> product;
+</span><span style="color: #008080;">27</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">28</span> 
+<span style="color: #008080;">29</span> }</pre>
+</div>
+<span class="cnblogs_code_collapse">Constructor Inject</span></div>
+<p>运行时，系统会自动给构造器ClothProductServiceImpl传递一个实例化的Product对象作为参数，以实现Product实例的注入</p>
+<p>附文中示例源码下载：<a href="http://files.cnblogs.com/yjmyzz/cdi-web-sample.zip" target="_blank">cdi-web-sample.zip</a></p>
+<p><a href="http://www.cnblogs.com/yjmyzz/p/javaee-cdi-bean-scope.html" target="_blank"> 下一节</a>，我们将学习Bean注入后的生命周期管理</p></div><div style="display: block;" id="MySignature"><div style="padding:5px;background:#ff9;border:solid 1px #ccc">作者：<a href="http://yjmyzz.cnblogs.com/">菩提树下的杨过</a><br>
+出处：<a href="http://yjmyzz.cnblogs.com/">http://yjmyzz.cnblogs.com</a>
+<br>
+本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。
+</div>
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/yjmyzz/category/424772.html">15.Java/Scala</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/yjmyzz/tag/java/">java</a>, <a href="http://www.cnblogs.com/yjmyzz/tag/CDI/">CDI</a></div>
+<div id="blog_post_info"><div id="green_channel">
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(3520878,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://msg.cnblogs.com/send/%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87" target="_blank">联系我</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon_weibo_24.png" alt=""></a>
+<a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/yjmyzz/" target="_blank"><img src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/u27612.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/yjmyzz/">菩提树下的杨过</a><br>
+<a href="http://home.cnblogs.com/u/yjmyzz/followees">关注 - 6</a><br>
+<a href="http://home.cnblogs.com/u/yjmyzz/followers">粉丝 - 2165</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor">荣誉：<a href="http://www.cnblogs.com/expert/" target="_blank">推荐博客</a></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(3520878,'Digg')">
+        <span class="diggnum" id="digg_count">2</span>
+    </div>
+	<div class="buryit" onclick="votePost(3520878,'Bury')"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/yjmyzz/p/3518386.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/yjmyzz/p/3518386.html" title="发布于2014-01-14 09:20">[转] EJB 3和Spring技术体系比较</a><br><a href="http://www.cnblogs.com/yjmyzz/p/3521554.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/yjmyzz/p/3521554.html" title="发布于2014-01-15 21:24">JAVA_HOME环境变量失效的解决办法</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2014-01-15 16:36</span> <a href="http://www.cnblogs.com/yjmyzz/">菩提树下的杨过</a> 阅读(<span id="post_view_count">13887</span>) 评论(<span id="post_comment_count">0</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=3520878" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(3520878);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=31164,cb_entryId=3520878,cb_blogApp=currentBlogApp,cb_blogUserGuid='c1853d0b-63cf-dd11-9e4d-001cf0cd104b',cb_entryCreatedDate='2014/1/15 16:36:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login('commentform');">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block"></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/545215/" target="_blank">股价暴跌：联想还能重获资本市场青睐吗？</a><br> ·  <a href="http://news.cnblogs.com/n/545214/" target="_blank">甲骨文收购OPower，云计算巨头开启军备竞赛？</a><br> ·  <a href="http://news.cnblogs.com/n/545213/" target="_blank">近1300颗行星获确认 外星世界数量翻一番</a><br> ·  <a href="http://news.cnblogs.com/n/545212/" target="_blank">微软关闭了Window 10的Wi-Fi密码分享功能</a><br> ·  <a href="http://news.cnblogs.com/n/545211/" target="_blank">不是拍电视剧 原来苹果公司是这样解雇员工</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/543110/" target="_blank">架构漫谈（九）：理清技术、业务和架构的关系</a><br> ·  <a href="http://kb.cnblogs.com/page/542725/" target="_blank">架构漫谈（八）：从架构的角度看如何写好代码</a><br> ·  <a href="http://kb.cnblogs.com/page/542257/" target="_blank">架构漫谈（七）：不要空设架构师这个职位，给他实权</a><br> ·  <a href="http://kb.cnblogs.com/page/541740/" target="_blank">架构漫谈（六）：软件架构到底是要解决什么问题？</a><br> ·  <a href="http://kb.cnblogs.com/page/541188/" target="_blank">架构漫谈（五）：什么是软件</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"><b>历史上的今天:</b><br>2010-01-15 <a href="http://www.cnblogs.com/yjmyzz/archive/2010/01/15/1648738.html">Silverlight中也玩屏幕截图</a><br>2010-01-15 <a href="http://www.cnblogs.com/yjmyzz/archive/2010/01/15/1648614.html">重温delphi之:如何将Bitmap位图与base64字符串相互转换</a><br>2010-01-15 <a href="http://www.cnblogs.com/yjmyzz/archive/2010/01/15/1648317.html">silverlight中如何将BitmapImage转化为Stream或byte数组?</a><br></div>
+<script type="text/javascript">
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><img src="JAVA%20CDI%20%E5%AD%A6%E4%B9%A0%281%29%20-%20@Inject%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%20-%20%E8%8F%A9%E6%8F%90%E6%A0%91%E4%B8%8B%E7%9A%84%E6%9D%A8%E8%BF%87%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/2011012713161842.png" alt="菩提树下的杨过"><br>
+<span style="color:#399ab2">注：技术发展日新月异，随着时间推移，无法保证本博客所有内容的正确性，如有误导，请大家见谅！</span>
+<table>
+<tbody><tr>
+<td align="right">英文名：</td>
+<td align="left">Jimmy.Yang</td>
+</tr>
+<tr>
+<td align="right">中文名：</td>
+<td align="left">杨俊明</td>
+</tr>
+<tr>
+<td align="right">一妹儿：</td>
+<td align="left">yjmyzz#126.com</td>
+</tr>
+<tr>
+<td align="right">扣扣：</td>
+<td align="left">二妻八舅幺舅五零妻</td>
+</tr>
+<tr>
+<td align="right">所在地：</td>
+<td align="left">上海</td>
+</tr>
+</tbody></table><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/yjmyzz/">菩提树下的杨过</a><br>园龄：<a href="http://home.cnblogs.com/u/yjmyzz/" title="入园时间：2007-11-26">8年5个月</a><br>荣誉：<a href="http://www.cnblogs.com/expert/">推荐博客</a><br>粉丝：<a href="http://home.cnblogs.com/u/yjmyzz/followers/">2165</a><br>关注：<a href="http://home.cnblogs.com/u/yjmyzz/followees/">6</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger('c1853d0b-63cf-dd11-9e4d-001cf0cd104b')">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk" type="text">&nbsp;<input onclick="zzk_go()" value="找找看" id="btnZzk" class="btn_my_zzk" type="button"></div>
+
+</div>
+</div>
+
+</div><div id="sidebar_categories">
+<div class="catListPostCategory">
+<h3 class="catListTitle">随笔分类<span style="font-size:11px;font-weight:normal">(1245)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/yjmyzz/category/195429.html">01.WebForm/MVC(105)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/yjmyzz/category/195428.html">02.FrameWork/C#(142)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/yjmyzz/category/195425.html">03.WinForm(22)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/yjmyzz/category/195430.html">04.JavaScript(85)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/yjmyzz/category/195426.html">05.CSS(25)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/yjmyzz/category/195432.html">06.Design Pattern(13)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/yjmyzz/category/195431.html">07.WPF/Silverlight(118)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/yjmyzz/category/195433.html">08.Database(82)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/yjmyzz/category/195427.html">09.Open Source(91)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/yjmyzz/category/223381.html">10.Delphi(17)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/yjmyzz/category/233120.html">11.Ruby(16)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/yjmyzz/category/236214.html">12.Flex/Flash/AS3.0(124)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/yjmyzz/category/273711.html">13.C/Objective-C(15)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/yjmyzz/category/424772.html">15.Java/Scala(223)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/yjmyzz/category/552939.html">16.linux/mac(37)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/yjmyzz/category/691867.html">17.Hadoop(17)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/yjmyzz/category/219873.html">18.Others(113)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案<span style="font-size:11px;font-weight:normal">(1075)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/yjmyzz/archive/2016/04.html">2016年4月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/yjmyzz/archive/2016/03.html">2016年3月 (13)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/yjmyzz/archive/2016/02.html">2016年2月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/yjmyzz/archive/2016/01.html">2016年1月 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/yjmyzz/archive/2015/12.html">2015年12月 (14)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/yjmyzz/archive/2015/11.html">2015年11月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/yjmyzz/archive/2015/10.html">2015年10月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/yjmyzz/archive/2015/09.html">2015年9月 (18)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/yjmyzz/archive/2015/08.html">2015年8月 (17)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/yjmyzz/archive/2015/07.html">2015年7月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/yjmyzz/archive/2015/06.html">2015年6月 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/yjmyzz/archive/2015/05.html">2015年5月 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/yjmyzz/archive/2015/04.html">2015年4月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/yjmyzz/archive/2015/03.html">2015年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/yjmyzz/archive/2015/02.html">2015年2月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/yjmyzz/archive/2015/01.html">2015年1月 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/yjmyzz/archive/2014/12.html">2014年12月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/yjmyzz/archive/2014/11.html">2014年11月 (17)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/yjmyzz/archive/2014/10.html">2014年10月 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/yjmyzz/archive/2014/09.html">2014年9月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/yjmyzz/archive/2014/08.html">2014年8月 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/yjmyzz/archive/2014/07.html">2014年7月 (14)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/yjmyzz/archive/2014/05.html">2014年5月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/yjmyzz/archive/2014/04.html">2014年4月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_24" href="http://www.cnblogs.com/yjmyzz/archive/2014/03.html">2014年3月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_25" href="http://www.cnblogs.com/yjmyzz/archive/2014/02.html">2014年2月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_26" href="http://www.cnblogs.com/yjmyzz/archive/2014/01.html">2014年1月 (18)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_27" href="http://www.cnblogs.com/yjmyzz/archive/2013/12.html">2013年12月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_28" href="http://www.cnblogs.com/yjmyzz/archive/2013/11.html">2013年11月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_29" href="http://www.cnblogs.com/yjmyzz/archive/2013/10.html">2013年10月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_30" href="http://www.cnblogs.com/yjmyzz/archive/2013/09.html">2013年9月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_31" href="http://www.cnblogs.com/yjmyzz/archive/2013/08.html">2013年8月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_32" href="http://www.cnblogs.com/yjmyzz/archive/2013/07.html">2013年7月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_33" href="http://www.cnblogs.com/yjmyzz/archive/2013/05.html">2013年5月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_34" href="http://www.cnblogs.com/yjmyzz/archive/2013/04.html">2013年4月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_35" href="http://www.cnblogs.com/yjmyzz/archive/2013/02.html">2013年2月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_36" href="http://www.cnblogs.com/yjmyzz/archive/2013/01.html">2013年1月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_37" href="http://www.cnblogs.com/yjmyzz/archive/2012/12.html">2012年12月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_38" href="http://www.cnblogs.com/yjmyzz/archive/2012/11.html">2012年11月 (16)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_39" href="http://www.cnblogs.com/yjmyzz/archive/2012/09.html">2012年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_40" href="http://www.cnblogs.com/yjmyzz/archive/2012/07.html">2012年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_41" href="http://www.cnblogs.com/yjmyzz/archive/2012/06.html">2012年6月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_42" href="http://www.cnblogs.com/yjmyzz/archive/2012/05.html">2012年5月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_43" href="http://www.cnblogs.com/yjmyzz/archive/2012/04.html">2012年4月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_44" href="http://www.cnblogs.com/yjmyzz/archive/2012/03.html">2012年3月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_45" href="http://www.cnblogs.com/yjmyzz/archive/2012/02.html">2012年2月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_46" href="http://www.cnblogs.com/yjmyzz/archive/2012/01.html">2012年1月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_47" href="http://www.cnblogs.com/yjmyzz/archive/2011/12.html">2011年12月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_48" href="http://www.cnblogs.com/yjmyzz/archive/2011/11.html">2011年11月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_49" href="http://www.cnblogs.com/yjmyzz/archive/2011/10.html">2011年10月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_50" href="http://www.cnblogs.com/yjmyzz/archive/2011/09.html">2011年9月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_51" href="http://www.cnblogs.com/yjmyzz/archive/2011/08.html">2011年8月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_52" href="http://www.cnblogs.com/yjmyzz/archive/2011/07.html">2011年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_53" href="http://www.cnblogs.com/yjmyzz/archive/2011/06.html">2011年6月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_54" href="http://www.cnblogs.com/yjmyzz/archive/2011/05.html">2011年5月 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_55" href="http://www.cnblogs.com/yjmyzz/archive/2011/04.html">2011年4月 (16)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_56" href="http://www.cnblogs.com/yjmyzz/archive/2011/03.html">2011年3月 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_57" href="http://www.cnblogs.com/yjmyzz/archive/2011/02.html">2011年2月 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_58" href="http://www.cnblogs.com/yjmyzz/archive/2011/01.html">2011年1月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_59" href="http://www.cnblogs.com/yjmyzz/archive/2010/12.html">2010年12月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_60" href="http://www.cnblogs.com/yjmyzz/archive/2010/11.html">2010年11月 (13)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_61" href="http://www.cnblogs.com/yjmyzz/archive/2010/10.html">2010年10月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_62" href="http://www.cnblogs.com/yjmyzz/archive/2010/09.html">2010年9月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_63" href="http://www.cnblogs.com/yjmyzz/archive/2010/08.html">2010年8月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_64" href="http://www.cnblogs.com/yjmyzz/archive/2010/07.html">2010年7月 (32)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_65" href="http://www.cnblogs.com/yjmyzz/archive/2010/06.html">2010年6月 (19)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_66" href="http://www.cnblogs.com/yjmyzz/archive/2010/05.html">2010年5月 (21)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_67" href="http://www.cnblogs.com/yjmyzz/archive/2010/04.html">2010年4月 (30)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_68" href="http://www.cnblogs.com/yjmyzz/archive/2010/03.html">2010年3月 (49)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_69" href="http://www.cnblogs.com/yjmyzz/archive/2010/02.html">2010年2月 (23)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_70" href="http://www.cnblogs.com/yjmyzz/archive/2010/01.html">2010年1月 (22)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_71" href="http://www.cnblogs.com/yjmyzz/archive/2009/12.html">2009年12月 (47)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_72" href="http://www.cnblogs.com/yjmyzz/archive/2009/11.html">2009年11月 (26)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_73" href="http://www.cnblogs.com/yjmyzz/archive/2009/10.html">2009年10月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_74" href="http://www.cnblogs.com/yjmyzz/archive/2009/09.html">2009年9月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_75" href="http://www.cnblogs.com/yjmyzz/archive/2009/08.html">2009年8月 (14)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_76" href="http://www.cnblogs.com/yjmyzz/archive/2009/07.html">2009年7月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_77" href="http://www.cnblogs.com/yjmyzz/archive/2009/06.html">2009年6月 (27)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_78" href="http://www.cnblogs.com/yjmyzz/archive/2009/05.html">2009年5月 (14)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_79" href="http://www.cnblogs.com/yjmyzz/archive/2009/04.html">2009年4月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_80" href="http://www.cnblogs.com/yjmyzz/archive/2009/03.html">2009年3月 (14)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_81" href="http://www.cnblogs.com/yjmyzz/archive/2009/02.html">2009年2月 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_82" href="http://www.cnblogs.com/yjmyzz/archive/2009/01.html">2009年1月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_83" href="http://www.cnblogs.com/yjmyzz/archive/2008/11.html">2008年11月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_84" href="http://www.cnblogs.com/yjmyzz/archive/2008/10.html">2008年10月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_85" href="http://www.cnblogs.com/yjmyzz/archive/2008/09.html">2008年9月 (34)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_86" href="http://www.cnblogs.com/yjmyzz/archive/2008/08.html">2008年8月 (40)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_87" href="http://www.cnblogs.com/yjmyzz/archive/2008/06.html">2008年6月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_88" href="http://www.cnblogs.com/yjmyzz/archive/2008/05.html">2008年5月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_89" href="http://www.cnblogs.com/yjmyzz/archive/2008/04.html">2008年4月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_90" href="http://www.cnblogs.com/yjmyzz/archive/2008/03.html">2008年3月 (20)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_91" href="http://www.cnblogs.com/yjmyzz/archive/2008/02.html">2008年2月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_92" href="http://www.cnblogs.com/yjmyzz/archive/2008/01.html">2008年1月 (24)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_93" href="http://www.cnblogs.com/yjmyzz/archive/2007/12.html">2007年12月 (36)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_94" href="http://www.cnblogs.com/yjmyzz/archive/2007/11.html">2007年11月 (27)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catList">
+<h3 class="catListTitle">友情链接</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/cloudgamer/" rel="nofollow">cloudgamer</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_1" href="http://blog.zhaojie.me/" rel="nofollow">JeffreyZhao</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_2" href="http://www.cnblogs.com/Jax/" rel="nofollow">包建强</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_3" href="http://www.cnblogs.com/subconscious/" rel="nofollow">计算机的潜意识</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_4" href="http://www.cnblogs.com/rubylouvre/" rel="nofollow" target="_blank">司徒正美</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_5" href="http://www.cnblogs.com/del/" rel="nofollow">万一</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_6" href="http://wayfarer.cnblogs.com/" rel="nofollow">张逸:晴窗笔记</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	1063864
+	</li>
+	<li class="liRank">
+		排名 -	44
+	</li>
+</ul>
+</div>
+
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/yjmyzz/p/dubbo-admin-monitor-deploy.html#3428471">1. Re:dubbox 的各种管理和监管</a></li>
+        <li class="recent_comment_body">monitor一直没有数据？是哪方面问题呢？请教下</li>
+        <li class="recent_comment_author">--小黑手600</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/yjmyzz/p/update-dubbo-to-spring-4-and-add-log4j2-support.html#3428391">2. Re:dubbox升级spring到4.x及添加log4j2支持</a></li>
+        <li class="recent_comment_body">@菩提树下的杨过引用@小黑手600反~墙，你懂的w(ﾟДﾟ)w 原来是这个样子滴.....😁...</li>
+        <li class="recent_comment_author">--小黑手600</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/yjmyzz/p/update-dubbo-to-spring-4-and-add-log4j2-support.html#3428372">3. Re:dubbox升级spring到4.x及添加log4j2支持</a></li>
+        <li class="recent_comment_body">@小黑手600反~墙，你懂的...</li>
+        <li class="recent_comment_author">--菩提树下的杨过</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/yjmyzz/p/update-dubbo-to-spring-4-and-add-log4j2-support.html#3428364">4. Re:dubbox升级spring到4.x及添加log4j2支持</a></li>
+        <li class="recent_comment_body">@菩提树下的杨过引用@小黑手600我刚试了，下载没问题我这里不是这个地址，直接跳到Amazon的AWS地址，然后就一直无限等待了。不过我已经编译源码了。那个跳转地址是...</li>
+        <li class="recent_comment_author">--小黑手600</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/yjmyzz/p/update-dubbo-to-spring-4-and-add-log4j2-support.html#3428114">5. Re:dubbox升级spring到4.x及添加log4j2支持</a></li>
+        <li class="recent_comment_body">@小黑手600我刚试了，下载没问题...</li>
+        <li class="recent_comment_author">--菩提树下的杨过</li>
+</ul>
+</div>
+</div>
+</div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2016 菩提树下的杨过
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>

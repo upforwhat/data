@@ -1,0 +1,1735 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>   
+   
+
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <title>mybatis动态SQL语句 - ask_rent的专栏
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="android的ram console是一个辅助调试的内核机制，它用一段物理内存虚拟一个console设备，这样printk的时候会把调试信息写一份到这块ram，最后通过/proc文件系统输出。Ram console 类似于普通的串口console, printk()的内部实现都是向已注册和打开的console输出信息的，console可以基于串口实现，当然也可以基于内存实现，区别是数据流" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+      <script type="text/javascript" src="http://static.blog.csdn.net/scripts/jquery-version.js"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/css/index.css">        <!--new top-->
+    
+      <!-- ad begin -->
+         <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/tracking.js"></script>
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/dark1/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/ask_rent/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+</head>
+<body>
+    <!-- 广告位开始 -->
+        <ins data-revive-zoneid="149" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/ask_rent">ask_rent的专栏</a></h2>
+            <h3>Java程序员交流</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+            
+                <li id="btnContents"><a href="http://blog.csdn.net/ask_rent?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/ask_rent?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/ask_rent/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "ask_rent";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/ask_rent";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://edu.csdn.net/huiyiCourse/detail/111
+">
+<font color=red>【免费公开课】C语言指针与汇编内存地址
+</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://blog.csdn.net/blogdevteam/article/details/51198465">
+<font color=blue>有奖试读—漫话程序员面试求职、升职加薪、创业与生活</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://huiyi.csdn.net/activity/product/goods_list?project_id=2928">
+<font color=red>chinapub读书会第8期：程序员代码面试揭秘</font></a>
+&nbsp;&nbsp;&nbsp;
+
+
+</font></a>
+</div>                        </div>
+                        
+
+
+
+<!-- 广告位开始 -->
+<ins data-revive-zoneid="72" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+<!-- 广告位结束 -->
+
+  
+<link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/search-service/main.js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0" />
+<link rel="stylesheet" href="http://static.blog.csdn.net/css/category.css?v=1.0" />
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+
+ <script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/replace.min.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+          
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/ask_rent/article/details/6320326">
+        mybatis动态SQL语句            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/sql' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">sql</a><a href='http://www.csdn.net/tag/null' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">null</a><a href='http://www.csdn.net/tag/list' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">list</a><a href='http://www.csdn.net/tag/xml' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">xml</a><a href='http://www.csdn.net/tag/string' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">string</a><a href='http://www.csdn.net/tag/java' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">java</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2011-04-13 13:34</span>
+            <span class="link_view" title="阅读次数">23133人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(4)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('mybatis动态SQL语句','6320326');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(6320326,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody"  style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            var lib = eval("("+$("#lib").attr("value")+")");
+            var html = "";
+            if (lib.err == 0) {
+                $.each(lib.data, function (i) {
+                    var obj = lib.data[i];
+                    //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                    html += ' <a href="' + obj.url + '" target="_blank">';
+                    html += ' <img src="' + obj.logo + '">';
+                    html += ' <em><b>' + obj.name + '</b></em>';
+                    html += ' </a>';
+                });
+                if (html != "") {
+                    setTimeout(function () {
+                        $("#lib").html(html);
+                        /*
+                        var testhtml = "";
+                        testhtml += '<a href="#">';
+                        testhtml += '<img src="http://img.knowledge.csdn.net/upload/base/1455589744328_328.jpg">';
+                        testhtml += '<em>Android知识库</em>';
+                        testhtml += '</a>';
+                        $(".embody_c").html(testhtml);
+                        */
+                        $("#embody").show();
+                    }, 100);
+                }
+            }          
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('791730','ask_rent','top','6320326');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">mybatis<em>（2）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/ask_rent/article/category/791730"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_791730">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+    <script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>  
+        <div   class="bog_copyright">         
+            <p  class="copyright_p" >版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+<h1 style="padding-left: 30px; text-align: center;">三、动态SQL语句</h1>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 有些时候，sql语句where条件中，需要一些安全判断，例如按性别检索，如果传入的参数是空的，此时查询出的结果很可能是空的，也许我们需要参数为空时，是查出全部的信息。这是我们可以使用动态sql，增加一个判断，当参数不符合要求的时候，我们可以不去判断此查询条件。<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 下文均采用mysql语法和函数（例如字符串链接函数CONCAT）。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 源代码<a href="http://writeblog.csdn.net/admin/blogs/782190"><span style="color: #006600;">http://limingnihao.javaeye.com/admin/blogs/782190</span></a>页面最下面；</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>3.1 if标签</h2>
+<p>&nbsp;</p>
+<p style="padding-left: 30px;">&nbsp;一个很普通的查询：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;查询学生list，like姓名&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">select</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"getStudentListLikeName"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">resultMap</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentResultMap"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;from&nbsp;STUDENT_TBL&nbsp;ST&nbsp; &nbsp;&nbsp;</span></li>
+<li><span>WHERE&nbsp;ST.STUDENT_NAME&nbsp;LIKE&nbsp;CONCAT(CONCAT('%',&nbsp;#{studentName}),'%') &nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">select</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 查询学生list，like姓名 --&gt;
+&lt;select id="getStudentListLikeName" parameterType="StudentEntity" resultMap="studentResultMap"&gt;
+	SELECT * from STUDENT_TBL ST 
+WHERE ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
+&lt;/select&gt;
+</pre>
+<p>&nbsp;</p>
+<p style="padding-left: 30px;"><br />但是此时如果studentName是null或空字符串，此语句很可能报错或查询结果为空。此时我们使用if动态sql语句先进行判断，如果值为null或等于空字符串，我们就不进行此条件的判断。</p>
+<p style="padding-left: 30px;">修改为：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;查询学生list，like姓名&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">select</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"&nbsp;getStudentListLikeName&nbsp;"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">resultMap</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentResultMap"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;from&nbsp;STUDENT_TBL&nbsp;ST &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentName!=null&nbsp;and&nbsp;studentName!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;ST.STUDENT_NAME&nbsp;LIKE&nbsp;CONCAT(CONCAT('%',&nbsp;#{studentName}),'%') &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">select</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 查询学生list，like姓名 --&gt;
+&lt;select id=" getStudentListLikeName " parameterType="StudentEntity" resultMap="studentResultMap"&gt;
+	SELECT * from STUDENT_TBL ST
+	&lt;if test="studentName!=null and studentName!='' "&gt;
+		WHERE ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
+	&lt;/if&gt;
+&lt;/select&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="padding-left: 30px;">&nbsp;此时，当studentName的值为null或&rsquo;&rsquo;的时候，我们并不进行where条件的判断，所以当studentName值为null或&rsquo;&rsquo;值，不附带这个条件，所以查询结果是全部。</p>
+<p style="padding-left: 30px;">&nbsp;由于参数是Java的实体类，所以我们可以把所有条件都附加上，使用时比较灵活， new一个这样的实体类，我们需要限制那个条件，只需要附上相应的值就会where这个条件，相反不去赋值就可以不在where中判断。</p>
+<p style="padding-left: 30px;"><br />&nbsp;&nbsp; 代码中的where标签，请参考3.2.1.</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;查询学生list，like姓名，=性别、=生日、=班级，使用where,参数entity类型&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">select</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"getStudentListWhereEntity"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">resultMap</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentResultMap"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;from&nbsp;STUDENT_TBL&nbsp;ST &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">where</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentName!=null&nbsp;and&nbsp;studentName!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ST.STUDENT_NAME&nbsp;LIKE&nbsp;CONCAT(CONCAT('%',&nbsp;#{studentName}),'%') &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentSex!=&nbsp;null&nbsp;and&nbsp;studentSex!=&nbsp;''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;</span><span class="attribute"><span style="color: #ff0000;">ST.STUDENT_SEX</span></span><span>&nbsp;=&nbsp;#{studentSex} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentBirthday!=null"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;</span><span class="attribute"><span style="color: #ff0000;">ST.STUDENT_BIRTHDAY</span></span><span>&nbsp;=&nbsp;#{studentBirthday} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"classEntity!=null&nbsp;and&nbsp;classEntity.classID&nbsp;!=null&nbsp;and&nbsp;classEntity.classID!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;</span><span class="attribute"><span style="color: #ff0000;">ST.CLASS_ID</span></span><span>&nbsp;=&nbsp;#{classEntity.classID} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">where</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">select</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 查询学生list，like姓名，=性别、=生日、=班级，使用where,参数entity类型 --&gt;
+&lt;select id="getStudentListWhereEntity" parameterType="StudentEntity" resultMap="studentResultMap"&gt;
+	SELECT * from STUDENT_TBL ST
+	&lt;where&gt;
+		&lt;if test="studentName!=null and studentName!='' "&gt;
+			ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
+		&lt;/if&gt;
+		&lt;if test="studentSex!= null and studentSex!= '' "&gt;
+			AND ST.STUDENT_SEX = #{studentSex}
+		&lt;/if&gt;
+		&lt;if test="studentBirthday!=null"&gt;
+		 	AND ST.STUDENT_BIRTHDAY = #{studentBirthday}
+		&lt;/if&gt;
+		&lt;if test="classEntity!=null and classEntity.classID !=null and classEntity.classID!='' "&gt;
+			AND ST.CLASS_ID = #{classEntity.classID}
+		&lt;/if&gt;
+	&lt;/where&gt;
+&lt;/select&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="padding-left: 30px;">查询，姓名中有&lsquo;李&rsquo;，男，生日在&lsquo;1985-05-28&rsquo;，班级在&lsquo;20000002&rsquo;的学生。&nbsp;</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Java代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-j">
+<li><span><span>StudentEntity&nbsp;entity&nbsp;=&nbsp;</span><span class="keyword"><strong><span style="color: #7f0055;">new</span></strong></span><span>&nbsp;StudentEntity(); &nbsp;&nbsp;</span></span></li>
+<li><span>entity.setStudentName(</span><span class="string"><span style="color: #0000ff;">"李"</span></span><span>); &nbsp;&nbsp;</span></li>
+<li><span>entity.setStudentSex(</span><span class="string"><span style="color: #0000ff;">"男"</span></span><span>); &nbsp;&nbsp;</span></li>
+<li><span>entity.setStudentBirthday(StringUtil.parse(</span><span class="string"><span style="color: #0000ff;">"1985-05-28"</span></span><span>)); &nbsp;&nbsp;</span></li>
+<li><span>entity.setClassEntity(classMapper.getClassByID(</span><span class="string"><span style="color: #0000ff;">"20000002"</span></span><span>)); &nbsp;&nbsp;</span></li>
+<li><span>List&lt;StudentEntity&gt;&nbsp;studentList&nbsp;=&nbsp;studentMapper.getStudentListWhereEntity(entity); &nbsp;&nbsp;</span></li>
+<li><span class="keyword"><strong><span style="color: #7f0055;">for</span></strong></span><span>(&nbsp;StudentEntity&nbsp;entityTemp&nbsp;:&nbsp;studentList){ &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(entityTemp.toString()); &nbsp;&nbsp;</span></li>
+<li><span>}&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="java" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">StudentEntity entity = new StudentEntity();
+entity.setStudentName("李");
+entity.setStudentSex("男");
+entity.setStudentBirthday(StringUtil.parse("1985-05-28"));
+entity.setClassEntity(classMapper.getClassByID("20000002"));
+List&lt;StudentEntity&gt; studentList = studentMapper.getStudentListWhereEntity(entity);
+for( StudentEntity entityTemp : studentList){
+	System.out.println(entityTemp.toString());
+}
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><br />3.2 where、set、trim标签</h2>
+<h3 style="padding-left: 30px;"><br />3.2.1 where</h3>
+<p style="padding-left: 60px;">当if标签较多时，这样的组合可能会导致错误。例如，like姓名，等于指定性别等：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;查询学生list，like姓名，=性别&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">select</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"getStudentListWhere"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">resultMap</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentResultMap"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;from&nbsp;STUDENT_TBL&nbsp;ST &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentName!=null&nbsp;and&nbsp;studentName!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ST.STUDENT_NAME&nbsp;LIKE&nbsp;CONCAT(CONCAT('%',&nbsp;#{studentName}),'%') &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentSex!=&nbsp;null&nbsp;and&nbsp;studentSex!=&nbsp;''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;</span><span class="attribute"><span style="color: #ff0000;">ST.STUDENT_SEX</span></span><span>&nbsp;=&nbsp;#{studentSex} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">select</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 查询学生list，like姓名，=性别 --&gt;
+&lt;select id="getStudentListWhere" parameterType="StudentEntity" resultMap="studentResultMap"&gt;
+	SELECT * from STUDENT_TBL ST
+		WHERE
+		&lt;if test="studentName!=null and studentName!='' "&gt;
+			ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
+		&lt;/if&gt;
+		&lt;if test="studentSex!= null and studentSex!= '' "&gt;
+			AND ST.STUDENT_SEX = #{studentSex}
+		&lt;/if&gt;
+&lt;/select&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="padding-left: 60px;">&nbsp;如果上面例子，参数studentName为null或&rsquo;&rsquo;，则或导致此sql组合成&ldquo;WHERE AND&rdquo;之类的关键字多余的错误SQL。<br />&nbsp;这时我们可以使用where动态语句来解决。这个&ldquo;where&rdquo;标签会知道如果它包含的标签中有返回值的话，它就插入一个&lsquo;where&rsquo;。此外，如果标签返回的内容是以AND 或OR 开头的，则它会剔除掉。<br />&nbsp;上面例子修改为：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;查询学生list，like姓名，=性别&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">select</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"getStudentListWhere"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">resultMap</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentResultMap"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;from&nbsp;STUDENT_TBL&nbsp;ST &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">where</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentName!=null&nbsp;and&nbsp;studentName!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ST.STUDENT_NAME&nbsp;LIKE&nbsp;CONCAT(CONCAT('%',&nbsp;#{studentName}),'%') &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentSex!=&nbsp;null&nbsp;and&nbsp;studentSex!=&nbsp;''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;</span><span class="attribute"><span style="color: #ff0000;">ST.STUDENT_SEX</span></span><span>&nbsp;=&nbsp;#{studentSex} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">where</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">select</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 查询学生list，like姓名，=性别 --&gt;
+&lt;select id="getStudentListWhere" parameterType="StudentEntity" resultMap="studentResultMap"&gt;
+	SELECT * from STUDENT_TBL ST
+	&lt;where&gt;
+		&lt;if test="studentName!=null and studentName!='' "&gt;
+			ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
+		&lt;/if&gt;
+		&lt;if test="studentSex!= null and studentSex!= '' "&gt;
+			AND ST.STUDENT_SEX = #{studentSex}
+		&lt;/if&gt;
+	&lt;/where&gt;
+&lt;/select&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 style="padding-left: 30px;"><br />3.2.2 set</h3>
+<p style="padding-left: 60px;">当在update语句中使用if标签时，如果前面的if没有执行，则或导致逗号多余错误。使用set标签可以将动态的配置SET 关键字，和剔除追加到条件末尾的任何不相关的逗号。<br />没有使用if标签时，如果有一个参数为null，都会导致错误，如下示例：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;更新学生信息&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">update</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"updateStudent"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;UPDATE&nbsp;STUDENT_TBL &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_NAME</span></span><span>&nbsp;=&nbsp;#{studentName}, &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_SEX</span></span><span>&nbsp;=&nbsp;#{studentSex}, &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_BIRTHDAY</span></span><span>&nbsp;=&nbsp;#{studentBirthday}, &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.CLASS_ID</span></span><span>&nbsp;=&nbsp;#{classEntity.classID} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_ID</span></span><span>&nbsp;=&nbsp;#{studentID}; &nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">update</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 更新学生信息 --&gt;
+&lt;update id="updateStudent" parameterType="StudentEntity"&gt;
+	UPDATE STUDENT_TBL
+	   SET STUDENT_TBL.STUDENT_NAME = #{studentName},
+	       STUDENT_TBL.STUDENT_SEX = #{studentSex},
+	       STUDENT_TBL.STUDENT_BIRTHDAY = #{studentBirthday},
+	       STUDENT_TBL.CLASS_ID = #{classEntity.classID}
+	 WHERE STUDENT_TBL.STUDENT_ID = #{studentID};
+&lt;/update&gt;
+</pre>
+<p>&nbsp;</p>
+<p style="padding-left: 60px;"><br />&nbsp;使用set+if标签修改后，如果某项为null则不进行更新，而是保持数据库原值。如下示例：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;更新学生信息&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">update</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"updateStudent"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;UPDATE&nbsp;STUDENT_TBL &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">set</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentName!=null&nbsp;and&nbsp;studentName!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_NAME</span></span><span>&nbsp;=&nbsp;#{studentName}, &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentSex!=null&nbsp;and&nbsp;studentSex!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_SEX</span></span><span>&nbsp;=&nbsp;#{studentSex}, &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentBirthday!=null&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_BIRTHDAY</span></span><span>&nbsp;=&nbsp;#{studentBirthday}, &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"classEntity!=null&nbsp;and&nbsp;classEntity.classID!=null&nbsp;and&nbsp;classEntity.classID!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.CLASS_ID</span></span><span>&nbsp;=&nbsp;#{classEntity.classID} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">set</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_ID</span></span><span>&nbsp;=&nbsp;#{studentID}; &nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">update</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 更新学生信息 --&gt;
+&lt;update id="updateStudent" parameterType="StudentEntity"&gt;
+	UPDATE STUDENT_TBL
+	&lt;set&gt;
+		&lt;if test="studentName!=null and studentName!='' "&gt;
+			STUDENT_TBL.STUDENT_NAME = #{studentName},
+		&lt;/if&gt;
+		&lt;if test="studentSex!=null and studentSex!='' "&gt;
+			STUDENT_TBL.STUDENT_SEX = #{studentSex},
+		&lt;/if&gt;
+		&lt;if test="studentBirthday!=null "&gt;
+			STUDENT_TBL.STUDENT_BIRTHDAY = #{studentBirthday},
+		&lt;/if&gt;
+		&lt;if test="classEntity!=null and classEntity.classID!=null and classEntity.classID!='' "&gt;
+			STUDENT_TBL.CLASS_ID = #{classEntity.classID}
+		&lt;/if&gt;
+	&lt;/set&gt;
+	WHERE STUDENT_TBL.STUDENT_ID = #{studentID};
+&lt;/update&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 style="padding-left: 30px;">3.2.3 trim</h3>
+<p style="padding-left: 60px;">&nbsp;trim是更灵活的去处多余关键字的标签，他可以实践where和set的效果。</p>
+<p style="padding-left: 60px;"><br />&nbsp;where例子的等效trim语句：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;查询学生list，like姓名，=性别&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">select</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"getStudentListWhere"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">resultMap</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentResultMap"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;from&nbsp;STUDENT_TBL&nbsp;ST &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">trim</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">prefix</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"WHERE"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">prefixOverrides</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"AND|OR"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentName!=null&nbsp;and&nbsp;studentName!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ST.STUDENT_NAME&nbsp;LIKE&nbsp;CONCAT(CONCAT('%',&nbsp;#{studentName}),'%') &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentSex!=&nbsp;null&nbsp;and&nbsp;studentSex!=&nbsp;''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;</span><span class="attribute"><span style="color: #ff0000;">ST.STUDENT_SEX</span></span><span>&nbsp;=&nbsp;#{studentSex} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">trim</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">select</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 查询学生list，like姓名，=性别 --&gt;
+&lt;select id="getStudentListWhere" parameterType="StudentEntity" resultMap="studentResultMap"&gt;
+	SELECT * from STUDENT_TBL ST
+	&lt;trim prefix="WHERE" prefixOverrides="AND|OR"&gt;
+		&lt;if test="studentName!=null and studentName!='' "&gt;
+			ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
+		&lt;/if&gt;
+		&lt;if test="studentSex!= null and studentSex!= '' "&gt;
+			AND ST.STUDENT_SEX = #{studentSex}
+		&lt;/if&gt;
+	&lt;/trim&gt;
+&lt;/select&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="padding-left: 60px;">set例子的等效trim语句：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;更新学生信息&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">update</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"updateStudent"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;UPDATE&nbsp;STUDENT_TBL &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">trim</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">prefix</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"SET"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">suffixOverrides</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">","</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentName!=null&nbsp;and&nbsp;studentName!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_NAME</span></span><span>&nbsp;=&nbsp;#{studentName}, &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentSex!=null&nbsp;and&nbsp;studentSex!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_SEX</span></span><span>&nbsp;=&nbsp;#{studentSex}, &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentBirthday!=null&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_BIRTHDAY</span></span><span>&nbsp;=&nbsp;#{studentBirthday}, &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">if</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"classEntity!=null&nbsp;and&nbsp;classEntity.classID!=null&nbsp;and&nbsp;classEntity.classID!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.CLASS_ID</span></span><span>&nbsp;=&nbsp;#{classEntity.classID} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">if</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">trim</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;</span><span class="attribute"><span style="color: #ff0000;">STUDENT_TBL.STUDENT_ID</span></span><span>&nbsp;=&nbsp;#{studentID}; &nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">update</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 更新学生信息 --&gt;
+&lt;update id="updateStudent" parameterType="StudentEntity"&gt;
+	UPDATE STUDENT_TBL
+	&lt;trim prefix="SET" suffixOverrides=","&gt;
+		&lt;if test="studentName!=null and studentName!='' "&gt;
+			STUDENT_TBL.STUDENT_NAME = #{studentName},
+		&lt;/if&gt;
+		&lt;if test="studentSex!=null and studentSex!='' "&gt;
+			STUDENT_TBL.STUDENT_SEX = #{studentSex},
+		&lt;/if&gt;
+		&lt;if test="studentBirthday!=null "&gt;
+			STUDENT_TBL.STUDENT_BIRTHDAY = #{studentBirthday},
+		&lt;/if&gt;
+		&lt;if test="classEntity!=null and classEntity.classID!=null and classEntity.classID!='' "&gt;
+			STUDENT_TBL.CLASS_ID = #{classEntity.classID}
+		&lt;/if&gt;
+	&lt;/trim&gt;
+	WHERE STUDENT_TBL.STUDENT_ID = #{studentID};
+&lt;/update&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><br />3.3 choose (when, otherwise)</h2>
+<p style="padding-left: 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 有时候我们并不想应用所有的条件，而只是想从多个选项中选择一个。MyBatis提供了choose 元素，按顺序判断when中的条件出否成立，如果有一个成立，则choose结束。当choose中所有when的条件都不满则时，则执行otherwise中的sql。类似于Java 的switch 语句，choose为switch，when为case，otherwise则为default。<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if是与(and)的关系，而choose是或（or）的关系。</p>
+<p style="padding-left: 30px;"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 例如下面例子，同样把所有可以限制的条件都写上，方面使用。选择条件顺序，when标签的从上到下的书写顺序：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><span class="comments"><span style="color: #008200;">&lt;!--&nbsp;查询学生list，like姓名、或=性别、或=生日、或=班级，使用choose&nbsp;--&gt;</span></span><span>&nbsp;&nbsp;</span></span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">select</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"getStudentListChooseEntity"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">parameterType</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"StudentEntity"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">resultMap</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentResultMap"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;from&nbsp;STUDENT_TBL&nbsp;ST &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">where</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">choose</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">when</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentName!=null&nbsp;and&nbsp;studentName!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ST.STUDENT_NAME&nbsp;LIKE&nbsp;CONCAT(CONCAT('%',&nbsp;#{studentName}),'%') &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">when</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">when</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentSex!=&nbsp;null&nbsp;and&nbsp;studentSex!=&nbsp;''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;</span><span class="attribute"><span style="color: #ff0000;">ST.STUDENT_SEX</span></span><span>&nbsp;=&nbsp;#{studentSex} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">when</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">when</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentBirthday!=null"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;</span><span class="attribute"><span style="color: #ff0000;">ST.STUDENT_BIRTHDAY</span></span><span>&nbsp;=&nbsp;#{studentBirthday} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">when</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">when</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">test</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"classEntity!=null&nbsp;and&nbsp;classEntity.classID&nbsp;!=null&nbsp;and&nbsp;classEntity.classID!=''&nbsp;"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;</span><span class="attribute"><span style="color: #ff0000;">ST.CLASS_ID</span></span><span>&nbsp;=&nbsp;#{classEntity.classID} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">when</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">otherwise</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">otherwise</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">choose</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">where</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">select</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;!-- 查询学生list，like姓名、或=性别、或=生日、或=班级，使用choose --&gt;
+&lt;select id="getStudentListChooseEntity" parameterType="StudentEntity" resultMap="studentResultMap"&gt;
+	SELECT * from STUDENT_TBL ST
+	&lt;where&gt;
+		&lt;choose&gt;
+			&lt;when test="studentName!=null and studentName!='' "&gt;
+					ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
+			&lt;/when&gt;
+			&lt;when test="studentSex!= null and studentSex!= '' "&gt;
+					AND ST.STUDENT_SEX = #{studentSex}
+			&lt;/when&gt;
+			&lt;when test="studentBirthday!=null"&gt;
+				AND ST.STUDENT_BIRTHDAY = #{studentBirthday}
+			&lt;/when&gt;
+			&lt;when test="classEntity!=null and classEntity.classID !=null and classEntity.classID!='' "&gt;
+				AND ST.CLASS_ID = #{classEntity.classID}
+			&lt;/when&gt;
+			&lt;otherwise&gt;
+				
+			&lt;/otherwise&gt;
+		&lt;/choose&gt;
+	&lt;/where&gt;
+&lt;/select&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>3.4 foreach</h2>
+<p style="padding-left: 30px;">对于动态SQL 非常必须的，主是要迭代一个集合，通常是用于IN 条件。<br />List 实例将使用&ldquo;list&rdquo;做为键，数组实例以&ldquo;array&rdquo; 做为键。</p>
+<p style="padding-left: 30px;">&nbsp;</p>
+<h3 style="padding-left: 30px;">&nbsp;3.4.1参数为list实例的写法：</h3>
+<p style="padding-left: 60px;">SQL写法：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">select</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"getStudentListByClassIDs"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">resultMap</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentResultMap"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;FROM&nbsp;STUDENT_TBL&nbsp;ST &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;ST.CLASS_ID&nbsp;IN&nbsp; &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">foreach</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">collection</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"list"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">item</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"classList"</span></span><span>&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">open</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"("</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">separator</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">","</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">close</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">")"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{classList} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">foreach</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">select</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;select id="getStudentListByClassIDs" resultMap="studentResultMap"&gt;
+	SELECT * FROM STUDENT_TBL ST
+	 WHERE ST.CLASS_ID IN 
+	 &lt;foreach collection="list" item="classList"  open="(" separator="," close=")"&gt;
+	 	#{classList}
+	 &lt;/foreach&gt;	
+&lt;/select&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="padding-left: 60px;">接口的方法声明：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Java代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-j">
+<li><span><span class="keyword"><strong><span style="color: #7f0055;">public</span></strong></span><span>&nbsp;List&lt;StudentEntity&gt;&nbsp;getStudentListByClassIDs(List&lt;String&gt;&nbsp;classList);&nbsp;&nbsp;</span></span></li>
+</ol></div>
+<pre class="java" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">public List&lt;StudentEntity&gt; getStudentListByClassIDs(List&lt;String&gt; classList);</pre>
+<p>&nbsp;</p>
+<p style="padding-left: 60px;">&nbsp;测试代码，查询学生中，在20000002、20000003这两个班级的学生：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Java代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-j">
+<li><span><span>List&lt;String&gt;&nbsp;classList&nbsp;=&nbsp;</span><span class="keyword"><strong><span style="color: #7f0055;">new</span></strong></span><span>&nbsp;ArrayList&lt;String&gt;(); &nbsp;&nbsp;</span></span></li>
+<li><span>classList.add(</span><span class="string"><span style="color: #0000ff;">"20000002"</span></span><span>); &nbsp;&nbsp;</span></li>
+<li><span>classList.add(</span><span class="string"><span style="color: #0000ff;">"20000003"</span></span><span>); &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;</span></li>
+<li><span>List&lt;StudentEntity&gt;&nbsp;studentList&nbsp;=&nbsp;studentMapper.getStudentListByClassIDs(classList); &nbsp;&nbsp;</span></li>
+<li><span class="keyword"><strong><span style="color: #7f0055;">for</span></strong></span><span>(&nbsp;StudentEntity&nbsp;entityTemp&nbsp;:&nbsp;studentList){ &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(entityTemp.toString()); &nbsp;&nbsp;</span></li>
+<li><span>}&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="java" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">List&lt;String&gt; classList = new ArrayList&lt;String&gt;();
+classList.add("20000002");
+classList.add("20000003");
+
+List&lt;StudentEntity&gt; studentList = studentMapper.getStudentListByClassIDs(classList);
+for( StudentEntity entityTemp : studentList){
+	System.out.println(entityTemp.toString());
+}
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 style="padding-left: 30px;"><br />&nbsp;3.4.2参数为Array实例的写法：</h3>
+<p>&nbsp;</p>
+<p style="padding-left: 60px;">SQL语句：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Xml代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-xml">
+<li><span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">select</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">id</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"getStudentListByClassIDs"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">resultMap</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"studentResultMap"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;FROM&nbsp;STUDENT_TBL&nbsp;ST &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;ST.CLASS_ID&nbsp;IN&nbsp; &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;</span><span class="tag-name">foreach</span></span></strong><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">collection</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"array"</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">item</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"ids"</span></span><span>&nbsp;&nbsp;</span><span class="attribute"><span style="color: #ff0000;">open</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">"("</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">separator</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">","</span></span><span>&nbsp;</span><span class="attribute"><span style="color: #ff0000;">close</span></span><span>=</span><span class="attribute-value"><span style="color: #0000ff;">")"</span></span><span class="tag"><strong><span style="color: #006699;">&gt;</span></strong></span><span>&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{ids} &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">foreach</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+<li><strong><span style="color: #006699;"><span class="tag">&lt;/</span><span class="tag-name">select</span><span class="tag">&gt;</span></span></strong><span>&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="xml" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">&lt;select id="getStudentListByClassIDs" resultMap="studentResultMap"&gt;
+	SELECT * FROM STUDENT_TBL ST
+	 WHERE ST.CLASS_ID IN 
+	 &lt;foreach collection="array" item="ids"  open="(" separator="," close=")"&gt;
+	 	#{ids}
+	 &lt;/foreach&gt;
+&lt;/select&gt;
+</pre>
+<p>&nbsp;</p>
+<p style="padding-left: 60px;"><br />&nbsp;接口的方法声明：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Java代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-j">
+<li><span><span class="keyword"><strong><span style="color: #7f0055;">public</span></strong></span><span>&nbsp;List&lt;StudentEntity&gt;&nbsp;getStudentListByClassIDs(String[]&nbsp;ids);&nbsp;&nbsp;</span></span></li>
+</ol></div>
+<pre class="java" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">public List&lt;StudentEntity&gt; getStudentListByClassIDs(String[] ids);</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="padding-left: 60px;">测试代码，查询学生中，在20000002、20000003这两个班级的学生：</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools">Java代码 <a title="复制代码" onclick="dp.sh.Toolbar.CopyToClipboard(this);return false;" href="http://limingnihao.iteye.com/blog/782190#"><img src="http://limingnihao.iteye.com/images/icon_copy.gif" alt="复制代码" /></a>&nbsp;<a title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;" href="javascript:void()"><img class="star" src="http://limingnihao.iteye.com/images/icon_star.png" alt="收藏代码" /><img class="spinner" style="display: none;" src="http://limingnihao.iteye.com/images/spinner.gif" alt="" /></a></div>
+</div>
+<ol class="dp-j">
+<li><span><span>String[]&nbsp;ids&nbsp;=&nbsp;</span><span class="keyword"><strong><span style="color: #7f0055;">new</span></strong></span><span>&nbsp;String[</span><span class="number"><span style="color: #c00000;">2</span></span><span>]; &nbsp;&nbsp;</span></span></li>
+<li><span>ids[</span><span class="number"><span style="color: #c00000;">0</span></span><span>]&nbsp;=&nbsp;</span><span class="string"><span style="color: #0000ff;">"20000002"</span></span><span>; &nbsp;&nbsp;</span></li>
+<li><span>ids[</span><span class="number"><span style="color: #c00000;">1</span></span><span>]&nbsp;=&nbsp;</span><span class="string"><span style="color: #0000ff;">"20000003"</span></span><span>; &nbsp;&nbsp;</span></li>
+<li><span>List&lt;StudentEntity&gt;&nbsp;studentList&nbsp;=&nbsp;studentMapper.getStudentListByClassIDs(ids); &nbsp;&nbsp;</span></li>
+<li><span class="keyword"><strong><span style="color: #7f0055;">for</span></strong></span><span>(&nbsp;StudentEntity&nbsp;entityTemp&nbsp;:&nbsp;studentList){ &nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(entityTemp.toString()); &nbsp;&nbsp;</span></li>
+<li><span>}&nbsp;&nbsp;</span></li>
+</ol></div>
+<pre class="java" style="display: none;" title="MyBatis学习 之 三、动态SQL语句">String[] ids = new String[2];
+ids[0] = "20000002";
+ids[1] = "20000003";
+List&lt;StudentEntity&gt; studentList = studentMapper.getStudentListByClassIDs(ids);
+for( StudentEntity entityTemp : studentList){
+	System.out.println(entityTemp.toString());
+}
+</pre>
+<p>&nbsp;</p>   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css" />
+
+    
+<!--172.16.140.14-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+        <div id="digg" ArticleId="6320326">
+            <dl id="btnDigg" class="digg digg_disable">
+               
+                 <dt>顶</dt>
+                <dd>3</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/ask_rent/article/details/6313524';">上一篇</span><a href="/ask_rent/article/details/6313524" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">flex4 日期类型字符串转日期类型（string转Date）</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/ask_rent/article/details/6320793';">下一篇</span><a href="/ask_rent/article/details/6320793" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">flex include和import</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article"  style="display:none">
+                <h4>我的同类文章</h4>
+                <div class="similar_c"style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('791730','ask_rent','foot','6320326');">mybatis<em>（2）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141"  style="max-height:195px;">
+                        <a href="http://blog.csdn.net" style="display:none">http://blog.csdn.net</a>
+                        <ul class="similar_list fl">                          
+                        </ul>
+
+                        <ul class="similar_list fr">                           
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+    <script  type="text/javascript">
+        $(function () {
+            GetCategoryArticles('791730', 'ask_rent','foot','6320326');
+        });
+    </script>
+      
+</div>
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/ask_rent/svc/GetSuggestContent/6320326",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ <link rel="stylesheet" href="http://static.blog.csdn.net/css/replace.css"/>
+<div id="relate" data-mod="popu_218"  class="tracking-ad">
+        <div class="relate_t">
+            <h3><span>参考知识库</span></h3>
+        </div>
+        <div class="relate_c">
+        </div>
+</div>
+ 
+
+<dl class="blog-ass-articl" id="res-relatived" > 
+    <div class="embody embody_b" id="libkeyparent"  style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "6320326",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    </div>  
+
+    
+     <div id="res"  data-mod="popu_36"  class="tracking-ad" style="width: 42%;float: left;margin-right: 30px;"></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'mybatis动态SQL语句' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+    <div id="ad_cen">        
+<!-- 广告位开始 -->
+<ins data-revive-zoneid="71" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+<!-- 广告位结束 -->    </div>  
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '6320326';
+    var commentscount = 4;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  language="javascript" type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/ask_rent/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+ <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/async_new.js"></script>      
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/ask_rent" target="_blank">
+    <img src="http://avatar.csdn.net/E/F/2/1_ask_rent.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/ask_rent" class="user_name" target="_blank">ask_rent</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=ask_rent','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>185769次</span></li>
+    <li>积分：<span>2573</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog5.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：2573 </div>
+        </span>  </li>
+    <li>排名：<span>第9157名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>70篇</span></li>
+    <li>转载：<span>14篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>41条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/ask_rent/article/category/793130" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">flex</a><span>(36)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/818921" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Java</a><span>(16)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/793307" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux</a><span>(15)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/791730" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">mybatis</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/792256" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">myeclipse</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/793621" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">SQLServer</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/791731" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">情感</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/793127" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">电脑</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1139057" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">ymPrompt</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142741" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">MySQL</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142742" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">root</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142743" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">mysqladmin</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142744" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">password</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142747" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据库</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142748" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">DOS</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142749" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">exit</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142750" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">database</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142751" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">create</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142853" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">mysql  innodb  sqlyog.err  数据库  教训   |字号大中小 订阅</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142857" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">innodb</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1142858" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">sqlyog.err</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1143464" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">TortoiseSVN</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1143465" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">比较</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1143466" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">SVN</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1143467" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Merge</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1143468" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Differ</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1143469" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">WinMerge</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1143470" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">BeyondCompare</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1144333" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">view</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1144334" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">视图</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1144335" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">hibernate</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1144336" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Debug</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1150860" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">jar</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1150861" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">main</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1150862" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">class</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1150869" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">properties</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1150870" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">fileinputstream</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1150871" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">inputstream</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1150872" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">getResource</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1150873" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">ClassLoader</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1151241" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">无法创建名为&quot;WScript.Shell&quot;的对象</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1151243" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">vbs</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1151244" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">regsvr32</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1151245" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">wscript</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1151246" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">WScript.Shell</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1151247" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">没有文件扩展&quot;.vbs&quot;的脚本引擎</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1307058" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">润乾</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1307061" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">快逸</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1307062" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">报表</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1307063" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">runqian</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1352662" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">apache</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1352663" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">tomcat</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1352664" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">dbcp</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1352665" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">连接池</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1352666" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">属性</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1396148" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">fusionchart</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1396149" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">仪表盘</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1396150" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">data</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1396151" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">display</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1396152" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">图表</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1398344" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">存储过程</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1398345" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">定时器</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1398346" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Timer</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1404751" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">jndi</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1404752" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">jboss</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1404753" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">c3p0</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1467241" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">get</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1467243" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">exception</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1561827" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">html</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1561829" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">body</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1561831" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">document</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1561833" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">静态页面</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/ask_rent/article/category/1561835" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">documentElement</a><span>(1)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/ask_rent/article/month/2014/05">2014年05月</a><span>(1)</span></li><li><a href="/ask_rent/article/month/2013/08">2013年08月</a><span>(1)</span></li><li><a href="/ask_rent/article/month/2013/06">2013年06月</a><span>(1)</span></li><li><a href="/ask_rent/article/month/2013/04">2013年04月</a><span>(3)</span></li><li><a href="/ask_rent/article/month/2013/02">2013年02月</a><span>(1)</span></li><li><a href="/ask_rent/article/month/2013/01">2013年01月</a><span>(1)</span></li><li><a href="/ask_rent/article/month/2012/12">2012年12月</a><span>(1)</span></li><li><a href="/ask_rent/article/month/2012/10">2012年10月</a><span>(1)</span></li><li><a href="/ask_rent/article/month/2012/05">2012年05月</a><span>(10)</span></li><li><a href="/ask_rent/article/month/2011/05">2011年05月</a><span>(9)</span></li><li><a href="/ask_rent/article/month/2011/04">2011年04月</a><span>(22)</span></li><li><a href="/ask_rent/article/month/2011/03">2011年03月</a><span>(32)</span></li><li><a href="/ask_rent/article/month/2011/02">2011年02月</a><span>(1)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/ask_rent/article/details/6320326" title="mybatis动态SQL语句">mybatis动态SQL语句</a><span>(23104)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6395288" title="Flex（try-catch-finally）机制">Flex（try-catch-finally）机制</a><span>(9373)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/8080857" title="struts2 token 使用方法及问题解决">struts2 token 使用方法及问题解决</a><span>(7722)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/7549592" title="MySQL备份/还原 Unknown storage engine &#39;InnoDB&#39;">MySQL备份/还原 Unknown storage engine &#39;InnoDB&#39;</a><span>(5883)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6248607" title="如何在CentOS上安装电影播放器">如何在CentOS上安装电影播放器</a><span>(5558)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/8813210" title="fusioncharts 经常出现no data to display">fusioncharts 经常出现no data to display</a><span>(5017)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/7577519" title="javax.mail.MessagingException: 553 authentication is required">javax.mail.MessagingException: 553 authentication is required</a><span>(4242)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6210709" title="我的青春谁做主——经典台词之人生哲理">我的青春谁做主——经典台词之人生哲理</a><span>(4075)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6346929" title="flex 弹出的titleWindow 隐藏标题栏">flex 弹出的titleWindow 隐藏标题栏</a><span>(4010)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6275710" title="写一个java的网络数据包分析程序(一)">写一个java的网络数据包分析程序(一)</a><span>(3577)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/ask_rent/article/details/6281548" title="Flex导出Excel">Flex导出Excel</a><span>(6)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6346929" title="flex 弹出的titleWindow 隐藏标题栏">flex 弹出的titleWindow 隐藏标题栏</a><span>(5)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6359253" title="flex4 SuperTabNavigator 添加关闭图片">flex4 SuperTabNavigator 添加关闭图片</a><span>(4)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6320326" title="mybatis动态SQL语句">mybatis动态SQL语句</a><span>(4)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/7577519" title="javax.mail.MessagingException: 553 authentication is required">javax.mail.MessagingException: 553 authentication is required</a><span>(3)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6232088" title="FLEX选项卡">FLEX选项卡</a><span>(3)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6320823" title="flex 1037:包不能嵌套">flex 1037:包不能嵌套</a><span>(3)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/7586084" title="执行vbs脚本中遇到的问题及解决方案">执行vbs脚本中遇到的问题及解决方案</a><span>(2)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6275710" title="写一个java的网络数据包分析程序(一)">写一个java的网络数据包分析程序(一)</a><span>(2)</span>
+</li>
+<li>
+<a href="/ask_rent/article/details/6224591" title="MyEclipse6.5 + Adobe Flex Builder 3 插件版">MyEclipse6.5 + Adobe Flex Builder 3 插件版</a><span>(2)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/evan_man/article/details/51328628" 
+target="_blank">*EventBus的使用与深入学习</a></li>
+<li><a href="http://blog.csdn.net/xuehuayous/article/details/51324656" 
+target="_blank">*Android 拍照、选择图片并裁剪</a></li>
+<li><a href="http://blog.csdn.net/u013831257/article/details/50784565" 
+
+target="_blank">* 安卓自定义View进阶-Path基本操作</a></li>
+<li><a 
+
+href="http://blog.csdn.net/je930502/article/details/50650231"target="_blank">*Ceph架构</a></li>
+<li><a href="http://blog.csdn.net/gj19890923/article/details/51333899" 
+target="_blank">*neutron-server的启动流程(一)</a></li>
+<li><a href="http://blog.csdn.net/xueshanhaizi/article/details/51321382" target="_blank">*Android事件分发机制浅析</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/ask_rent/article/details/6320326#comments">mybatis动态SQL语句</a>
+    <p style="margin:0px;"><a href="/huangxiaoming1993" class="user_name">huangxiaoming1993</a>:
+nice
+    </p>
+    </li>
+    <li>
+   
+         <a href="/ask_rent/article/details/6320326#comments">mybatis动态SQL语句</a>
+    <p style="margin:0px;"><a href="/tx542009" class="user_name">tx542009</a>:
+谢谢作者分享这么好的资料！感谢
+    </p>
+    </li>
+    <li>
+   
+         <a href="/ask_rent/article/details/6254513#comments">ActionScript读取XML的路径问题</a>
+    <p style="margin:0px;"><a href="/whlei01" class="user_name">whlei01</a>:
+如果是 本地文件 的相对路径呢
+    </p>
+    </li>
+    <li>
+   
+         <a href="/ask_rent/article/details/7577519#comments">javax.mail.MessagingException: 553 authentication is required</a>
+    <p style="margin:0px;"><a href="/huangzhen1991" class="user_name">huangzhen1991</a>:
+呵呵！同病相怜留个言
+    </p>
+    </li>
+    <li>
+   
+         <a href="/ask_rent/article/details/6281548#comments">Flex导出Excel</a>
+    <p style="margin:0px;"><a href="/ask_rent" class="user_name">ask_rent</a>:
+@henchong:现在不用flex了，这个就没有再处理过
+    </p>
+    </li>
+    <li>
+   
+         <a href="/ask_rent/article/details/6395288#comments">Flex（try-catch-finally）机制</a>
+    <p style="margin:0px;"><a href="/u013364850" class="user_name">u013364850</a>:
+不错
+    </p>
+    </li>
+    <li>
+   
+         <a href="/ask_rent/article/details/6395288#comments">Flex导出Excel</a>
+    <p style="margin:0px;"><a href="/huangyong_asp" class="user_name">huangyong_asp</a>:
+ExportExcel.loadDGInExcel(this.dataGrid,&#39;ExcelExpo...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/ask_rent/article/details/8813210#comments">fusioncharts 经常出现no data to display</a>
+    <p style="margin:0px;"><a href="/ask_rent" class="user_name">ask_rent</a>:
+@xxy6414:好的，谢谢你！
+    </p>
+    </li>
+    <li>
+   
+         <a href="/ask_rent/article/details/8813210#comments">fusioncharts 经常出现no data to display</a>
+    <p style="margin:0px;"><a href="/xxy6414" class="user_name">xxy6414</a>:
+引起这个的根本原因是因为你数据查询结束了，但图表还没渲染完成，所以没办法把数据显示到图表里面。如果数...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/ask_rent/article/details/6346929#comments">flex 弹出的titleWindow 隐藏标题栏</a>
+    <p style="margin:0px;"><a href="/xiaolvhai" class="user_name">xiaolvhai</a>:
+没用啊
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+ </div>   
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/cnick/cnick.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=868793"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/JavaScript1.js"></script>
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+   
+    <link href="http://c.csdnimg.cn/comm_ask/css/ask_float_block.css" type="text/css" rel="stylesheet" />
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/wmd.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/showdown.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/prettify.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/apps/ask_float_block.js'></script>
+   
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+</body>
+</html>   
+ 

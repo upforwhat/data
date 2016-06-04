@@ -1,0 +1,176 @@
+.lookPoint{ position: relative; padding-top: 0px;}
+.lookPoint_more{ position: absolute; right: 10px; top:8px;}
+.lookPoint-list{padding: 0; margin: 0; list-style: none; height: 27px; }
+.lookPoint-list li{ float: left;  height: 26px; line-height: 26px; /*border-right: 1px solid #e0e0e0;
+cursor: pointer;*/}
+.lookPoint-list-fir{ padding: 0 28px 0 28px;}
+.lookPoint-list-sec{ padding: 0 22px 0 23px;}
+.lookPoint-list-Now{ font-weight: bold;}
+.lookPoint-con{ margin-bottom: 10px;}
+.lookPoint ul,.lookPoint li{ list-style: none;}
+
+/*rewrite*/
+.zjrit{    overflow: visible;}
+.havZj{ padding: 0; margin: 0;}
+#wb_time ul{ padding: 0;}
+#cont_ktab_1{ width: 672px; margin: 0; padding: 0;}
+#cont_ktab_2{width: 672px; margin: 0; padding: 0;}
+#cont_ktab_3{width: 672px; margin: 0; padding: 0;}
+#lookPoint .side_title{ font-weight: normal}
+
+#lookPoint .Reply{  margin-top: 0;border-top: none;}
+/*kandian*/
+.kandian{ border-top:0px; overflow:hidden;zoom:1m; position:relative}
+.kandian .x4,.kandian .x5{ width:672px; margin:0 auto}
+.kandian .x4{ padding:0px 0px 4px;}
+.kandian .x4 .lay{ line-height:30px; overflow:hidden; padding-bottom:17px}
+.kandian .x4 .lay iframe{ display:none}
+.kandian .x4 .text{ color:#ccc; float:left; width:660px; line-height:28px; border:1px #bebebe solid; height:28px; padding-left:10px; margin-top:5px}
+.kandian .x4 .nfbbut01{ float:right;cursor:pointer}
+.kandian .x5  .t{ border-bottom:1px #e9e9e9 solid;height:24px;overflow: visible;*overflow:hidden; width:100%;}
+.kandian .x5  .t p { display:inline}
+.kandian .x5  .t span{ font-size:12px; padding:0px 8px; height:24px; line-height:24px; display:block; float:left; cursor:pointer}
+.kandian .x5  .t span.hover{ font-weight:bold;  border-bottom:0px; position:relative;  height:24px;}
+.kandian .x5 li{ border-bottom:1px #d9d9d9 dotted; padding:14px 0px 8px 0; margin: 0; border-top:0px;  zoom:1;}
+.kandian .x5 li.lastli{ padding:0px; border:0px; z-index:-1; }
+.kandian .x5 dl{ overflow:hidden;zoom:1; padding: 0; margin: 0;}
+.kandian .x5 dt{ width:40px;}
+.kandian .x5 dt,.kandian.x5 dd{ float:left;}
+.kandian .x5 dt a{ line-height:22px}
+.kandian .x5 dt img{ width:30px; height:30px}
+.kandian .x5 dd{ width:629px; margin: 0; padding-left:0px; line-height:24px; float:left; margin-top:-4px;}
+.kandian .x5 dd a{ cursor:pointer}
+.kandian .x5 dd .time{  padding-left:10px}
+.kandian .x5 .more{ padding:0px; width:670px; overflow:hidden; text-align:right; zoom:1;border:1px #e9e9e9 solid; height:28px; text-align:center; line-height:28px; cursor:pointer; margin:20px 0px 20px; color:#990000}
+.kandian .x5 li.i_more{ border:0px; padding:0px}
+.kandian .x5 .more a{text-decoration:none; color:#a92d78;}
+.kandian .x5 .more a:hover{ color:#990000}
+/*2ÆÚ*/
+.kandian .x4 .zj,.kdzjtoplist{ overflow:hidden;zoom:1; padding-top:15px;_display:inline; border-style: solid; border-width: 1px; margin-bottom:15px; margin-top:18px; padding:8px 13px 10px 20px; }
+.kandian .x4 .zj .zj_tit{}
+.kandian .x4 .zj .zjlistlet{ float:left; border-right-width:  1px; border-style: solid; border-left:none; border-top: none; border-bottom: none; display:inline; width:548px}
+.kandian .x4 .zj .havZj{ display:block; overflow:hidden;}
+.kandian .x4 .zj .havZj li{ width:137px; text-align:left; margin-top:10px; padding:0px}
+.kandian .x4 .zj .havZj li a.zjpic{ width:50px; float:left}
+.kandian .x4 .zj .havZj li a.name,.kdzjtoplist .rit a.name{ margin-top:-2px; margin-bottom:4px}
+.kandian .x4 .zj .havZj li .zjrit{ float:left; width:87px}
+.kandian .x4 .zj .zjlistrit{ float:right; padding:22px 4px 0px 0px;display:inline; width:70px;}
+.kandian .x4 .zj .zjlistrit .tj_btn,.kdzjtoplist .rit li.zjtop_list_last a{background:url(../img/lookPointwytj.png) no-repeat; width:73px; height:24px; cursor:pointer; border:0px; display:block}
+.kandian .x4 .zj .zj_tit{ line-height:14px;}
+.kandian .x4 .zj .zj_tit strong{  font-size:14px}
+.kandian .x4 .zj ul{ display:block; zoom:1}
+.kandian .x4 .zj li{float:left; border:0px; padding:0px 2px 4px 0px;width:59px; position:relative; text-align:center; color:#696969; zoom:1}
+.kandian .x4 .zj li a{ display:block; line-height:22px}
+.kandian .x4 .zj li a.name{ height:21px; width:40px; float:left; word-break:break-all; line-height:18px}
+.kandian .x4 .zj li.x1{ width:96px; padding-top:13px}
+.kandian .x4 .zj li.x2{ width:40px; text-align:left;padding-top:13px}
+.kandian .x4 .zj li.x3{ padding:8px 0px 6px 6px; width:75px;*padding:8px 0px 10px 6px; }
+.kandian .x4 .zj li .tj_btn{background:url(http://img.hexun.com/2012/kd/images/tj_btnv2.jpg) no-repeat 0px -2px; width:70px; height:21px; display:inline-table; cursor:pointer; border:0px}
+.kandian .x4 .lay .input_fot{ overflow:hidden; zoom:1}
+.kandian .x4 .lay .turn_t{ float:left; padding-top:12px; line-height:10px}
+.kandian .x4 .lay .turn_t input{ width:13px; height:13px; margin: 3px 3px 3px 4px; position: relative; top: -5px;float:left; display:inline; border: none;}
+.kandian .x4 .lay #wb_subimt{ float:right; padding-top:8px;}
+.kandian .x4 .lay #wb_subimt #zh_name{ float:right; line-height:22px; padding-right:10px; position:relative}
+.kandian .x4 .lay #wb_subimt #zh_name span{ color:#D14836}
+.kandian .x4 .lay #wb_subimt #zh_name img{ vertical-align:top}
+.kandian .x4 .lay #wb_subimt #zh_name img.wrong{ margin-top:2px; position:absolute; margin-left:3px; display:none}
+.kandian .x4 .lay #wb_subimt input.submit{ background:url(http://img.hexun.com/2012/kd/images/tj_btnv2.jpg) no-repeat 0px -31px; width:70px; height:21px; border:0px; cursor:pointer;float:right}
+.kandian .x4 .lay #wb_subimt input.TextGpic{ width:53px; height:19px; border:1px #cdcdcd solid; padding:0px 3px 0px 4px; color:#999; font-size:12px}
+.indshowC_b5{background:url(http://kd.hexun.com/images/wb_rqico.gif) no-repeat 0px 0px ; padding:2px 3px 4px 9px; text-align:center}
+/*2ÆÚ·ÖÏí*/
+.kandian .x5 li .operate{ text-align:right; padding-right:4px; line-height:16px}
+.kandian .x5 li .fx_pos{ width:188px; height:27px;border:1px #d7d7d7 solid;;zoom:1; position:absolute; background:#fff; right:0px;*margin-top:17px; display:none; z-index:999999}
+.kandian .x5 li .fx_pos.hover{background:#ededed; border-color:#b7b7b7;}
+.kandian .x5 li .fx_pos a,.fxmore a{ background:url("http://bdimg.share.baidu.com/static/images/is.png?cdnversion=20120720"); display:block; width:21px; height:21px; float:left; margin-left:2px; cursor:pointer; z-index:999}
+.kandian .x5 li .fx_pos a.kd2_fx_hx{ background-position:0px -1829px}
+.kandian .x5 li .fx_pos a.kd2_fx_xl{background-position:0px -115px}
+.kandian .x5 li .fx_pos a.kd2_fx_tx{background-position:0px -235px}
+.kandian .x5 li .fx_pos a.jt{ background:#fff url(http://img.hexun.com/2012/kd/images/i_fx_ico2.gif) no-repeat 7px 11px;}
+.kandian .x5 li .fxmore{ position:absolute; width:100px; height:28px;background:#fff; left:-1px; top:28px; border:1px #b7b7b7 solid; border-top:0px; display:none}
+
+.kandian .x5 li .fx_pos a.kd2_fx_sohu{background-position:0px -435px}
+.kandian .x5 li .fx_pos a.kd2_fx_kj{background-position:0px -75px}
+.kandian .x5 li .fx_pos a.kd2_fx_rr{background-position:0px -195px}
+.kandian .x5 li .fx_pos a.kd2_fx_db{background-position:0px -395px}
+
+.kandian .memoryKdId{ display:none}
+.kandian .x5 li.kd_isnonews{ margin:0px;border:0px; padding:9px 0px 26px 19px}
+.kandian .x5 li.kd_isnonews div{color:#696969; line-height:22px}
+/*µ¯³ö´°¿Ú
+#alert{border:8px #c8c8c8 solid; width:342px; background:#fff; overflow:hidden}
+#alert dl{ overflow:hidden}
+#alert dl,#alertdd,#alert dt{ margin:0px; padding:0px; border:0px;background:#fff}
+#alert dt{ overflow:hidden; }
+#alert dd { padding:4px 6px 0px 9px; height:20px; overflow:hidden; zoom:1}
+#alert .login_right{ float:right; padding-top:4px}
+#alert .login_right .zc{ float:right; font-size:12px; color:#495a92; text-decoration:none; padding-right:6px; line-height:16px}
+#alert .login_right .zc:hover{ text-decoration:underline; color:#990000}
+#alert dd .memberLogin_topicClass{ float:left; font-size:16px; font-family:"Î¢ÈíÑÅºÚ"; color:#000; margin:0px; padding:0px}
+*/
+
+/*µ¯³ö´°¿Ú*/
+#alert{border:8px #c8c8c8 solid; width:342px; background:#fff; overflow:hidden}
+#alert dl{ overflow:hidden}
+#alert dl,#alertdd,#alert dt{ margin:0px; padding:0px; border:0px;background:#fff}
+#alert dt{ overflow:hidden; }
+#alert dd { padding:4px 6px 0px 9px; height:20px; overflow:hidden; zoom:1; margin-left:0px}
+#alert .login_right{ float:right; padding-top:4px}
+#alert .login_right .zc{ float:right; font-size:12px; color:#495a92; text-decoration:none; padding-right:6px; line-height:16px}
+#alert .login_right .zc:hover{ text-decoration:underline; color:#990000}
+#alert dd .memberLogin_topicClass{ float:left; font-size:16px; font-family:"Î¢ÈíÑÅºÚ"; color:#000; margin:0px; padding:0px}
+#alert .close{ float:right; margin:4px 6px 0px 0px}
+#alert .memberLogin_topicClass{
+float: left;
+font-size: 14px;
+font-weight: bold;
+margin-bottom: 0;
+margin-left: 10px;
+margin-right: 0;
+margin-top: 6px;
+text-align: left;
+width: 306px;
+}
+#alert .memberLogin_topicClass span {
+float: left;
+}
+#alert .memberLogin_topicClass .zc {
+-moz-text-blink: none;
+-moz-text-decoration-color: -moz-use-text-color;
+-moz-text-decoration-line: underline;
+-moz-text-decoration-style: solid;
+color: #4B5A91;
+float: right;
+font-size: 12px;
+font-weight: 100;
+} 
+
+/*ÍÆ¼öµ¯´°*/
+#myGroom{ position:fixed; top:30%; margin:0 auto;width:387px; left:36%; z-index:10001; display:none}
+#myGroom .mgTop{ width:387px; height:10px; background:url(http://img.hexun.com/2012/kd/images/i2_tj_show.gif) no-repeat 0px -6px; font-size:2px}
+#myGroom .mgMid{ border-left:1px #b9b9b9 solid;border-right:1px #b9b9b9 solid; background:#f6f6f6; overflow:hidden; line-height:24px; }
+#myGroom .mgMid .cont_lay{width:347px; margin:0 auto; padding:10px 0px 10px; overflow:hidden; zoom:1}
+#myGroom .mgMid .cont_lay .input textarea{color:#ccc; width:325px; line-height:18px; border:1px #bebebe solid; height:58px; padding:8px 10px; margin:10px 0px 10px; overflow-x:hidden; font-size:12px;outline:none;resize:none}
+#myGroom .mgMid .cont_lay a{ color:#4B5A91; text-decoration:underline}
+#myGroom .mgMid .cont_lay a:hover{ color:#990000}
+#myGroom .mgMid .cont_lay .let{ float:left;_margin-top:4px; color:#696969}
+#myGroom .mgMid .cont_lay .let label{ padding-right:12px}
+#myGroom .mgMid .cont_lay .let input{ width:13px; height:13px; margin-right:4px;vertical-align:middle; margin-top:-2px}
+#myGroom .mgMid .cont_lay .rit { float:right;}
+#myGroom .mgMid .cont_lay .rit input{ width:70px; height:21px; background:url(http://img.hexun.com/2012/kd/images/tj_show_btn.jpg) no-repeat; border:0px; cursor:pointer}
+#myGroom .mgFot{ width:387px; height:17px; background:url(http://img.hexun.com/2012/kd/images/i2_tj_show.gif) no-repeat 0px -32px;}
+* html #myGroom{position:absolute;top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||260)-(parseInt(this.currentStyle.marginBottom,10)||0)));}
+html{
+_background-image: url(about:blank);
+_background-attachment: fixed; /* prevent screen flash in IE6 */
+} 
+#myGroom .mgClose{ width:16px; height:16px; float:right; margin-right:3px; cursor:pointer}
+.setTop{}
+
+.kandian .x5 dd .setTop{ background:url(http://kd.hexun.com/images/i2_ico.gif) no-repeat 24px -66px; padding-right:30px; color:#d44638; font-style:normal}
+.kandian .x5 dd .setTop:hover{ color:#d44638; text-decoration:none}
+
+.lookNav{height: 27px;padding-left: 0;padding-top:0;padding-right:0;}
+
+#cont_look_2 .more{padding:0px; width:720px; overflow:hidden; text-align:right; zoom:1;border:1px #e9e9e9 solid; height:28px; text-align:center; line-height:28px; cursor:pointer; margin:20px 0px 20px; color:#990000}
+
+#lookPoint .ArticleBlog{ padding-top:0px; line-height:24px}

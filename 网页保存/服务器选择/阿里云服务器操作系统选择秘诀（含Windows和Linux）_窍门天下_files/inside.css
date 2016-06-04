@@ -1,0 +1,93 @@
+@charset "utf-8";
+/**
+ * 内页
+ * 2014-7-20
+ * zhw
+**/
+body{ word-break:break-all; word-wrap:break-word;}
+/*
+	* 内容页
+*/
+/* * 主体 * */
+.g_pos{ padding-bottom:10px; color:#999;}
+.g_pos a{ color:#666;}
+.inside_wrap{ border-top:solid 1px #ddd; background:url(/skin/2015/img/dot.gif) 684px 0 repeat-y;}
+.left_main{ width:669px; padding-top:10px; overflow:hidden;}
+
+.arc_attr .item{ float:left; height:28px; line-height:28px;}
+.arc_attr .date{ padding-left:40px;}
+.arc_attr .from{ padding:0 100px;}
+.arc_body{ width:669px; overflow:hidden; margin-bottom:10px; line-height:1.8; font-size:16px;}
+.arc_body p{ margin-bottom:10px;}
+.arc_body img{ max-width:669px;}
+.arc_body .editor{ font-size:12px; color:#999;}
+.arc_body a{ color:#36c;}
+.arc-related{ overflow:hidden; *zoom:1;}
+.arc-related .item{ float:left; width:213px; margin-right:10px; height:30px; line-height:30px; overflow:hidden;}
+.arc-related a{ font-size:14px; color:#36c;}
+
+.arc_bot_commend{ width:100%; overflow:hidden;}
+.arc_bot_commend .pic_news_x{ width:705px;}
+.arc_bot_commend .pic_news_x .item{ margin-right:36px;}
+
+.arc_bot_1{ height:250px; overflow:hidden; border-top:solid 3px #111; padding-top:20px;}
+.arc_bot_1 .pic_news_x{ width:329px; padding-left:40px;}
+.arc_bot_1 .pic_news_x .item{ width:154px;}
+
+.arc_bot_3 .pic_news_x,.page_list_img .left_main  .list_wrap{ width:689px;}
+.arc_bot_3 .item,.page_list_img .list_wrap .item{ width:152px; margin:0 20px 20px 0;}
+
+
+.tit_tab .menu .item{ float:left; min-width:60px; height:30px; line-height:30px; padding:0 20px; margin-right:10px; cursor:pointer; font-size:16px; font-weight:400; text-align:center; background:#999; color:#fff;}
+.tit_tab .menu .hover{ border-bottom:solid 3px #ff3c00; background:#333;}
+
+/* * 边栏 * */
+.inside_side{ padding:10px 7px 0 7px; background:#f7f7f7;}
+.inside_side .hd{ height:35px; line-height:35px; border-bottom:solid 1px #ccc; font-size:18px; font-weight:400;}
+.inside_side .pic_news_x .item{ width:140px;}
+.inside_side .pic_news_x .t{ height:20px; line-height:20px; overflow:hidden;}
+
+
+
+/*
+	* 列表页
+*/
+.page_list .list_item{ border-bottom:solid 1px #eee; margin-bottom:25px; padding-bottom:25px;}
+.page_list .list_item .img{ margin-right:20px;}
+.page_list .list_item .attrs{ padding:5px 0;}
+.page_list .list_item .img_more{ display:inline-block; margin:10px 0; color:#999;}
+.page_list .item_img{ height:150px; overflow:hidden;}
+
+.page_list_xh .xh_item{ padding:15px; margin-bottom:15px; border:solid 1px #ddd; box-shadow:1px 1px 1px #ddd;}
+.page_list_xh p{ text-align:left !important;}
+.page_list_xh .xh_item .t{ margin-bottom:10px;}
+
+.channel_item .type_tit{ border-bottom:solid 3px #111;}
+.channel_item .g_list{ padding:0 0 20px 2em;}
+
+.g_pages{ font-family:Arial; font-size:14px; text-align:center;}
+.g_pages a,.g_pages .thisclass,.g_pages .cpnext,.g_pages .cpprev,.g_pages .cptotal{ display:inline-block; border:solid 1px #ddd; border-radius:3px; padding:5px 12px; margin:15px 15px 15px 0; background:#fafafa; color:#666;}
+.g_pages .cpnext,.g_pages .cpprev{ font-family:Simsun;}
+.g_pages .thisclass, .g_pages .current{ background:#df2c33; border-color:#b20000; color:#fff; font-weight:700;}
+
+.page_list_img .list_wrap .item .t{ display:block; margin-top:5px; text-align:center;}
+
+/* * 内链组 * */
+.qmtx3Related .qmtx3RelatedTw,.qmtx3Related .qmtx3RelatedList{ float:left;}
+.qmtx3Related .qmtx3RelatedTw{ width:75px; font-size:12px;}
+.qmtx3Related .qmtx3RelatedList{ width:553px;}
+.qmtx3Related .qmtx3RelatedItem{ width:266px; height:22px; line-height:22px; margin-right:10px; overflow:hidden; float:left;}
+.qmtx3Related .qmtx3RelatedList .bdArcLink{ margin:0;}
+.bdArcLink{ color:#36c;}
+.bdArcLink:hover{ color:#3CAC4C;}
+
+/* 文章属性 */
+.arc-property{ border:dashed 1px #ddd; padding:5px 0 5px 10px; margin-bottom:10px; font-family:Arial;}
+.arc-property .property{ width:400px; font-size:14px;}
+.arc-property .property p{ height:30px; line-height:30px; overflow:hidden;} 
+.arc-property .related{ width:250px; height:120px; overflow:hidden;}
+.arc-property .related .item{ height:24px; line-height:24px; overflow:hidden;}
+
+
+
+

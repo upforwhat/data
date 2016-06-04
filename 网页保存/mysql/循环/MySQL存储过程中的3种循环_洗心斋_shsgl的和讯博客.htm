@@ -1,0 +1,1194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><link href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/toolsBar.css" rel="stylesheet" type="text/css">
+    <title>MySQL存储过程中的3种循环_洗心斋_shsgl的和讯博客</title>
+    <meta name="description" content="MySQL存储过程中的3种循环_MySQL存储过程中的3种循环【转载】在MySQL存储过程的语句中有三个标准的循环方式：WHILE循..._洗心斋_shsgl的和讯博客">
+    <meta name="keywords" content="洗心斋,shsgl,程序,格式,存储过程,混乱,语句,和讯博客">
+    <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+    
+    <link rel="alternate" type="application/rss+xml" title="MoodLove" href="http://moodlove.blog.hexun.com/rss2.aspx">
+    <link href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/common.css" type="text/css" rel="stylesheet">
+    <link href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/my.css" type="text/css" rel="stylesheet">
+    
+    <script language="JavaScript" type="text/javascript">
+<!--
+function HEXUN_SetMediaPlayState()
+{
+	var cookieName = "HEXUN_COM_MEDIA_PLAYSTATE";
+	var curCookie = cookieName + "=1;path=/;domain=hexun.com";
+	document.cookie = curCookie;
+}
+HEXUN_SetMediaPlayState();
+-->
+</script>
+
+    
+    <script src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/jquery-1.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $.noConflict();
+</script>
+<link href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/commonhead1_3.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/Comment.js"></script>
+<script src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/TB.js" type="text/javascript"></script><script src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/bds_s_v2.js" data="type=tools&amp;amp;uid=657298" id="bdshare_js"></script><script src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/logger.js"></script><link type="text/css" rel="stylesheet" href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/bdsstyle.css"></head>
+<body id="BlogBody"><iframe style="display: none;" frameborder="0"></iframe><div style="display: block;" id="bdshare_s"><iframe id="bdsIfr" style="position:absolute;display:none;z-index:9999;" frameborder="0"></iframe><div style="display: none;" id="bdshare_l"><div id="bdshare_l_c"><h6>分享到</h6><ul><li><a href="#" class="bds_mshare mshare">一键分享</a></li><li><a href="#" class="bds_qzone qqkj">QQ空间</a></li><li><a href="#" class="bds_tsina xlwb">新浪微博</a></li><li><a href="#" class="bds_bdysc bdysc">百度云收藏</a></li><li><a href="#" class="bds_renren rrw">人人网</a></li><li><a href="#" class="bds_tqq txwb">腾讯微博</a></li><li><a href="#" class="bds_bdxc bdxc">百度相册</a></li><li><a href="#" class="bds_kaixin001 kxw">开心网</a></li><li><a href="#" class="bds_tqf txpy">腾讯朋友</a></li><li><a href="#" class="bds_tieba bdtb">百度贴吧</a></li><li><a href="#" class="bds_douban db">豆瓣网</a></li><li><a href="#" class="bds_tsohu shwb">搜狐微博</a></li><li><a href="#" class="bds_bdhome bdhome">百度新首页</a></li><li><a href="#" class="bds_sqq sqq">QQ好友</a></li><li><a href="#" class="bds_thx thx">和讯微博</a></li><li><a href="#" class="bds_more">更多...</a></li></ul><p><a href="#" class="goWebsite">百度分享</a></p></div></div></div>
+    <div id="logBox" class="log_box" style="display: none; left: 819px; top: 31px;">
+</div>
+<div class="navbar">
+  <div class="container">
+    <a href="http://hexun.com/8490947/default.html" class="navbar_logo">
+      <img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/logo.png" height="44" width="80">
+    </a>
+    <div class="navbar_pro_name fyh">
+      <a href="http://hexun.com/8490947/default.html">个人门户</a>
+      <!--<img src="images/blank.gif" class="navbar_pro_brand" />-->
+    </div>
+    <div class="navbar_menu_list">
+      <a href="http://blog.hexun.com/" target="_blank">博客</a>
+      <a href="http://t.hexun.com/default.htm" target="_blank">微博</a>
+      <a href="http://wenda.hexun.com/" target="_blank">问答</a>
+      <a href="http://bbs.hexun.com/" target="_blank">论坛</a>
+      <a href="http://guba.hexun.com/" target="_blank">股吧</a>
+      <a href="http://jijinba.hexun.com/" target="_blank">基金吧</a>
+    </div>
+    <div id="hx_home_login" style=" display:none ">
+      <div class="navbar_usr_info">
+        <span class="navbar_info_cur" id="hxjy_navbar_info_news">
+          <a href="http://message.hexun.com/">
+            消息
+          </a>
+          <a href="http://message.hexun.com/" class="navbar_info_num vhide"></a>
+        </span>
+        <span class="navbar_info_cur" id="hxjy_navbar_info_inform">
+          <a href="http://message.hexun.com/notice">通知</a>
+          <a href="http://message.hexun.com/notice" class="navbar_info_num vhide"></a>
+          <ul class="dropdown-menu w121">
+          </ul>
+        </span>
+        <span class="navbar_info_cur" id="hxjy_navbar_info_account">
+          <a href="javascript:void(0)" class="pr8">
+            账号
+          </a>
+          <em class="navbar_account"></em>
+          <ul class="dropdown-menu w48">
+            <li id="btnUserSet">
+              <a href="http://hexun.com/newHome/set/userinfo">设置</a>
+            </li>
+            <li>
+              <a href="#">退出 </a>
+            </li>
+          </ul>
+        </span>
+      </div>
+      <div class="navbar_person">
+        <a href="http://hexun.com/newhome/set/photo">
+          <img id="userMiniHeadImg" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/1ee5c28-40.jpg" align="absmiddle" height="22" width="22">
+        </a>
+        <a id="userMiniName" href="#"></a>
+      </div>
+    </div>
+    <div id="hx_home_unlogin" style="">
+      <div class="loginMod fr">
+        <a target="_blank" href="https://reg.hexun.com/regname.aspx?gourl=http%3A//moodlove.blog.hexun.com/86484113_d.html" class="quickReg fl">快速注册</a>
+        <span class="loginModLine fl"></span>
+        <a href="javascript:void(0);" class="fl loginBtn" id="loginInter">
+          登录<span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="padding-top: 44px; font-size: 0; line-height: 0; height: 0; overflow: hidden;">
+</div>
+    <!--  页面:开始  -->
+    <div id="page">
+        <!--  头部:开始  -->
+        <script language="javascript">
+                function bookmarkThis(myhref)
+                {
+		                t=document.title;
+		                u=myhref;
+		                e=document.selection?(document.selection.type!='None'?document.selection.createRange().text:''):(document.getSelection?document.getSelection():'');
+		                void(open('http://bookmark.hexun.com/post.aspx?title='+escape(t)+'&amp;url='+escape(u)+'&amp;excerpt='+escape(e),'HexunBookmark','scrollbars=no,width=600,height=450,left=80,top=80,status=no,resizable=yes'));	
+                }
+                function copytext(blogname,username) 
+                {		
+	                var copyText='http://hexun.com/' +  blogname + '/default.html';
+	                window.clipboardData.setData('Text',copyText);
+	                alert(username + '的个人门户地址已经拷贝到剪贴板！');
+
+                }
+                function addbookmark(myhref)
+                {
+	                t=document.title;
+	                u=myhref;
+	                e=document.selection?(document.selection.type!='None'?document.selection.createRange().text:''):(document.getSelection?document.getSelection():'');
+	                void(open('http://bookmark.hexun.com/post.aspx?title='+escape(t)+'&amp;url='+escape(u)+'&amp;excerpt='+escape(e),'HexunBookmark','scrollbars=no,width=600,height=450,left=80,top=80,status=no,resizable=yes'));	
+                		
+                }
+
+                </script>
+
+                <script type="text/javascript">
+
+                function cnLength(Str) {
+	                var escStr = escape(Str);
+	                var numI = 0;
+	                var escStrlen = escStr.length;
+	                for (i = 0;  i < escStrlen;  i++) 
+	                if(escStr.charAt(i) == '%') 
+	                if(escStr.charAt(++i) == 'u')  numI ++;
+	                return Str.length+numI;
+                }
+                </script>
+                <div id="page">
+                <div id="header">
+                  <div id="site_title">
+                     <div class="address">http://hexun.com/MoodLove &gt;  <a href="javascript:copytext('MoodLove','shsgl')">复制</a> &gt; <a href="javascript:addbookmark('http://hexun.com/MoodLove')">收藏</a> | <a href="http://hexuncom.blog.hexun.com/2029948_d.html" target="_blank">手机看个人门户</a>	</div>
+                     <div class="link"><span id="SelfTab_Login"><a href="javascript:GotoLogin()">登录</a> | <a href="http://reg.hexun.com/" target="_blank">注册</a> | <a href="http://blog.hexun.com/" target="_blank">和讯博客</a> | <span class="hexun_link"><a href="http://www.hexun.com/" target="_blank">和讯首页</a></span></span>
+                     </div>
+                  </div>
+                  <div id="site_description" class="site_description">
+                    <div tag="2" class="site_description_A"><a tag="MoodLove" id="blog_title1">洗心斋</a></div><div class="site_description_B"><span id="blog_title2">莫道谗言似海深，莫言迁客似沙沉， 千淘万漉虽辛苦，吹尽黄沙始见金。--大道至简,知易行难</span></div></div>
+                    <div id="navi_bar">
+	                     <div class="navi_bar_left">
+	                        <div id="bar_01" class="all_bar"><a href="http://hexun.com/MoodLove/default.html" target="_parent">个人门户</a></div>
+	                        <div id="bar_02" class="all_bar"><a href="http://moodlove.blog.hexun.com/" target="_parent">博客</a></div>
+                            <div id="bar_06" class="all_bar"><a href="http://t.hexun.com/MoodLove/default.html" target="_blank">微博</a></div>
+	                        <div id="bar_03" class="all_bar"><a href="http://moodlove.photo.hexun.com/" target="_parent">相册</a></div>
+	                        <div id="bar_04" class="all_bar"><a href="http://moodlove.music.hexun.com/" target="_parent">音乐</a></div>
+                            <div id="bar_05" class="all_bar"><a href="http://bookmark.hexun.com/MoodLove/default.aspx" target="_parent">转帖</a></div>
+	                        
+	                        
+	                        
+	                        <div id="bar_09" class="all_bar"><a href="http://hexun.com/newHome/user/8490947/followers" target="_parent">关注</a></div>
+	                        
+	                        <!--<div id='bar_12' class='all_bar'><a href='http://stock.hexun.com/mystock/' target='_blank'>理财</a></div>-->
+	                     </div>
+	                    <div class="navi_bar_right"><a id="blog_set_head_16" style="display:none" href="http://post.blog.hexun.com/i/articlelist.aspx?BlogName=8490947" target="_blank">博客设置</a>&nbsp;&nbsp;</div>
+                            </div>
+                         <div id="tag_bar">
+                               <div class="tag_bar_title" id="tag_bar_title" style="width:56px;">联系主人</div>
+                               <div class="tag_bar_left" id="tag_bar_left"><a href="http://message.hexun.com/Send.aspx?id=8490947" target="_blank" title="发送私信">发送私信</a> | <a href="http://hexun.com/8490947" target="_blank">进入Ta的个人门户</a> | <a href="http://t.hexun.com/8490947/default.html" target="_blank">进入Ta的微博</a></div>
+                        </div>
+                        <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/IsUserSelf.js"> </script>
+                      
+                      </div></div>
+        
+        <!--  头部:结束  -->
+        
+                <!--  主体:开始  -->
+                <div id="content">
+                    <div id="content_inner">
+                        
+                        <div class="left_side_2" style="float: left;">
+                            
+<div id="BlogPageLeft" class="left_side_2_inner">
+    <!--  主人:开始  -->
+    <div id="master" class="side_block">
+        <div id="GetBriefPanel1">      <div id="master_name" class="side_title" style=" padding-left:5px">         主人：<a style="widht:200px;display:inline-table" href="http://hexun.com/moodlove/default.html" title="访问shsgl的个人门户" target="_blank">shsgl</a></div></div>
+        <div id="master_ptoto" class="side_content">
+            <div id="master_ptoto_1">
+                <img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/c38f81-150.jpg" alt="洗心斋 - shsgl" title="洗心斋 - shsgl" border="0">
+            </div>
+            
+            <div id="GetBriefPanel2"><div id="blog_userIntro">喜欢哲学（包括各种 教派学说），正在研究经济与金融。对计算机数学研究甚多</div>			<div style="display: none;" id="master_ptoto_2">[<a id="hx_home_message" href="http://message.hexun.com/message?id=8490947" title="给shsgl发送私信" target="_blank">发送私信</a>]			[<a id="hx_home_attention" tagid="8490947" href="javascript:void(0)"></a>]      <span id="more">更多&#8711;</span>			</div></div>
+            
+        </div>
+    <div id="blog_userIntro1"></div></div>
+    <!--  主人:结束  -->
+    <!--  自定义HTML:开始  -->
+    
+<div style="display: none;" id="SelfHtml" class="side_block">
+
+</div>
+
+    <!--  自定义HTML:结束  -->
+    <!--  快速链接:开始  -->
+    
+<div id="QuickLink" class="side_block">
+     <div class="side_title">
+              <div class="side_title_1">快速链接</div>
+              <div class="side_title_2"></div>
+		  <div class="clear"></div>
+	 </div>
+    <div id="QuickLink_list" class="side_content">
+              <div><a href="http://blog.hexun.com/" target="_blank">[和讯博客]</a></div>
+              <div><a href="http://post.blog.hexun.com/MoodLove/newpostblog.aspx">[发表文章]</a></div>
+              <div><a href="http://hexun.com/newhome/BlogSet/" target="_blank">[博客设置]</a></div>
+              <div><a href="http://post.blog.hexun.com/i/articlelist.aspx?BlogName=MoodLove" target="_blank">[文章管理]</a></div>
+              <div><input name="q" id="q" size="15" type="text"> <a href="javascript:" onclick="javascript:window.open('http://MoodLove.blog.hexun.com/search.aspx?q='+escape(document.getElementById('q').value), 'newwindow')">搜索</a></div>
+              <div class="QuickLink_rss">
+                <a href="http://moodlove.blog.hexun.com/rss2.aspx" target="_blank"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/rss2.png" alt="RSS 2.0" style="padding-bottom:4px;" border="0" height="15" width="80"></a><br>
+                <br>
+              </div>
+	</div>
+</div>
+    <!--  快速链接:结束  -->
+    <!--  分类:开始  -->
+    <div id="GetCate"> <div id="BiaoQian" class="side_block">        <div class="side_title">          <div class="side_title_1">分类</div>          <div class="side_title_2"></div>        <div class="clear"></div>      </div>      <div id="BiaoQian_list" class="side_content">           <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1143411&amp;cate=%b0%b2%d7%bf" title="安卓">安卓</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1141913&amp;cate=%d0%c4%c2%b7" title="心路">心路</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1141672&amp;cate=%b1%e0%d2%eb%26amp%3b%b2%d9%d7%f7%cf%b5%cd%b3" title="编译&amp;amp;操作系统">编译&amp;amp...</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1141516&amp;cate=X5" title="X5">X5</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1141424&amp;cate=%d3%e9%c0%d6" title="娱乐">娱乐</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1141255&amp;cate=%c6%e4%cb%fc+%d6%b2%ce%ef%c0%e0" title="其它 植物类">其它 植物类</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1141151&amp;cate=linux" title="linux">linux</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1141030&amp;cate=Mysql" title="Mysql">Mysql</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1140859&amp;cate=sql" title="sql">sql</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1140805&amp;cate=js" title="js">js</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1140797&amp;cate=%b9%dc%c0%ed" title="管理">管理</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1140709&amp;cate=crack" title="crack">crack</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1140690&amp;cate=%cf%ee%c4%bf" title="项目">项目</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1140529&amp;cate=%d1%a7%cf%b0" title="学习">学习</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1140528&amp;cate=java" title="java">java</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1140280&amp;cate=ot" title="ot">ot</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1140155&amp;cate=ls" title="ls">ls</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1139913&amp;cate=vs" title="vs">vs</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1139887&amp;cate=%c9%e8%bc%c6" title="设计">设计</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1139885&amp;cate=delphi" title="delphi">delphi</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1121378&amp;cate=%c3%ce%c0%ef%cb%b5%c3%ce" title="梦里说梦">梦里说梦</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1106656&amp;cate=%c1%ac%d4%d8" title="连载">连载</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1100871&amp;cate=%b6%c1%ca%b7%ce%f6%ca%c2%bc%c7" title="读史析事记">读史析事记</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1077489&amp;cate=%cf%b5%cd%b3%b9%e6%bb%ae%d3%eb%bc%dc%b9%b9%c9%e8%bc%c6" title="系统规划与架构设计">系统规划与架构设计</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1076797&amp;cate=%b9%c9%c6%da%bb%e3" title="股期汇">股期汇</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1071230&amp;cate=%c8%cb%c9%fa%ce%e8%b2%bd" title="人生舞步">人生舞步</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1063769&amp;cate=%c6%da%ba%a3%c5%aa%b3%b1" title="期海弄潮">期海弄潮</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1052940&amp;cate=%c9%e7%bb%e1%b9%db%b3%b1" title="社会观潮">社会观潮</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=659125&amp;cate=%c4%ba%c9%ab%c4%ea%bb%aa" title="暮色年华">暮色年华</a></div> <div><a href="http://moodlove.blog.hexun.com/cate.aspx?cateid=1022513&amp;cate=%cf%b4%cb%bc%ce%f2%b5%c0%c2%bc" title="洗思悟道录">洗思悟道录</a></div>            </div>        </div></div>
+    <!--  分类:结束  -->
+    <!--  友情链接:开始  -->
+    <div id="GetLink">	<div id="ArticleLink" class="side_block">          <div class="side_title">                         <div class="side_title_1">友情链接</div>                      <div class="side_title_2"></div> 						 <div class="clear"></div>                        </div>                     <div id="ArticleLink_List" class="side_content">                           <a href="http://ishare.iask.sina.com.cn/download/explain.php?fileid=23389367&amp;amp;amp;page=1" target="_blank" title="[isak文档] http://iask.sina.com.cn/u/1065727334/ish?folderid=935511&amp;amp;amp;page=10
+
+管理文档
+http://ishare.iask.sina.com.cn/download/explain.php?fileid=35886669&amp;amp;page=2">isak文档</a><br><a href="https://github.com/julianhyde/linq4j" target="_blank" title="[linq4j] ">linq4j</a><br><a href="http://blog.sina.com.cn/wrg228258" target="_blank" title="[杂文家王若谷] ">杂文家王若谷</a><br><a href="http://www.oschina.net/p/nessus/" target="_blank" title="[漏洞扫描程序 Nessus] ">漏洞扫描程序 Nessus</a><br><a href="http://www.cnblogs.com/huangygdelphi/category/250369.html" target="_blank" title="[黄云贵的Delphi] ">黄云贵的Delphi</a><br><a href="http://hugege.com/doc/ready.html" target="_blank" title="[$() FY.JS文档] ">$() FY.JS文档</a><br><a href="http://piano-midi.de/midi_files.htm" target="_blank" title="[*** midi站点合集2] http://www.midishow.com/
+
+http://bbs.midyy.com/
+http://www.youku.com/playlist_show/id_3478409.html">*** midi站点合集2</a><br><a href="http://q.sohu.com/q/23682?p=5" target="_blank" title="[***************立体哲学] ">***************立体哲学</a><br><a href="http://www.9553.com/soft/17693.htm" target="_blank" title="[*********凯立德手机导航软件4.0破解 安卓版下载] ">*********凯立德手机导航软件4.0破解 安卓版下载</a><br><a href="http://iask.sina.com.cn/u/1614463743/ish?folderid=0&amp;page=4" target="_blank" title="[*********管理理论] ">*********管理理论</a><br><a href="http://wiki.lazarus.freepascal.org/Lazarus_Documentation/zh_CN" target="_blank" title="[****和Delphi有高度的相容性 lazarus 编译器FPC] http://www.freepascal.org/download.var 编译器
+http://www.freepascal.org/down/source/sources.var编译器源码
+http://www.freepascal.org/down/source/sources-netherlands.var
+
+http://sourceforge.net/projects/lazarus/files/
+http://www.lazarus.freepascal.org/
+http://wiki.lazarus.freepascal.org/Lazarus_Documentation/zh_CN
+http://wiki.lazarus.freepascal.org/Overview_of_Free_Pascal_and_Lazarus/zh_TW
+http://wiki.lazarus.freepascal.org/Main_Page/zh_CN">****和Delphi有高度的相容性 lazarus 编译器FPC</a><br><a href="http://xh.5156edu.com/ciyu/z7384m8619j1963.html" target="_blank" title="[***这个还可以 可以查询 包含等 动作] ">***这个还可以 可以查询 包含等 动作</a><br><a href="http://www.cnblogs.com/anderslly/" target="_blank" title="[**一个程序员的自省 。net] ">**一个程序员的自省 。net</a><br><a href="http://hongdou.gxnews.com.cn/viewthread-1153705.html" target="_blank" title="[___________手动清除 木马病毒] ">___________手动清除 木马病毒</a><br><a href="http://chenxingzhi.vip.bokee.com/" target="_blank" title="[___陈行之] ">___陈行之</a><br><a href="http://www.3gsc.com.cn/bookcon/184140_1_0" target="_blank" title="[__基因密码] ">__基因密码</a><br><a href="http://www.3dllc.com/html/0/1/7154568.html" target="_blank" title="[__官术] www.3dllc.com/html/9/9711/
+www.3dllc.com/html/15/15015/5168725.html
+www.3dllc.com/html/9/9762/3938440.html">__官术</a><br><a href="http://hexun.com/303991/default.html" target="_blank" title="[__王剑] ">__王剑</a><br><a href="http://guxiaojun.vip.bokee.com/" target="_blank" title="[__顾晓军] ">__顾晓军</a><br><a href="http://www.pt80.com/thread-95403-1-1.html" target="_blank" title="[【靈魂之旅】 喜多郎 《絲綢之路組曲》] ">【靈魂之旅】 喜多郎 《絲綢之路組曲》</a><br><a href="http://ishare.iask.sina.com.cn/f/21387268.html" target="_blank" title="[107个常用Javascript语句] javaScript权威指南（第五版）
+http://ishare.iask.sina.com.cn/f/34215335.html">107个常用Javascript语句</a><br><a href="http://www.daqianduan.com/15-javascript-web-ui/" target="_blank" title="[15 个 JavaScript Web UI 库] ">15 个 JavaScript Web UI 库</a><br><a href="https://code.csdn.net/2013OSSurvey/gitop/codevote/vote_num" target="_blank" title="[2013年度中国优秀开源项目评选] 禅道项目管理软件
+http://www.zentao.net/
+http://pms.zentao.net/my/
+http://demo.zentao.net/feedback-browse.html">2013年度中国优秀开源项目评选</a><br><a href="http://www.2ccc.com/" target="_blank" title="[2cccDELPHI盒子] http://www.2ccc.com/article.asp?articleid=6071">2cccDELPHI盒子</a><br><a href="http://www.3dbody.cn/" target="_blank" title="[3dbody 3d医学人体图像] ">3dbody 3d医学人体图像</a><br><a href="http://www.3v.cm/" target="_blank" title="[3v asp免费空间] http://www.free9.net/webspace/asp/">3v asp免费空间</a><br><a href="http://www.52delphi.com/" target="_blank" title="[52delphi] ">52delphi</a><br><a href="http://top.5sing.com/index.html" target="_blank" title="[5sing] ">5sing</a><br><a href="http://www.61762.com/" target="_blank" title="[61762美女] ">61762美女</a><br><a href="https://github.com/NilsHoyer/MySQL-Front/blob/master/Source/QueryBuilder/Packages/acQueryBuilder_160.dpk" target="_blank" title="[acQueryBuilder可视化查询组件] ">acQueryBuilder可视化查询组件</a><br><a href="http://sebug.net/appdir/Apache+Tomcat" target="_blank" title="[Apache+Tomcat 漏洞] ">Apache+Tomcat 漏洞</a><br><a href="http://www.getmywarez.com/delphi/33808-apesuite-fs.html" target="_blank" title="[apesuite-fs ApeSuite FS] ">apesuite-fs ApeSuite FS</a><br><a href="http://okok.org/lisp/function.htm" target="_blank" title="[AuotLisp及vLisp函数全集] ">AuotLisp及vLisp函数全集</a><br><a href="http://www.bhcode.net/" target="_blank" title="[bhcode.net] ">bhcode.net</a><br><a href="http://www.cnblogs.com/" target="_blank" title="[cnblogs] ">cnblogs</a><br><a href="http://www.cnpack.org/" target="_blank" title="[cnpack] ">cnpack</a><br><a href="http://wiki.cnki.com.cn/HotWord/2341251.htm" target="_blank" title="[CPU结构获取最新] ">CPU结构获取最新</a><br><a href="http://iask.sina.com.cn/u/1169663031/ish" target="_blank" title="[dd] ">dd</a><br><a href="http://blog.csdn.net/diligentcat/article/category/668947/2" target="_blank" title="[delphi diligentcat] ">delphi diligentcat</a><br><a href="http://download.csdn.net/detail/rich31023/5067713" target="_blank" title="[Delphi XE3 with Update2 一键激活工具 Activator Ver 6.3] ">Delphi XE3 with Update2 一键激活工具 Activator Ver 6.3</a><br><a href="http://bbs.pediy.com/showthread.php?t=61683" target="_blank" title="[delphi 驱动] ">delphi 驱动</a><br><a href="http://www.kmdkit4d.net/dispbbs.do?boardId=8&amp;ID=17&amp;star=1" target="_blank" title="[delphi 驱动] http://www.kmdkit4d.net/dispbbs.do?boardId=5&amp;amp;amp;amp;amp;ID=594&amp;amp;amp;amp;amp;star=1
+http://www.kmdkit4d.net/dispbbs.do?boardId=5&amp;amp;amp;amp;ID=71&amp;amp;amp;amp;star=1
+http://fxh7622.blog.51cto.com/63841/d-3">delphi 驱动</a><br><a href="http://www.myhack58.com/Soft/53/86/" target="_blank" title="[delphi 黑客] http://www.yeshack.com/forum.php?mod=forumdisplay&amp;amp;fid=31&amp;amp;page=1">delphi 黑客</a><br><a href="http://www.delphigear.cn/default.aspx" target="_blank" title="[delphigear] ">delphigear</a><br><a href="http://code.google.com/p/delphi-iocp-framework/source/browse/trunk/Datasnap?spec=svn45&amp;amp;r=45" target="_blank" title="[delphi-iocp-framework] http://code.google.com/p/delphipi/
+thtmlviewer:http://code.google.com/p/thtmlviewer/">delphi-iocp-framework</a><br><a href="http://www.delphitop.com/" target="_blank" title="[delphitop] ">delphitop</a><br><a href="http://www.delphitop.com/html/zhengze/" target="_blank" title="[delphitop] ">delphitop</a><br><a href="http://www.bianceng.cn/Programming/Delphi/201212/34692.htm" target="_blank" title="[Delphi与嵌入汇编专题] ">Delphi与嵌入汇编专题</a><br><a href="http://www.delphifans.com/" target="_blank" title="[Delphi园地] http://downloads.2ccc.com/vcl/security/
+ftp://uploads@uploads.2ccc.com/">Delphi园地</a><br><a href="http://code.google.com/p/delphi-iocp-framework/source/list" target="_blank" title="[Delphi完成端口通讯框架] ">Delphi完成端口通讯框架</a><br><a href="http://blog.chinaunix.net/uid-87897-id-2014071.html" target="_blank" title="[Delphi研究之驱动开发篇(三)] ">Delphi研究之驱动开发篇(三)</a><br><a href="http://www.cnblogs.com/jiangyuxuan/category/292090.html" target="_blank" title="[Devexpress(asp.net)] ">Devexpress(asp.net)</a><br><a href="http://docs.huihoo.com/hibernate/reference-v3_zh-cn/index.html" target="_blank" title="[DOC     HIBERNATE - 符合Java习惯的关系数据库持久化] ">DOC     HIBERNATE - 符合Java习惯的关系数据库持久化</a><br><a href="http://downloads.2ccc.com/general/internet_lan/" target="_blank" title="[downloads.2ccc.com] ">downloads.2ccc.com</a><br><a href="http://subclipse.tigris.org/servlets/ProjectDocumentList?folderID=2240" target="_blank" title="[Eclipse SVN] ">Eclipse SVN</a><br><a href="http://erlang-china.org/" target="_blank" title="[Erlang中文] http://erlang-china.org/
+http://www.cnblogs.com/me-sa/category/304370.html">Erlang中文</a><br><a href="http://www.fastreportcn.com/product/VCL_5.html" target="_blank" title="[FASTCUBE 2.0] ">FASTCUBE 2.0</a><br><a href="http://www.flex-graphics.com/" target="_blank" title="[FlexGraphics是一套创建矢量图形的VCL组件] ">FlexGraphics是一套创建矢量图形的VCL组件</a><br><a href="http://sourceforge.net/projects/zeoslib/files/latest/download" target="_blank" title="[fpc delphi数据库操作组件ZeosLib] ">fpc delphi数据库操作组件ZeosLib</a><br><a href="http://www.freepascal.org/download.var" target="_blank" title="[freepascal] http://sourceforge.net/projects/freepascal/files/">freepascal</a><br><a href="http://www.w3school.com.cn/h.asp" target="_blank" title="[HTML 系列教程 XML 系列教程] ">HTML 系列教程 XML 系列教程</a><br><a href="http://dev.21tx.com/dotnet/" target="_blank" title="[http://dev.21tx.com/dotnet/] ">http://dev.21tx.com/dotnet/</a><br><a href="http://pp.sohu.com/explore/%E7%BE%8E%E5%A5%B3" target="_blank" title="[http://pp.sohu.com/explore/美女] ">http://pp.sohu.com/explore/美女</a><br><a href="http://smartsoft.5d6d.net/" target="_blank" title="[http://smartsoft.5d6d.net/] ">http://smartsoft.5d6d.net/</a><br><a href="http://www.codesky.net/" target="_blank" title="[http://www.codesky.net] ">http://www.codesky.net</a><br><a href="http://www.codesky.net/" target="_blank" title="[http://www.codesky.net] ">http://www.codesky.net</a><br><a href="http://www.devexpresscn.com/" target="_blank" title="[http://www.devexpresscn.com/] ">http://www.devexpresscn.com/</a><br><a href="http://www.erpgear.com/DevInfo/" target="_blank" title="[http://www.erpgear.com/DevInfo/] ">http://www.erpgear.com/DevInfo/</a><br><a href="http://www.itpub.net/" target="_blank" title="[http://www.itpub.net/] ">http://www.itpub.net/</a><br><a href="http://www.sevenzip.net/" target="_blank" title="[http://www.sevenzip.net/] ">http://www.sevenzip.net/</a><br><a href="http://www.verysource.com/" target="_blank" title="[http://www.verysource.com] ">http://www.verysource.com</a><br><a href="http://hi.baidu.com/icewee" target="_blank" title="[Icesoft] ">Icesoft</a><br><a href="http://indy.fulgan.com/SSL/" target="_blank" title="[indy需要的openssl库下载地址] ">indy需要的openssl库下载地址</a><br><a href="http://www.augos.com/software/inflisp.html" target="_blank" title="[Inflisp - Lisp interpreter for Delphi] http://lisp-in-a-box.software.informer.com/
+http://corman-lisp.software.informer.com/3.0/
+http://wmi-delphi-code-creator.software.informer.com/1.0/download/">Inflisp - Lisp interpreter for Delphi</a><br><a href="http://sourceforge.net/projects/mzirc/files/v2/" target="_blank" title="[IRC source] http://sourceforge.net/projects/mzirc/files/v2/
+
+http://sourceforge.net/projects/bewareserv/files/bewareserv/2.2.0/">IRC source</a><br><a href="http://man.lupaworld.com/content/develop/open-open/54.htm" target="_blank" title="[java 相关] ">java 相关</a><br><a href="http://stackoverflow.com/questions/13297272/javascript-engine-for-delphi" target="_blank" title="[javascript-engine-for-delphi] http://code.google.com/p/delphi-javascript/
+http://depositfiles.com/files/tfryg81ny">javascript-engine-for-delphi</a><br><a href="http://blog.csdn.net/huangchunwju" target="_blank" title="[JAVA企业应用] ">JAVA企业应用</a><br><a href="http://www.javaweb.cc/architecture/" target="_blank" title="[java框架技术] ">java框架技术</a><br><a href="http://www.javaweb.cc/architecture/" target="_blank" title="[java框架技术] ">java框架技术</a><br><a href="http://caterpillar.onlyfun.net/Gossip/" target="_blank" title="[java等学习  可以看看] ">java等学习  可以看看</a><br><a href="http://www.codeproject.com/Articles/37893/jLinq-2-2-0-Released" target="_blank" title="[jLinq json linq] https://github.com/hugoware/jlinq-beta
+json linq">jLinq json linq</a><br><a href="http://sourceforge.net/projects/jnative/files/" target="_blank" title="[JNative可以让你方便的访问DLL以及Linux平台下的so动态库文件] ">JNative可以让你方便的访问DLL以及Linux平台下的so动态库文件</a><br><a href="http://www.cnblogs.com/snandy/category/285213.html" target="_blank" title="[jquery] ">jquery</a><br><a href="http://www.cnblogs.com/MikeChen/articles/1795526.html" target="_blank" title="[js 001] ">js 001</a><br><a href="http://code.google.com/p/jsdt/downloads/list" target="_blank" title="[JSDT eclipse JS调试工具] ">JSDT eclipse JS调试工具</a><br><a href="http://www.csrcode.cn/article-3712-1.html" target="_blank" title="[JS模拟Dialog实现可创建可拖拽拉伸可拖动可关闭的浮动div层] ">JS模拟Dialog实现可创建可拖拽拉伸可拖动可关闭的浮动div层</a><br><a href="http://validform.rjboy.cn/" target="_blank" title="[js表单验证] ">js表单验证</a><br><a href="http://www.longene.org/" target="_blank" title="[Linux 可执行windows程序的内核] http://www.lupaworld.com/proj-class-type-tag-sid-152.html 输入法">Linux 可执行windows程序的内核</a><br><a href="http://www.linuxdiyf.com/bbs/rf/linux/" target="_blank" title="[lINUX学习] 鳥哥的 Linux 私房菜  http://linux.vbird.org">lINUX学习</a><br><a href="http://iask.sina.com.cn/u/2120379030/ish?folderid=737267" target="_blank" title="[Linux运维等] ">Linux运维等</a><br><a href="http://sourceforge.net/projects/lua4delphi/" target="_blank" title="[lua4delphi] ">lua4delphi</a><br><a href="http://www.midishow.com/" target="_blank" title="[MIDI  站点3] http://www.midifan.org/ShowForum.asp?ForumID=4">MIDI  站点3</a><br><a href="http://www.midishow.com/midi/browse/game-music" target="_blank" title="[midishow] ">midishow</a><br><a href="http://www.midishow.com/midi" target="_blank" title="[midi站点合集] http://talk3.silversand.net/midi/piano.htm
+http://piano-midi.de/midi_files.htm
+http://www.dzwww.com/yule/wohei/dzyyk/t20030829_213553.htm">midi站点合集</a><br><a href="https://code.google.com/p/mmz-asio4delphi/" target="_blank" title="[mmz-asio4delphi] Boost ASIO for delphi的高效率稳定封装">mmz-asio4delphi</a><br><a href="http://www.myexception.cn/h/543627.html" target="_blank" title="[myexception] ">myexception</a><br><a href="http://dev.mysql.com/doc/refman/5.1/zh/index.html" target="_blank" title="[MySQL 5.1参考手册] ">MySQL 5.1参考手册</a><br><a href="http://www.nexusdb.com/support/index.php" target="_blank" title="[NexusDB 官网] ">NexusDB 官网</a><br><a href="http://www.openssl.org/source/" target="_blank" title="[openssl] ">openssl</a><br><a href="http://c.t.qq.com/i/43?sideid=293171134164642&amp;token=25f12aaa&amp;pgv_ref=web.backflow.wide.c.unlogin" target="_blank" title="[qq美女 微频道] ">qq美女 微频道</a><br><a href="http://bbs.csdn.net/topics/370168547" target="_blank" title="[RAD Studio 2010/XE/XE2/XE3 官方 ISO 下载地址] ">RAD Studio 2010/XE/XE2/XE3 官方 ISO 下载地址</a><br><a href="http://runjs.cn/square?p=2" target="_blank" title="[runjs] ">runjs</a><br><a href="http://www.terrainformatica.com/sciter/" target="_blank" title="[sciter] ">sciter</a><br><a href="http:///" target="_blank" title="[sex] http://www.qu1314.com/
+http://www.bbsjzn.com/thread-4593-1-1.html">sex</a><br><a href="http://www.kernel.org/" target="_blank" title="[The Linux Kernel 源码] ">The Linux Kernel 源码</a><br><a href="http://baike.baidu.com/view/9153908.htm" target="_blank" title="[ThinkPad tablet 2] http://cn.engadget.com/tag/thinkpad+tablet/">ThinkPad tablet 2</a><br><a href="http://www.haoxg.net/tinydb.html" target="_blank" title="[tinydb 294] ">tinydb 294</a><br><a href="http://www.torry.net/" target="_blank" title="[torry] ">torry</a><br><a href="http://bbs.uc.cn/forum.php?mod=viewthread&amp;tid=449447&amp;highlight=midi" target="_blank" title="[UC 站点 dospy站点] http://bbs.uc.cn/forum.php?mod=viewthread&amp;amp;tid=449447&amp;amp;highlight=midi
+http://bbs.dospy.com/1111258attachdown.php?aid=14916913&amp;amp;bbsid=203">UC 站点 dospy站点</a><br><a href="http://www.vclcomponents.com/LISP/" target="_blank" title="[vclcomponents] ">vclcomponents</a><br><a href="http://www.cnblogs.com/haiq/archive/2011/01/14/1935377.html" target="_blank" title="[WMI问题全解（Windows管理规范）] ">WMI问题全解（Windows管理规范）</a><br><a href="http://www.codefans.net/down" target="_blank" title="[www.codefans.net] ">www.codefans.net</a><br><a href="http://www.codesky.net/" target="_blank" title="[www.codesky.net] ">www.codesky.net</a><br><a href="http://www.newxing.com/Code/Delphi/WJCZ/1195.html" target="_blank" title="[www.newxing.com] ">www.newxing.com</a><br><a href="http://altd.embarcadero.com/download/radstudio/xe4/delphicbuilder_xe4_win.iso" target="_blank" title="[XE4] ">XE4</a><br><a href="http://www.yesck.com/" target="_blank" title="[YesCK's Blog] 编程">YesCK's Blog</a><br><a href="http://www.yzw19.com/qingganliangxing/" target="_blank" title="[一周网] ">一周网</a><br><a href="http://www.cnblogs.com/del" target="_blank" title="[万一的 Delphi 博客] ">万一的 Delphi 博客</a><br><a href="http://www.daode.org/" target="_blank" title="[东方阳西 王凤仪嘉言路] ">东方阳西 王凤仪嘉言路</a><br><a href="http://www.letv.com/" target="_blank" title="[乐视网] http://mobile.letv.com/#android 下载
+http://mobile.letv.com/?p=6&amp;amp;t=1&amp;amp;f=01">乐视网</a><br><a href="http://code.google.com/p/zxing/downloads/list" target="_blank" title="[二维码java] ">二维码java</a><br><a href="http://www.yunpdf.com/" target="_blank" title="[云 pdf] http://www.yunpdf.com/soft-dzgy/200610.html#d">云 pdf</a><br><a href="http:///" target="_blank" title="[云计算安全 架构、战略、标准与运营] ">云计算安全 架构、战略、标准与运营</a><br><a href="http://www.palunion.net/bbs/forum-41-2.html" target="_blank" title="[仙剑 音乐等] http://www.palunion.net/bbs/thread-326387-1-2.html
+http://www.palunion.net/bbs/thread-329723-1-2.html">仙剑 音乐等</a><br><a href="http://hexun.com/sossos1581/default.html" target="_blank" title="[做个真正的我 博客] ">做个真正的我 博客</a><br><a href="http:///" target="_blank" title="[公开课] 《中国古代性文化大观》50集全http://data.movie.xunlei.com/movie/67120?down=1
+《南开大学公开课：走进《金瓶梅》的绮丽世界》
+http://data.movie.xunlei.com/movie/66863?down=1">公开课</a><br><a href="http://iask.sina.com.cn/u/1621163042/ish?folderid=0&amp;page=14" target="_blank" title="[共享资料CMS] ">共享资料CMS</a><br><a href="http://eblog.cersp.com/userlog22/144120/cmd.shtml?uid=144120&amp;do=index&amp;page=5" target="_blank" title="[养浩然正气] 不错">养浩然正气</a><br><a href="http://kb.cnblogs.com/list/1009/2/" target="_blank" title="[博客园  知识库 &amp;amp;#187; 项目管理] ">博客园  知识库 &amp;amp;#187; 项目管理</a><br><a href="http://www.boraid.com/article/html/221/221250.asp" target="_blank" title="[博锐管理 可关注] ">博锐管理 可关注</a><br><a href="http://www.people.com.cn/GB/historic/0413/" target="_blank" title="[历史上的今天] ">历史上的今天</a><br><a href="http://post.blog.hexun.com/MoodLove/postarticle.aspx?xfh=" target="_blank" title="[原版 博客 提交] ">原版 博客 提交</a><br><a href="http://hexun.com/gumoyi/default.html" target="_blank" title="[古墨弈] ">古墨弈</a><br><a href="http://pic.onlylady.com/2013/0329/2670685.shtml" target="_blank" title="[图库] ">图库</a><br><a href="http://dev.21tx.com/language/delphi/wz/" target="_blank" title="[天新网] ">天新网</a><br><a href="http://2302710.blog.hexun.com/" target="_blank" title="[婉阳] ">婉阳</a><br><a href="http://www.sansky.net/" target="_blank" title="[存储部落] ">存储部落</a><br><a href="http://www.eyeandroid.com/forum-AndroidSourceSharing-1.html" target="_blank" title="[安卓 源码] http://www.eyeandroid.com/forum-AndroidSourceSharing-1.html
+http://www.27123.net/forum.php
+http://www.eoeandroid.com/code/
+安卓 sqllite 源码
+http://www.oschina.net/code/explore/android-4.0.1/core/java/android/database/sqlite">安卓 源码</a><br><a href="http://www.qisuu.com/Shtml27382.html" target="_blank" title="[小说] http://hexun.com/MoodLove/default.html
+http://www.ailing.cc/">小说</a><br><a href="http://www.qjtxt.com/" target="_blank" title="[小说] ">小说</a><br><a href="http://iask.sina.com.cn/u/1597659145/ish?folderid=0&amp;page=19" target="_blank" title="[小说下载] ">小说下载</a><br><a href="http://www.i7wu.cn/xiazai/txt/5300.htm" target="_blank" title="[小说下载  大明天工] http://www.i7wu.cn/xiazai/txt/5300.htm
+http://www.bxwx.org/binfo/9/9269.htm
+http://www.shupeng.com/book/3429089">小说下载  大明天工</a><br><a href="http://www.bxwx.org/binfo/14/14557.htm" target="_blank" title="[帝王心术] http://www.quanben.com/xiazai/3/3771/">帝王心术</a><br><a href="https://github.com/adambom/parallel.js" target="_blank" title="[并行js] ">并行js</a><br><a href="http://www.oschina.net/project/tag/240/virtual-machine" target="_blank" title="[开源或者特殊软件一览] 函数图像绘制工具 Crispy Plotter http://www.oschina.net/p/cplotter
+ 有限元数据映射 FEDES http://www.oschina.net/p/fedes
+ 《金庸群侠传》的重制版 http://www.oschina.net/p/kys-jedisdl
+ HPROSE logo 高性能远程对象服务引擎 HPROSE http://www.oschina.net/p/hprose
+ LAN存取控制 FreeNAC http://www.oschina.net/p/freenac
+ Windows浏览器软件 Gikonavi http://www.oschina.net/p/gikonavi
+ Delphi工具包 jazz sdk  http://www.oschina.net/p/jazz-sdk
+ 文件共享程序 Ares http://www.oschina.net/p/ares
+ Delphi Spring Framework http://www.oschina.net/p/delphi-spring-fram">开源或者特殊软件一览</a><br><a href="http://docs.huihoo.com/hibernate/reference-v3_zh-cn/persistent-classes.html" target="_blank" title="[开源文档] ">开源文档</a><br><a href="http://www.openwebspider.org/" target="_blank" title="[开源蜘蛛 delphi] Delphi开源虚拟机Qemu Manager源代码">开源蜘蛛 delphi</a><br><a href="http://www.cnblogs.com/shanyou/category/32025.html" target="_blank" title="[张善友 博客] http://www.cnblogs.com/teddyma/category/53498.html
+Nbear">张善友 博客</a><br><a href="http://www.veyue.com/home/1632661" target="_blank" title="[微约网] ">微约网</a><br><a href="http://www.soqi.cc/" target="_blank" title="[搜奇网] http://www.chinasouqi.com/">搜奇网</a><br><a href="http://iask.sina.com.cn/u/2638502692/ish?folderid=0&amp;page=0" target="_blank" title="[数学哥 共享] ">数学哥 共享</a><br><a href="http://blog.sina.com.cn/s/articlelist_1215048895_10_1.html" target="_blank" title="[数学笔记] ">数学笔记</a><br><a href="http://www.365zn.com/xhzd/htm/6817.htm" target="_blank" title="[新华字典 划] ">新华字典 划</a><br><a href="http://ishare.iask.sina.com.cn/" target="_blank" title="[新浪 资料] http://iask.sina.com.cn/u/ish">新浪 资料</a><br><a href="http://news.sina.com.cn/guide/" target="_blank" title="[新浪导航] ">新浪导航</a><br><a href="http://hexun.com/iiisss/default.html" target="_blank" title="[无心照人] ">无心照人</a><br><a href="http://user.qzone.qq.com/905712793/main" target="_blank" title="[期货交易成功之道探索系列] 期货交易成功之道探索之卅八 《巴菲特的成功投资学》
+
+期货交易成功之道探索之卅七 《丹尼斯海龟交易法则的启迪》
+
+期货交易成功之道探索之卅六 《期货投资组合子系统指引》
+
+期货交易成功之道探索之卅五 《期货资金管理子系统指引》
+
+期货交易成功之道探索之卅四 《人神契约与期货交易》
+
+期货交易成功之道探索之卅三 《佛学智慧与期货交易》
+
+期货交易成功之道探索之卅二 《儒家哲学与期货交易》
+
+期货交易成功之道探索之卅一 《期货的“浩然正气”》
+
+期货交易成功之道探索之三十 《对期货交易的启迪》
+
+期货交易成功之道探索之廿九 《张智鑫解读》
+
+期货交易成功之道探索之廿八 《期货投机宪法》
+
+期货交易成功之道探索之廿七 《投机之王—李费默》
+
+期货交易成功之道探索之廿六 《十年一觉期市梦》
+
+期货交易成功之道探索之廿五 《期市截拳道》
+
+期货交易成功之道探索之廿四 《期货“西游记”》
+
+期货交易成功之道探索之廿三 《期市专业投资心理》
+
+期货交易成功之道探索之廿二 《行为金融学在期货交易中的运用》
+
+期货交易成功之道探索之廿一">期货交易成功之道探索系列</a><br><a href="http://blog.sina.com.cn/s/articlelist_1582319552_0_1.html?retcode=0" target="_blank" title="[杨恒均] ">杨恒均</a><br><a href="http://www.chazidian.com/r_zi_zd5212/" target="_blank" title="[查字典] ">查字典</a><br><a href="http://qing.blog.sina.com.cn/tag/%E6%A0%A1%E8%8A%B1?blogid=5d16f6380101dn8o" target="_blank" title="[校花图片精选] ">校花图片精选</a><br><a href="http://echo1377.blog.hexun.com/p1/default.aspx" target="_blank" title="[梦里说梦] ">梦里说梦</a><br><a href="http://blog.sina.com.cn/bbgc9689" target="_blank" title="[步步高] 不错
+ http://blog.sina.com.cn/bbgc9689
+ 
+http://blog.eastmoney.com/bbgc9689">步步高</a><br><a href="http://bbs.tizenol.com/" target="_blank" title="[泰泽论坛] ">泰泽论坛</a><br><a href="http://open.taobao.com/doc/index.htm?spm=0.0.0.5.oluaZ6" target="_blank" title="[淘宝支付宝接口] http://open.taobao.com/doc/index.htm?spm=0.0.0.5.oluaZ6
+http://open.taobao.com/doc/api_cat_detail.htm?scope_id=289&amp;amp;amp;amp;category_id=102
+http://club.alipay.com/read-htm-tid-9976972.html">淘宝支付宝接口</a><br><a href="http://oss.org.cn/kernel-book/" target="_blank" title="[深入分析Linux内核源码] ">深入分析Linux内核源码</a><br><a href="http://zjl1975.blog.hexun.com/16168300_d.html" target="_blank" title="[温州人在上海] ">温州人在上海</a><br><a href="http://www.verysource.com/category/3d-graphic/" target="_blank" title="[源码网站] http://www.hur.cn/Soft/2012/26161.html
+http://www.verysource.com/code/4770089_1/dll2pas.dpr.html
+http://www.bvbcode.com/cn/t2e60wn8-1647372
+http://www.bvbcode.com/search.php?q=EnumOpenFiles&amp;amp;amp;language=zh&amp;amp;amp;searchsubmit=true">源码网站</a><br><a href="http://www.3uww.com/down/403.html#ecms" target="_blank" title="[炫书网] ">炫书网</a><br><a href="http://t.hexun.com/20367218/23152721_d.html" target="_blank" title="[特殊图片] ">特殊图片</a><br><a href="http://user.kdnet.net/index.asp?userid=539206" target="_blank" title="[王存兴] 社会">王存兴</a><br><a href="http://bbs.pediy.com/archive/index.php" target="_blank" title="[看雪安全论坛] ">看雪安全论坛</a><br><a href="http://blog.sina.com.cn/s/articlelist_1391297143_0_1.html" target="_blank" title="[社会杂谈] ">社会杂谈</a><br><a href="http://www.3dllc.com/html/19/19812/6251060.html" target="_blank" title="[神秘代码] ">神秘代码</a><br><a href="http://www.open-open.com/doc/view/bc90805069054822b2bf7e9043aac349" target="_blank" title="[程序员的自我修养pptx] ">程序员的自我修养pptx</a><br><a href="http://jonqf1708.blog.hexun.com/" target="_blank" title="[稳定盈利是投资的永恒主题] 稳定盈利是投资的永恒主题">稳定盈利是投资的永恒主题</a><br><a href="http://childish1960.photo.hexun.com/p12SectionList.html" target="_blank" title="[童心未泯 图片专辑] ">童心未泯 图片专辑</a><br><a href="http://www.bxwx.org/btopmonthvisit/0/1.htm" target="_blank" title="[笔下文学] ">笔下文学</a><br><a href="http://blog.yufeng.info/" target="_blank" title="[系统技术非业余研究 ERLang] http://mryufeng.iteye.com/">系统技术非业余研究 ERLang</a><br><a href="http://huaban.com/boards/967791/" target="_blank" title="[美女] ">美女</a><br><a href="http://iask.sina.com.cn/u/1065727334/ish?folderid=935511&amp;page=59" target="_blank" title="[美女] ">美女</a><br><a href="http://huaban.com/boards/2451670/" target="_blank" title="[美女001] ">美女001</a><br><a href="http://weiba.weibo.com/meinv?topnav=1&amp;wvr=5&amp;uid=1414296214&amp;position=3" target="_blank" title="[美女吧] ">美女吧</a><br><a href="http://pic.yesky.com/pic/man/girl/?utm_source=if1&amp;utm_medium=fkhz&amp;utm_campaign=if1" target="_blank" title="[美女图片] ">美女图片</a><br><a href="http://www.boting.co/book/tingshu4761_25_0_0_silverlight.html" target="_blank" title="[美的觉醒  有声小说 博听网录制首发] ">美的觉醒  有声小说 博听网录制首发</a><br><a href="http://blog.sina.com.cn/s/articlelist_1362427600_0_2.html" target="_blank" title="[股市分子] 很不错">股市分子</a><br><a href="http://yifggxu.pop.game3737.com/flash/8212/index.html?agent_id=55213&amp;placeid=27011&amp;type=3&amp;game_id=130&amp;aid=8212&amp;rand=2&amp;t=0.6429539882635013" target="_blank" title="[英雄难过美人关] http://yifggxu.pop.game3737.com/flash/8212/index.html?agent_id=55213&amp;amp;placeid=27011&amp;amp;type=3&amp;amp;game_id=130&amp;amp;aid=8212&amp;amp;rand=2&amp;amp;t=0.6429539882635013">英雄难过美人关</a><br><a href="http://blog.csdn.net/acrodelphi/article/list/2" target="_blank" title="[華華的博客] ">華華的博客</a><br><a href="http://hi.baidu.com/zifan" target="_blank" title="[蓝竹傲雪 eclipse java] ">蓝竹傲雪 eclipse java</a><br><a href="http://www.yxdown.com/paihang/rpg/" target="_blank" title="[角色扮演游戏排行榜] ">角色扮演游戏排行榜</a><br><a href="http://www.veryhuo.com/design/apprecia/" target="_blank" title="[设计欣赏] ">设计欣赏</a><br><a href="http://baike.baidu.com/view/1967.htm" target="_blank" title="[语义网 百科] ">语义网 百科</a><br><a href="http://hexun.com/tanming/default.html" target="_blank" title="[谭铭天地] ">谭铭天地</a><br><a href="http://www.wandoujia.com/" target="_blank" title="[豌豆荚] ">豌豆荚</a><br><a href="http://tieba.baidu.com/tb/top500/10.html" target="_blank" title="[贴吧排行] ">贴吧排行</a><br><a href="http://www.yunpdf.com/soft-dzgy/200581.html" target="_blank" title="[走出软件作坊] ">走出软件作坊</a><br><a href="http://www.justep.com/studio.html" target="_blank" title="[起步 X5学习应用网站] BMP
+http://www.justep.com/workflow.html
+OA
+http://www.justep.com/app/BJQB/OA.html#
+论坛
+http://bbs.justep.com/forum.php">起步 X5学习应用网站</a><br><a href="http://wangning868.blog.hexun.com/" target="_blank" title="[跑赢大盘的王者] 不错">跑赢大盘的王者</a><br><a href="http://www.china-01.net/" target="_blank" title="[跨媒体互动 小说等] ">跨媒体互动 小说等</a><br><a href="http://www.superdata.com.cn/" target="_blank" title="[速达官网] ">速达官网</a><br><a href="http://bbs.suda123.com/default.html" target="_blank" title="[速达社区] ">速达社区</a><br><a href="http://code.ijinshan.com/" target="_blank" title="[金山卫士 开源] ">金山卫士 开源</a><br><a href="http://game.3533.com/ting/67500.htm" target="_blank" title="[铃声] ">铃声</a><br><a href="http://www.cnblogs.com/enli/category/142270.html" target="_blank" title="[闲云野鹤 delphi] ">闲云野鹤 delphi</a><br><a href="http://anyishen.blog.hexun.com/" target="_blank" title="[陈坚] ">陈坚</a><br><a href="http://www.umlchina.com/" target="_blank" title="[非程序员] http://www.open-open.com/doc/">非程序员</a><br><a href="http://yvvwlfor.atspace.com/uahopi9.htm" target="_blank" title="[音乐？？？] ">音乐？？？</a><br><a href="http://www.epmsoft.net/" target="_blank" title="[项目管理] 工程项目管理    http://www.cpmchina.com/ 
+建筑工程教育网  http://www.jianshe99.com/ 
+项目管理资源    http://www.leadge.com/
+项目管理者联盟  http://www.mypm.net/
+项目管理网      http://www.chinapmp.cn/
+工程项目管理门户 http://www.zggcxmgl.com/
+工程资料库      http://www.gong123.com/ 
+项目管理技术    http://www.pmtm.net.cn/ 
+项目管理师网   http://www.51cpmp.com/">项目管理</a><br><a href="http://code.google.com/p/ccflow/source/checkout" target="_blank" title="[驰骋工作流程引擎] ">驰骋工作流程引擎</a><br><a href="http://www.eol.cn/html/g/benkezy.shtml#0201" target="_blank" title="[高校本科专业目录,按所属学科分类：] ">高校本科专业目录,按所属学科分类：</a><br><a href="http://linux.vbird.org/" target="_blank" title="[鸟哥Linux私房菜] ">鸟哥Linux私房菜</a><br><a href="http://huangjinmu1303.blog.hexun.com/" target="_blank" title="[黄金幕] ">黄金幕</a><br><a href="http://www.hackbase.com/tech/98.html" target="_blank" title="[黑基网] ">黑基网</a><br><a href="http://www.siluke.com/0/76/76401/" target="_blank" title="[齐天传全文] ">齐天传全文</a><br>                       </div> </div> <iframe src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/point.htm" style="display:none;" height="0" width="0"></iframe></div>
+    <!--  友情链接:结束  -->
+    <div id="ArticleSideMore" style="display: none;">
+    </div>
+    
+    
+</div>
+
+                        </div>
+                        
+                        <div class="right_side_2" style="float: left;">
+                            
+<script>
+    function isArticleDel(url) {
+        var x = window.confirm('是否删除？');
+        if (x) {
+            document.getElementById("ifr_delarticle").contentWindow.location = url;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function isVote() {
+        var x = window.confirm('是否投票？');
+        if (x) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function bookmarkThis() {
+        t = document.title;
+        u = location.href;
+        tag = "程序";
+        e = document.selection ? (document.selection.type != 'None' ? document.selection.createRange().text : '') : (document.getSelection ? document.getSelection() : '');
+        void (open('http://bookmark.hexun.com/post.aspx?title=' + escape(t) + '&url=' + escape(u) + '&tag=' + escape(tag) + '&excerpt=' + escape(e), 'HexunBookmark', 'fullscreen=yes,scrollbars=yes,status=yes,resizable=yes,toolbar=yes,menubar=yes,location=yes'));
+    }
+
+    var wordpt = 14;
+
+    function changeStyle(type) {
+        if (type == 0) {
+            if (wordpt > 8) {
+                wordpt = wordpt - 2;
+            }
+        }
+        else {
+            if (wordpt < 36) {
+                wordpt = wordpt + 2;
+            }
+        }
+        var temp = eval(wordpt);
+        temp = temp + "px";
+        document.getElementById('BlogArticleDetail').style.fontSize = temp;
+    }
+
+    function changeFont(type) {
+        var detail = document.getElementById("BlogArticleDetail");
+        var btnBig = document.getElementById("btnBigFont");
+        var btnNormal = document.getElementById("btnNormalFont");
+        var btnSmall = document.getElementById("btnSmallFont");
+        if (type == 1) {
+            detail.style.fontSize = "24px";
+            btnBig.style.fontWeight = "bold";
+            btnNormal.style.fontWeight = "normal";
+            btnSmall.style.fontWeight = "normal";
+            btnBig.style.cursor = "default";
+            btnNormal.style.cursor = "pointer";
+            btnSmall.style.cursor = "pointer";
+        }
+        else if (type == 3) {
+            detail.style.fontSize = "12px";
+            btnBig.style.fontWeight = "normal";
+            btnNormal.style.fontWeight = "normal";
+            btnSmall.style.fontWeight = "bold";
+            btnBig.style.cursor = "pointer";
+            btnNormal.style.cursor = "pointer";
+            btnSmall.style.cursor = "default";
+        }
+        else {
+            detail.style.fontSize = "14px";
+            btnBig.style.fontWeight = "normal";
+            btnNormal.style.fontWeight = "bold";
+            btnSmall.style.fontWeight = "normal";
+            btnBig.style.cursor = "pointer";
+            btnNormal.style.cursor = "default";
+            btnSmall.style.cursor = "pointer";
+        }
+    }
+
+    function weibo(title, url) {
+        var title = '分享 @shsgl 的博文:《<a style="cursor: pointer;text-decoration: none;" href="http://MoodLove.blog.hexun.com/86484113_d.html">MySQL存储过程中的3种循环</a>》 ';
+        var url = 'http://MoodLove.blog.hexun.com/86484113_d.html';
+        void ((function (s, d, e, t, z) { var f = 'http://t.hexun.com/channel/shareblog.aspx?', u = z || d.location, p = ['title=', e(t || d.title), '&url=', e(u)].join(''); function a() { if (!window.open([f, p].join(''), 'wb', ['toolbar=0,status=0,resizable=1,width=636,height=326,left=', (s.width - 636) / 2, ',top=', (s.height - 326) / 2].join(''))) u.href = [f, p].join(''); }; if (/Firefox/.test(navigator.userAgent)) setTimeout(a, 0); else a(); })(screen, document, encodeURIComponent, title, url));
+    }
+
+    function sms() {
+        window.open('http://comment.blog.hexun.com/i/sendsms.aspx?blogname=MoodLove&brief=%0a%09%09MySQL%b4%e6%b4%a2%b9%fd%b3%cc%d6%d0%b5%c43%d6%d6%d1%ad%bb%b7%a1%be%d7%aa%d4%d8%a1%bf%0a%d4%daMySQL%b4%e6%b4%a2%b9%fd%b3%cc%b5%c4%d3%ef%be%e4%d6%d0%d3%d0%c8%fd%b8%f6%b1%ea%d7%bc%b5%c4%d1%ad%bb%b7%b7%bd%ca%bd%a3%baWHILE%d1%ad%bb%b7%a3%acLOOP%d1%ad%bb%b7%d2%d4%bc%b0REPEAT%d1%ad%bb%b7%a1%a3%bb%b9%d3%d0%d2%bb%d6%d6%b7%c7%b1%ea%d7%bc%b5%c4%d1%ad%bb%b7%b7%bd%ca%bd%a3%baGOTO%a3%ac%b2%bb%b9%fd%d5%e2%d6%d6%d1%ad%bb%b7%b7%bd%ca%bd%d7%ee%ba%c3%b1%f0%d3%c3%a3%ac%ba%dc%c8%dd%d2%d7%d2%fd%c6%f0%b3%cc%d0%f2%b5%c4%bb%ec%c2%d2%a3%ac%d4%da%d5%e2%c0%ef%be%cd%b2%bb%b4%ed%be%df%cc%e5%bd%e9%c9%dc%c1%cb%a1%a3%0a%d5%e2%bc%b8', 'blogsms', 'toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,width=380,height=180,left=' + (screen.width - 380) / 2 + ',top=' + (screen.height - 180) / 2);
+    }
+    function RecommendArticle(aid) {
+        void (open('http://post.blog.hexun.com/inc/ArticleRecommend.aspx?articleid=' + aid + '&blogid=4047358', 'HexunRecommend', 'scrollbars=no,width=515,height=200,left=80,top=80,status=no,resizable=yes,location=no'));
+    }
+</script>
+<div id="BlogPageRight" class="right_side_2_inner">
+    <!--  文章内容:开始  -->
+    <iframe src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/a_004.htm" id="ifr_delarticle" scrolling="no" style="display: none;" frameborder="0" height="0" width="0"></iframe>
+    <div class="Article" id="ArticeTextID">
+        <div class="ArticleTitle">
+            <span class="ArticleTitleText">
+                <a style="cursor: pointer;text-decoration: none;" href="http://moodlove.blog.hexun.com/86484113_d.html">MySQL存储过程中的3种循环</a></span> [转贴
+            2013-7-1 11:44:24]
+            
+            <a href="http://post.blog.hexun.com/MoodLove/newpostblog.aspx?articleid=86484113" title="编辑..."><img style="display: none;" id="idIconEdit" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/icon_edit.gif" align="absmiddle" border="0"></a>&nbsp;<img id="idIconDel" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/icon_del.gif" title="删除..." style="cursor: pointer; display: none;" onclick="isArticleDel('http://MoodLove.blog.hexun.com/deletearticle.aspx?articleid=86484113')" align="absmiddle" border="0">&nbsp;
+        </div>
+        <span style="position: absolute; height: 0px; width: 0px;" id="imgnext_86484113">
+        </span>
+        <div class="ArticleBlog">
+            <div class="ArticleBlogText">
+                <div style="margin-bottom: 4px;" id="ArticleBlogButtons" align="right">
+                    <a id="link_VoteArticle_Top" href="http://cache-sidebar.blog.hexun.com/voteArticle.aspx?articleID=86484113&amp;blogname=MoodLove&amp;blogid=4047358" title="给这篇文章投一票"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/btn-newding.gif" style="border: 0;
+                               cursor: pointer; vertical-align: middle;" alt="我顶"></a>
+                    <span id="ChangeBlogArticleFont" style="vertical-align: middle; font-size: 12px;">字号：<span onclick="javascript:changeFont(1);" style="cursor: pointer; font-weight: normal;" id="btnBigFont">大</span> <span onclick="javascript:changeFont(2);" style="cursor: default;
+                            font-weight: bold;" id="btnNormalFont">中</span> <span onclick="javascript:changeFont(3);" style="cursor: pointer; font-weight: normal;" id="btnSmallFont">小</span></span>
+                </div>
+                <div id="BlogArticleDetail" style="font-size: 14px;">
+                    <div class="postTitle">
+		<a id="viewpost1_TitleUrl" class="postTitle2" href="http://www.blogjava.net/rain1102/archive/2011/05/16/350301.html">MySQL存储过程中的3种循环【转载】</a>
+	</div>
+	<div>
+<p>在MySQL存储过程的语句中有三个标准的循环方式：WHILE循环，LOOP循环以及REPEAT循环。还有一种非标准的循环方式：GOTO，不过这种循环方式最好别用，很容易引起程序的混乱，在这里就不错具体介绍了。</p>
+<p>这几个循环语句的格式如下：<br>
+WHILE……DO……END WHILE<br>
+REPEAT……UNTIL END REPEAT<br>
+LOOP……END LOOP<br>
+GOTO。</p>
+<p>&nbsp;<wbr></p>
+<p>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 下面首先使用第一种循环编写一个例子。<br>
+mysql&gt; create procedure pro10()<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; begin<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; declare i int;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; set i=0;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; while i&lt;5 do<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> insert into t1(filed) values(i);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> set i=i+1;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; end while;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; end;//<br>
+Query OK, 0 rows affected (0.00 sec)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 在这个例子中，INSERT和SET语句在WHILE和END WHILE之间，当变量i大于等于5的时候就退出循环。使用set i=0；语句是为了防止一个常见的错误，如果没有初始化，i默认变量值为NULL，而NULL和任何值操作的结果都是NULL。<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 执行一下这个存储过程并产看一下执行结果：<br>
+mysql&gt; delete from t1//<br>
+Query OK, 0 rows affected (0.00 sec)<br>
+mysql&gt; call pro10()//<br>
+Query OK, 1 row affected (0.00 sec)<br>
+mysql&gt; select * from t1//<br>
++——-+<br>
+| filed |<br>
++——-+<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 0 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 1 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 2 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 3 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 4 |<br>
++——-+<br>
+5 rows in set (0.00 sec)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 以上就是执行结果，有5行数据插入到数据库中，证明存储过程编写正确无误^_^。</p>
+<p>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 再来看一下第二个循环控制指令 REPEAT……END REPEAT。使用REPEAT循环控制语句编写下面这个存储过程：<br>
+mysql&gt; create procedure pro11()<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; begin<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; declare i int default 0;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; repeat<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> insert into t1(filed) values(i);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> set i=i+1;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> until i&gt;=5<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; end repeat;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; end;//<br>
+Query OK, 0 rows affected (0.00 sec)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 这个REPEAT循环的功能和前面WHILE循环一样，区别在于它的执行后检查是否满足循环条件（until i&gt;=5），而WHILE则是执行前检查（while i&lt;5 do）。<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 不过要注意until i&gt;=5后面不要加分号，如果加分号，就是提示语法错误。<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 编写完成后，调用一下这个存储过程，并查看结果：<br>
+mysql&gt; delete from t1//<br>
+Query OK, 5 rows affected (0.00 sec)</p>
+<p>mysql&gt; call pro11()//<br>
+Query OK, 1 row affected (0.00 sec) #虽然在这里显示只有一行数据受到影响，但是下面选择数据的话，还是插入了5行数据。</p>
+<p>mysql&gt; select * from t1//<br>
++——-+<br>
+| filed |<br>
++——-+<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 0 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 1 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 2 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 3 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 4 |<br>
++——-+<br>
+5 rows in set (0.00 sec)<br>
+一行就是执行结果，实际的作用和使用while编写的存储过程一样，都是插入5行数据。</p>
+<div>
+<p>再来看一下第三个循环控制语句LOOP……END LOOP。编写一个存储过程程序如下：<br>
+mysql&gt; create procedure pro12()<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; begin<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; declare i int default 0;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; loop_label: loop<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> insert into t1(filed) values(i);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> set i=i+1;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> if i&gt;=5 then<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> leave loop_label;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> end if;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; end loop;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; end;//<br>
+Query OK, 0 rows affected (0.00 sec)<br>
+从上面这个例子可以看出，使用LOOP编写同样的循环控制语句要比使用while和repeat编写的要复杂一些：在循环内部加入了IF……END 
+IF语句，在IF语句中又加入了LEAVE语句，LEAVE语句的意思是离开循环，LEAVE的格式是：LEAVE 循环标号。<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 编写完存储过程程序后，来执行并查看一下运行结果：<br>
+mysql&gt; delete from t1//<br>
+Query OK, 5 rows affected (0.00 sec) </p>
+<p>&nbsp;<wbr></p>
+<p>mysql&gt; call pro12//<br>
+Query OK, 1 row affected (0.00 sec) #虽然说只有一行数据受影响，但是实际上是插入了5行数据。</p>
+<p>mysql&gt; select * from t1//<br>
++——-+<br>
+| filed |<br>
++——-+<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 0 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 1 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 2 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 3 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 4 |<br>
++——-+<br>
+5 rows in set (0.00 sec)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 执行结果和使用WHILE、LOOP编写的循环一样，都是往标中插入5行值。</p>
+<p>&nbsp;<wbr>&nbsp;<wbr> Labels&nbsp;<wbr>&nbsp;<wbr> 标号和 END Labels 结束标号<br>
+&nbsp;<wbr>&nbsp;<wbr> 在使用loop的时候，使用到的labels标号，对于labels可以用到while，loop，rrepeat等循环控制语句中。而且有必要好好认识一下lables!！<br>
+mysql&gt; create procedure pro13()<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; label_1:begin<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; label_2:while 0=1 do leave label_2;end while;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; label_3:repeat leave label_3;until 0=0 end repeat;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; label_4:loop leave label_4;end loop;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; end;//<br>
+Query OK, 0 rows affected (0.00 sec)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 上面这里例子显示了可以在BEGIN、WHILE、REPEAT或者LOOP语句前使用语句标号，语句标号只能在合法的语句前使用，所以LEAVE label_3意味着离开语句标号名为label_3的语句或符合语句。<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 其实，也可以使用END labels来表示标号结束符。<br>
+mysql&gt; create procedure pro14()<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; label_1:begin<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; label_2:while 0=1 do leave label_2;end while label_2;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; label_3:repeat leave label_3;until 0=0 end repeat label_3;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; label_4:loop leave label_4;end loop label_4;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; end label_1;//<br>
+Query OK, 0 rows affected (0.00 sec)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 上面就是使用了标号结束符，其实这个结束标号并不是十分有用，而且他必须和开始定义的标号名字一样，否则就会报错。如果要养成一个良好的编程习惯方便他人阅读的话，可以使用这个标号结束符。</p>
+<p>ITERATE 迭代&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 如果是在ITERATE语句，即迭代语句中的话，就必须使用LEAVE语句。ITERATE只能出现在LOOP，REPEAT和WHILE语句中，它的意思是“再次循环”，例如：<br>
+mysql&gt; create procedure pro15()&nbsp;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; begin<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; declare i int default 0;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; loop_label:loop<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> if i=3 then<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> set i=i+1;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> iterate loop_label;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> end if;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> insert into t1(filed) values(i);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> set i=i+1;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> if i&gt;=5 then<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> leave loop_label;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> end if;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt;&nbsp;<wbr>&nbsp;<wbr> end loop;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -&gt; end;//<br>
+Query OK, 0 rows affected (0.00 sec)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> iterate语句和leave语句一样，也是在循环内部使用，它有点类似于C/C++语言中的continue。<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 那么这个存储程序是怎么运行的的？首先i的值为0，条件判断语句if i=3 
+then判断为假，跳过if语段，向数据库中插入0，然后i+1，同样后面的if i&gt;=5 
+then判断也为假，也跳过；继续循环，同样插入1和2；在i=3的时候条件判断语句if i=3 
+then判断为真，执行i=i+1，i值为4，然后执行迭代iterate loop_label;，即语句执行到iterate 
+loop_label;后直接跳到if i=3 then判断语句，执行判断，这个时候由于i=4，if i=3 
+then判断为假，跳过IF语段，将4添加到表中，i变为5，条件判断if i&gt;=5 then判断为真，执行leave 
+loop_label;跳出loop循环，然后执行end;//，结束整个存储过程。<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 综上所述，数据库中将插入数值：0,1,2,4。执行存储过程，并查看结果：|<br>
+mysql&gt; delete from t1//<br>
+Query OK, 5 rows affected (0.00 sec) </p>
+<p>&nbsp;<wbr></p>
+<p>mysql&gt; call pro15//<br>
+Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; select * from t1//<br>
++——-+<br>
+| filed |<br>
++——-+<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 0 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 1 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 2 |<br>
+|&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> 4 |<br>
++——-+<br>
+4 rows in set (0.00 sec)</p>
+<p>和我们上面分析的结果一样，只插入了数值0,1,2,4。</p>
+</div>
+</div></div>
+            </div>
+            
+            <style>
+                /*0324 BlogMore*/
+                img
+                {
+                    border: none;
+                }
+                .moreArticles
+                {
+                    margin-top: 50px;
+                    font-size: 14px;
+                }
+                .moreArticles ul
+                {
+                    list-style: disc;
+                }
+                .moreArticles ul li
+                {
+                    height: 23px;
+                    line-height: 23px;
+                    font-size: 14px;
+                    overflow:hidden;
+                }
+                .moreArticles h2
+                {
+                    margin: 0px;
+                    padding: 0px;
+                    font-size: 14px;
+                    font-weight: normal;
+                    height: 30px;
+                }
+                .moreArticles h2 a
+                {
+                    text-decoration: underline;
+                }
+                .conBg_oth
+                {
+                    position: absolute;
+                    left: 505px;
+                    top: 505px;
+                    width: 644px;
+                    height: 390px;
+                    border: 1px solid #6d6b6a;
+                    z-index: 900;
+                    background: #fff;
+                }
+                .editMya
+                {
+                    width: 642px;
+                    height: 390px;
+                    border: 1px solid #a8bac1;
+                    font-size: 12px;
+                }
+                .editTop
+                {
+                    background: url(../images/box_top_bg.jpg) repeat-x;
+                    height: 22px;
+                    padding-top: 3px;
+                    padding-left: 12px;
+                    font-size: 14px;
+                    font-weight: normal;
+                    color: #4e7786;
+                }
+                .editTop span
+                {
+                    float: right;
+                    padding-right: 6px;
+                    padding-top: 2px;
+                }
+                .editLeft
+                {
+                    width: 396px;
+                    float: left;
+                    padding-left: 12px;
+                    padding-top: 12px;
+                    font-size: 12px;
+                }
+                .f000
+                {
+                    color: #000;
+                }
+                .selectAticle
+                {
+                    height: 25px;
+                }
+                .selectAticle .fright
+                {
+                    float: right;
+                }
+                #hk_page
+                {
+                    float: right;
+                    padding-right: 20px;
+                    padding-bottom: 3px;
+                }
+                #hk_page a
+                {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+                /*0324 BlogMore*/
+            </style>
+            <div class="moreArticles">
+                <div id="moreArticleList">
+                </div>
+            </div>
+            
+            <div class="ArticleTag">
+                标签:
+                <a href="http://blog.hexun.com/group/commontag.aspx?searchTag=%b3%cc%d0%f2" target="_blank">程序</a>&nbsp;<a href="http://t.hexun.com/k/%b3%cc%d0%f2" target="_blank"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/weibo.gif" alt="查看和 程序 相关的微博" border="0"></a>&nbsp;&nbsp;<a href="http://blog.hexun.com/group/commontag.aspx?searchTag=%b8%f1%ca%bd" target="_blank">格式</a>&nbsp;<a href="http://t.hexun.com/k/%b8%f1%ca%bd" target="_blank"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/weibo.gif" alt="查看和 格式 相关的微博" border="0"></a>&nbsp;&nbsp;<a href="http://blog.hexun.com/group/commontag.aspx?searchTag=%b4%e6%b4%a2%b9%fd%b3%cc" target="_blank">存储过程</a>&nbsp;<a href="http://t.hexun.com/k/%b4%e6%b4%a2%b9%fd%b3%cc" target="_blank"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/weibo.gif" alt="查看和 存储过程 相关的微博" border="0"></a>&nbsp;&nbsp;<a href="http://blog.hexun.com/group/commontag.aspx?searchTag=%bb%ec%c2%d2" target="_blank">混乱</a>&nbsp;<a href="http://t.hexun.com/k/%bb%ec%c2%d2" target="_blank"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/weibo.gif" alt="查看和 混乱 相关的微博" border="0"></a>&nbsp;&nbsp;<a href="http://blog.hexun.com/group/commontag.aspx?searchTag=%d3%ef%be%e4" target="_blank">语句</a>&nbsp;<a href="http://t.hexun.com/k/%d3%ef%be%e4" target="_blank"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/weibo.gif" alt="查看和 语句 相关的微博" border="0"></a>&nbsp;&nbsp;
+            </div>
+            
+            <div class="ArticleCate">
+                分类: <a href="http://moodlove.blog.hexun.com/cate.aspx?cateID=1141030&amp;cate=Mysql">
+                    Mysql</a>
+            </div>
+            
+            <style>
+                .Lwb
+                {
+                    float: left;
+                    margin: 15px 5px 0px 0px;
+                }
+                .Lwb a
+                {
+                    padding-right: 6px;
+                }
+                .ArticleClass
+                {
+                    padding-bottom: 15px;
+                }
+            </style>
+            <form action="" id="Lwbform" method="post" target="_blank">
+            <div class="Lwb" style="display:none;">
+                <a href="javascript:void(0)" id="CreateCWB" tcode="ODY0ODQxMTN8TW9vZExvdmV8NDA0NzM1OHw4NDkwOTQ3">
+                    <img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/Lwb_btn.gif" alt="生成长微博"></a>
+            </div>
+            </form>
+            <!-- 分享 -->
+            <link href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/bdsstyle_002.css" type="text/css" rel="stylesheet">
+            <link href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/share_blog_bd.css" type="text/css" rel="stylesheet">
+            <div class="ArticleTag">
+                <div class="shareBox" id="share">
+                    <span class="word_desc">将本文分享至:&nbsp;</span>
+                    <script type="text/javascript">
+                        (function () {
+                            var context = document.title.replace(/%/g, '％');
+                            var url = document.location.href;
+                            url = (url.indexOf('?') != -1) ? (url + '&fromweb=share') : (url + '?fromweb=share');
+                            document.write('<span id="bdshare" class="bdshare_t bds_tools get-codes-bdshare bdshare" style="float:left;"><a class="bds_thx thx shxwb_btn" name="和讯微博"><span><b>转发到和讯微博</b></span></a><a class="bds_tsina ssina_btn"><span><b>转发到新浪微博</b></span></a><a class="bds_tsohu shwb ssohu_btn" name="转发到搜狐微博"><span><b>转发到搜狐微博</b></span></a><a class="bds_tqq sqq_btn"><span><b>转发到腾讯微博</b></span></a><a class="bds_qzone qqkj_btn"><span><b>转发到QQ空间</b></span></a><a class="bds_renren srr_btn"><span><b>转发到人人网</b></span></a><a target="_blank" class="bds_douban db sdb_btn"><span><b>转发到豆瓣网</b></span></a><a href="#" class="phone_btn" ><span><img src="http://itv.hexun.com/lbi-html/doubleclick/tm10.gif" width=25 height=25 style="position:absolute" onclick="open_phone()"/><b onclick="open_phone()">转发到手机网</b></span></a><span class="bds_more"></span></span></cite><div style="clear:both"></div>');
+
+                        })();
+                        function open_phone(e) {
+                            var context = document.title.replace(/%/g, '％');
+                            var url = document.location.href;
+                            open("http://go.10086.cn/ishare.do?m=t&u=" + encodeURIComponent(url) + "&t=" + encodeURIComponent(context) + "&sid=6295c13d16170cd3930687d8156ed4a0");
+                        }
+                    </script><span id="bdshare" class="bdshare_t bds_tools get-codes-bdshare bdshare" style="float:left;"><a href="#" class="bds_thx thx shxwb_btn" name="和讯微博"><span><b>转发到和讯微博</b></span></a><a href="#" class="bds_tsina ssina_btn"><span><b>转发到新浪微博</b></span></a><a href="#" class="bds_tsohu shwb ssohu_btn" name="转发到搜狐微博"><span><b>转发到搜狐微博</b></span></a><a href="#" class="bds_tqq sqq_btn"><span><b>转发到腾讯微博</b></span></a><a href="#" class="bds_qzone qqkj_btn"><span><b>转发到QQ空间</b></span></a><a href="#" class="bds_renren srr_btn"><span><b>转发到人人网</b></span></a><a href="#" target="_blank" class="bds_douban db sdb_btn"><span><b>转发到豆瓣网</b></span></a><a href="#" class="phone_btn"><span><img class="dyaajpsgrxvbmaxcnscg" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/tm10.gif" style="position:absolute" onclick="open_phone()" height="25" width="25"><b onclick="open_phone()">转发到手机网</b></span></a><span class="bds_more"></span></span><div style="clear:both"></div>
+                </div>
+            </div>
+            <!-- 分享 end-->
+            
+            <div>
+                阅读(<span id="articleClickCount">7937</span>) | <a href="http://moodlove.blog.hexun.com/86484113_d.html#lookPoint">
+                    评论(<span id="articleCommentCount">0</span>)</a> | <a href="javascript:bookmarkThis()">
+                        转帖</a> 
+                
+                |
+                <a href="http://hexun.com/report.aspx?userid=8490947&amp;type=3&amp;Url=http%3a%2f%2fMoodLove.blog.hexun.com%2f86484113_d.html" target="_blank">举报</a>
+                <span style="display: none;" id="articleRecommendCount"><a href="http://moodlove.blog.hexun.com/ArticleCollectors.aspx?articleid=86484113&amp;type=2" target="_blank">本文章被推荐到了0个圈子</a></span>
+            </div>
+            <div id="dinglist">
+                <dl>
+                    <dt><span id="articleVoteCount"><a href="http://cache-sidebar.blog.hexun.com/i/votelist.aspx?articleid=86484113&amp;blogName=moodlove" target="_blank">0</a></span><a id="link_VoteArticle_Bottom" href="http://cache-sidebar.blog.hexun.com/voteArticle.aspx?articleID=86484113&amp;blogname=MoodLove&amp;blogid=4047358">
+                        我 顶</a></dt>
+                    <dd>
+                        <ul>
+                            <span id="articleVoteUsers"></span>
+                        </ul>
+                    </dd>
+                    <dd class="attention">
+                        <span>！</span>觉得精彩就顶一下，顶的多了，文章将出现在更重要的位置上。</dd>
+                </dl>
+            </div>
+            
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <!--  文章内容:结束  -->
+    <!--  上一篇下一篇:开始  -->
+    
+    <div class="NextBlog">
+        
+        <div>
+            下一篇: <a href="http://moodlove.blog.hexun.com/86484289_d.html">
+                如何调整MySQL 查询缓冲</a></div>
+        
+        <div>
+            上一篇: <a href="http://moodlove.blog.hexun.com/86483983_d.html">
+                mysql存储过程结合游标实例</a></div>
+        
+    </div>
+    
+    <!--  上一篇下一篇:结束  -->
+    <!--  博客链:开始  -->
+    <span id="articleLinkDisplay"></span>
+    <!--  博客链:结束  -->
+    <!--  最新读者:开始  -->
+    <span id="BlogTrackDiv"></span>
+    <!--  最新读者:结束  -->
+    
+    <!--  回复:开始  -->
+    <span id="CommentAuditDiv"></span>
+    <link href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/lookPoint.css" type="text/css" rel="stylesheet">
+    <div id="lookPoint" class="lookPoint side_block">
+        <div class="lookNav side_title">
+            <ul class="lookPoint-list clearfix" id="commenttab">
+                <li class="lookPoint-list-fir lookPoint-list-Now">评论</li>
+            </ul>
+        </div>
+        <div id="cont_look_2">
+            <span id="articleCommentDisplay"><div class="Reply"><a name="commentsList"></a><span id="CommentAuditTip"></span><table class="ReplyTable" id="tbl_commentsList" border="0" cellpadding="0" cellspacing="0"></table></div></span>
+            <div id="hk_page">&nbsp;</div>
+        </div>
+    </div>
+    <!--  回复:结束  -->
+    <!--  回复:结束  -->
+    <!--  发表评论:开始  -->
+    <div id="ViewArticleContainer1_ArticleWithComments_SubmitCommentPanel">
+	
+        <a name="#comment"></a>
+        
+<script language="javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/PostComment.js"></script>
+<script language="JavaScript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/globaltest.js" type="text/javascript"></script>
+<script language="JavaScript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/api.js" type="text/javascript"></script>
+
+<script language="javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/homeway.js"></script><div id="LeftMenu_parent" style="position:absolute;Z-INDEX:1115;display:none;top:10;left:10"><table border="1" bordercolor="#000000" cellpadding="1" cellspacing="0" width="78"><tbody><tr><td></td></tr></tbody></table></div>
+<script language="javascript" type="text/javascript">
+    function GotoHead() {
+        location.href = "http://reg.hexun.com/login.aspx?gourl=" + escape(location.href);
+    }
+</script>
+<div class="PublishComment">
+    <div class="PublishTitle">
+        发表评论</div>
+    <div class="PublishForm">
+        <form name="postComment" onsubmit="return CheckNoHtmlCommentContent();" method="post" action="http://comment.blog.hexun.com/MoodLove/postComment.aspx?ArticleID=86484113">
+        <div>
+            <span id="commenttag" style="font-color: ff0000"></span>
+        </div>
+        <div>
+            大 名:<span id="LoginLink" style="display: inline;">&nbsp;&nbsp;[<a href="http://reg.hexun.com/login.aspx?gourl=http://MoodLove.blog.hexun.com/86484113_d.html">登录</a>]&nbsp;&nbsp;[<a href="http://reg.hexun.com/regname.aspx?fromhost=HX_BLOG&amp;backurl=http://post.blog.hexun.com/registerblog.aspx" target="_blank">注册成为和讯用户</a>]</span></div>
+        <div>
+            <input name="UserNameTextbox" id="UserNameTextbox" onfocus="showCode(86484113);" type="text">(不填写则显示为匿名者)</div>
+        <div>
+            网 址:</div>
+        <div>
+            <input name="UserUrlTextbox" id="UserUrlTextbox" value="http://" onfocus="showCode(86484113);" type="text">(您的网址，可以不填)</div>
+        <div>
+            标 题:</div>
+        <div>
+            <input name="CommentTitle" id="CommentTitle" value="Re: MySQL存储过程中的3种循环" onfocus="showCode(86484113);" type="text"><input name="CommentIDTxt" id="CommentIDTxt" value="0" type="hidden"><input name="ReplyType" id="ReplyType" type="hidden"></div>
+        <div>
+            内 容:</div>
+        <div id="div_content">
+            <textarea name="NoHtmlCommentContent" id="NoHtmlCommentContent" rows="8" cols="80" onfocus="if(this.value=='字数上限为2000字'){this.value='';}this.select();showCode(86484113);">字数上限为2000字</textarea></div>
+        <div id="EmotionsDiv" style="width: 500px; font-family: verdana; font-size: 12px;"><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-)]')" title="微笑 [:-)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/01.gif" alt="微笑 [:-)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-D]')" title="大笑 [:-D]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/02.gif" alt="大笑 [:-D]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[;-)]')" title="眨眼 [;-)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/03.gif" alt="眨眼 [;-)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[8-)]')" title="装酷 [8-)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/04.gif" alt="装酷 [8-)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(6)]')" title="独眼龙 [(6)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/05.gif" alt="独眼龙 [(6)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-$]')" title="害羞 [:-$]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/06.gif" alt="害羞 [:-$]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[8o|]')" title="生气 [8o|]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/07.gif" alt="生气 [8o|]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-(]')" title="发呆 [:-(]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/08.gif" alt="发呆 [:-(]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-@]')" title="发怒 [:-@]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/09.gif" alt="发怒 [:-@]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-|]')" title="惊讶 [:-|]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/10.gif" alt="惊讶 [:-|]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(&amp;)]')" title="猫猫 [(&amp;)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/11.gif" alt="猫猫 [(&amp;)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[&amp;-|]')" title="白眼 [&amp;-|]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/12.gif" alt="白眼 [&amp;-|]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-#]')" title="不说 [:-#]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/13.gif" alt="不说 [:-#]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[$-)]')" title="眼馋 [$-)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/14.gif" alt="眼馋 [$-)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-P]')" title="吐舌头 [:-P]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/15.gif" alt="吐舌头 [:-P]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(@)]')" title="猫咪 [(@)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/16.gif" alt="猫咪 [(@)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:\'(]')" title="大哭 [:'(]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/17.gif" alt="大哭 [:'(]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-Z]')" title="困了 [:-Z]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/19.gif" alt="困了 [:-Z]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-S]')" title="困惑 [:-S]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/20.gif" alt="困惑 [:-S]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(ZZ)]')" title="粽子 [(ZZ)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/zz.gif" alt="粽子 [(ZZ)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[*-(]')" title="悲伤 [*-(]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/21.gif" alt="悲伤 [*-(]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-%]')" title="狂吐 [:-%]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/22.gif" alt="狂吐 [:-%]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[^-)]')" title="伤心 [^-)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/23.gif" alt="伤心 [^-)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[:-*]')" title="汗 [:-*]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/24.gif" alt="汗 [:-*]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(R)]')" title="花 [(R)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/25.gif" alt="花 [(R)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(W)]')" title="花 [(W)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/26.gif" alt="花 [(W)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(%)]')" title="太阳 [(%)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/27.gif" alt="太阳 [(%)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(S)]')" title="月亮 [(S)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/28.gif" alt="月亮 [(S)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(*)]')" title="星星 [(*)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/29.gif" alt="星星 [(*)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(M)]')" title="邮件 [(M)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/30.gif" alt="邮件 [(M)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(so)]')" title="足球 [(so)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/31.gif" alt="足球 [(so)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(I)]')" title="亮亮 [(I)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/32.gif" alt="亮亮 [(I)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(F)]')" title="咖啡 [(F)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/33.gif" alt="咖啡 [(F)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(L)]')" title="心 [(L)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/34.gif" alt="心 [(L)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(U)]')" title="心 [(U)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/35.gif" alt="心 [(U)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(=)]')" title="便便 [(=)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/36.gif" alt="便便 [(=)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(#)]')" title="电视 [(#)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/37.gif" alt="电视 [(#)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(O)]')" title="时间 [(O)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/38.gif" alt="时间 [(O)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(D)]')" title="酒 [(D)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/39.gif" alt="酒 [(D)]" border="0"></a><a href="javascript:AddEmotion('NoHtmlCommentContent','[(T)]')" title="电话 [(T)]"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/40.gif" alt="电话 [(T)]" border="0"></a></div>
+        <div style="display: block;" id="VerificationDiv" mm="c">
+            <div>
+                请根据下图中的字符输入验证码：</div>
+            <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/vcode.js"></script>
+            <div style="display: none;" id="vcodeShow">
+                0</div>
+            <div>
+                <img id="VerificationPic" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/vcodepic.gif" alt="验证码" align="absmiddle" border="0"><a href="javascript:refreshCodeV2(86484113);">
+                        <span id="vcodeHint">点这里显示验证码。</span></a></div>
+            <div>
+                <input name="VerificationInput" id="VerificationInput" style="width: 60px;
+                    height: 26px; font-family: Verdana; font-size: 14px; ime-mode: disabled;" onfocus="showCode(86484113);" type="text"></div>
+        </div>
+        <div class="PublishSubmit">
+            <input value="  提 交  " name="PostCommentButton" id="PostCommentButton" onclick="return CheckTitle(this.form);" type="submit"></div>
+        <div>
+            (您的评论将有可能审核后才能发表)</div>
+        </form>
+    </div>
+</div>
+
+    
+</div>
+    <!--  发表评论:结束  -->
+</div>
+<script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/ARecommend.htm"></script>
+<!--T21-->
+<script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/createimage.htm"></script>
+<script type="text/javascript">
+    var blog_loginUserId = "0";
+    var blog_lookUserId = "8490947";
+    var isadmin = "False";
+    var articleId = 86484113;
+    var kdIsAdminDelet = false;
+    if (blog_loginUserId == blog_lookUserId && parseInt(blog_lookUserId) > 0) {
+        kdIsAdminDelet = true;
+    }
+
+    //jQuery(function () {
+        showArticleComments("moodlove", "86484113", "4047358", 1);
+   // });
+</script>
+<style type="text/css">
+#ReplyTableAll{ width:610px}
+</style>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!--  主体:结束  -->
+                <!--  底部:开始  -->
+                <!--  底部:结束  -->
+                <div id="bottom"><a href="http://i.hexun.com/" target="_blank">和讯个人门户</a> v1.0 | <a href="http://blog.hexun.com/" target="_blank">和讯博客</a> | <a href="http://kf.hexun.com/feedback/index.html?id=home" target="_blank">意见反馈</a></div>
+
+<style type="text/css">
+
+#toolsBar20111010,#toolsBar20111010 div{overflow:visible}
+
+</style>
+
+<script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/TB_002.js"></script>
+<script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/addhotuser.txt"></script>
+            </div>
+            <!--  页面:结束  -->
+            
+    <!--  页面:结束  -->
+    <script type="text/javascript">
+        var _UBN = "MoodLove";
+    </script>
+    
+   
+    
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/articlelinkdisplay.htm"></script>
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/articlenewaddisplay.htm"></script>
+    
+    <!--我顶后面的博主列表-->
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/articlestatusnew.htm"></script>
+    <!--我顶后面的博主列表-->
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/click.htm"></script>
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/getarticleside.htm"></script> 
+    <!--用户整合相关的页面部分开始-->  
+     <link href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/newStyle.css" type="text/css" rel="stylesheet"> 
+   <div id="more-box" style="display: none">
+    <ul>
+        <li class="addBlankList plus">黑名单</li>
+        <li id="blog_addFocus" class="addFocus" style="display: none">求关注</li>
+        <li class="setGroup" id="setgroup" style="display: none">设置分组</li>
+       
+    </ul>
+</div>
+<div id="layerX"></div>
+<div id="group-box" class="group-box" style="display: none;">
+    <div class="group-tit">
+        <h2>设置分组</h2>
+        <a href="javascript:void(0);" class="group-close"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/group_close.png" alt=""></a>
+    </div>
+    <div class="group-add-success">
+        已成功添加“<span id="name-s"></span>”到 <span class="g-nums"></span> 个分组
+    </div>
+    <ul id="group"></ul>
+    <div class="newGroup">
+        <a href="#" class="newGroup-create">创建新分组</a>
+        <div class="newGroup-box" style="display: none;">
+            <input value="新分组名称" class="yoursGroup fl" type="text">
+            <a href="javascript:void(0);" class="fl btnSave h26">保存</a>
+            <a href="javascript:void(0);" class="fl btnCancel h26">取消</a>
+        </div>
+
+    </div>
+    <div class="newGroup-box-warning">
+        <span class="newGroup-box-warning-text">请不要超过6个字</span>
+    </div>
+
+    <div class="group-btns">
+        <a href="javascript:void(0);" class="fr gcom-btn11 h33">取消</a>
+        <a href="javascript:void(0);" class="gcom-btn1 fr h33">保存</a>
+    </div>
+</div>
+ <script type="text/x-dot-template" id="item-template">
+    {{ for(var i = 0,len = it.result.length; i < len; i++){}}
+    <li class="groupListItem">
+        <div class="view">
+          {{if(typeof(it.result[i].Belong)== 'undefined'){}}
+            <input class="toggle" type="checkbox" id="{{=it.result[i].GroupId}}"  />
+            {{} else if(it.result[i].Belong==true){}}
+            <input class="toggle" type="checkbox" id="{{=it.result[i].GroupId}}" checked="true"  />
+            {{}}}
+            {{if(it.result[i].GroupId==0){it.result[i].GroupName='未分组'}}}
+            <label for="{{=it.result[i].GroupId}}">{{=it.result[i].GroupName}}</label>
+           
+        </div>
+    </li>
+    {{ }}}
+
+</script>
+         <script src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/setOrGetRelation.js" type="text/javascript"></script>
+        <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/doT.js"></script>
+        <script src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/gengduo.js" type="text/javascript"></script>
+       
+    <script type="text/javascript">
+        jQuery(function () {
+            HxRelationGet("8490947", "shsgl", "0");
+        });
+    </script>
+    <!--用户整合相关的页面部分结束--> 
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/blogtrack.htm"></script>
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/emotions.htm"></script>
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/commentaudittip.txt"></script>
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/popbox.htm"></script><div id="popBoxDiv" style="background-color: Transparent; overflow: hidden; position: fixed; right: 0px; bottom: 24px; width: 320px; height: 205px; font-family: 宋体; font-size: 12px; display: none;"><div style="width:320px;height:27px;line-height:27px;background:url(http://img.hexun.com/2009/blog/pop101.gif);text-align:right"><div style="float:left;color:#fff;font-weight:bold;padding-left:5px;line-height:26px;height:26px;">欢迎通过<span style="color:#900000">百度搜索</span>来到&nbsp;<a href="http://blog.hexun.com/" target="_blank" style="color:#FFF;font-size:14px">和讯博客</a></div><div style="float:right;padding-top:2px;"><a href="javascript:closePopBox();" title="关闭"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/close.gif" alt="关闭" border="0"></a>&nbsp;</div></div><iframe src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/popbox1.htm" scrolling="no" allowtransparency="true" frameborder="0" height="205" width="320"></iframe></div>
+    
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/getarticlemore.txt" id="script_get_more_articles"></script>
+    <script language="javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/menu.htm"></script><font id="leftMenuMaster" style="position: absolute; z-index: 99999; top: 0px; left: 0px;"><table background="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/imc_11.gif" border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td height="22" width="20"></td><td style="FONT-SIZE:12px; COLOR:#d7e3f4; PADDING-TOP:6px" align="center" width="110">用户登录</td><td style="PADDING-TOP:6px" align="left" valign="top" width="20"><a href="#" onclick="javascript:expand()"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/imm_01.gif" border="0" vspace="0"></a></td></tr></tbody></table><table background="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/imm_04.png" border="0" cellpadding="0" cellspacing="0" height="3" width="150"><tbody><tr><td height="3"></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td align="center" valign="top"><form name="HWLoginForm" action="https://reg.hexun.com/login.aspx" method="post" onsubmit="return CheckHWLoginForm();" style="MARGIN:0px"><table background="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/imc_13.gif" border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td style="FONT-SIZE:12px; COLOR:#5876a0" align="center" height="54">登录名<input name="username" style="font-size:12px; border:solid; border-color:#799ED2; border-width:1px; width:84px; margin:3px; vertical-align:middle" type="text"><br>密　码<input name="password" value="" style="font-size:12px; border:solid; border-color:#799ED2; border-width:1px; width:84px; margin:2px; vertical-align:middle" type="password"></td></tr><tr><td align="left" height="24"> <input src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/dl_1.gif" name="btnlogin" style="margin:0 0 -12px 50px" border="0" type="image"></td></tr><tr><td style="FONT-SIZE:12px; COLOR:#5876a0;" align="left" height="50">&nbsp;&nbsp;&nbsp;&nbsp;<input id="LoginStateAuto" name="LoginStateAuto" value="1" onclick="Click_Auto(this)" type="checkbox"> <label for="LoginStateAuto">记住我</label></td></tr></tbody></table><table background="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/imc_16.gif" border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/imc_21.gif"></td></tr><tr><td align="center" height="25"><a href="http://reg.hexun.com/Register.aspx?fromhost=HX_BLOG&amp;backurl=http://blog.hexun.com/registerblog.aspx&amp;urlReferrerhost=http://moodlove.blog.hexun.com/86484113_d.html" target="_blank" style="FONT-SIZE:12px;COLOR:#5876a0; TEXT-DECORATION:none">[注册]</a> <a href="http://reg.hexun.com/GetPasswordPre.aspx" target="_blank" style="FONT-SIZE:12px;COLOR:#5876a0; TEXT-DECORATION:none">[忘记密码]</a></td></tr><tr><td><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/imc_17.gif"></td></tr></tbody></table><table background="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/imc_18.gif" border="0" cellpadding="0" cellspacing="0" width="150"><tbody><tr><td></td></tr><tr><td><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/imc_20.gif"></td></tr></tbody></table><input name="gourl" value="http://moodlove.blog.hexun.com/86484113_d.html" type="hidden"><input name="hiddenReferrer" id="hiddenReferrer" value="http://moodlove.blog.hexun.com/86484113_d.html" type="hidden"></form></td></tr></tbody></table></font>
+<script src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/track.js"></script><iframe src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/ftrack.htm" frameborder="0" height="0" width="0"></iframe>
+
+<!--分享-->
+<script language="javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/hx_base.js"></script>
+<link href="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/hxShare2011_blog_bd.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/hxShare2011_blog_bd.js"></script>
+<script type="text/javascript">
+    HX.$V.bind(window, 'load', function () {
+        hxShare2011('');
+    });</script>
+<!--分享over-->
+<!--<script type="text/javascript" src="http://t.hexun.com/special/llz/return.js"></script>-->
+<script src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+    _uacct = "UA-2706087-1";
+    urchinTracker();
+</script>
+<div id="SelfHtmlPrepare" style="display:none;"></div>
+<script type="text/javascript">
+var dom1;
+dom1 = document.getElementById("SelfHtmlPrepare").innerHTML;
+document.getElementById("SelfHtml").innerHTML = dom1;
+document.getElementById("SelfHtmlPrepare").innerHTML="";
+
+
+document.getElementById("SelfHtml").style.display="none";
+
+</script>
+    
+    <script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/hexun.js"></script>
+    
+<script type="text/javascript">
+    jQuery(function () {
+        // 个人门户→固定导航条
+        hexun.home.FileUserInfo().init({ uid: "8490947", loginUid: "0", urlhost: "http://hexun.com/newHome", gourl: "aHR0cDovL21vb2Rsb3ZlLmJsb2cuaGV4dW4uY29tLzg2NDg0MTEzX2QuaHRtbA==" });
+    });
+</script>
+<div id="pageTail"></div> 
+<script language="javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/pageMediaControl_0.js"></script>
+<!-- START WRating v1.0 -->
+<script type="text/javascript" src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/a1.js">
+</script>
+<script type="text/javascript">
+    var vjAcc = "860010-2918010100";
+    var wrUrl = "http://c.wrating.com/";
+    vjTrack("");
+</script><div style="display:none"><img src="MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%BE%AA%E7%8E%AF_%E6%B4%97%E5%BF%83%E6%96%8B_shsgl%E7%9A%84%E5%92%8C%E8%AE%AF%E5%8D%9A%E5%AE%A2_files/a.gif" id="wrTagImage" height="1" width="1"></div>
+<noscript><img src="http://c.wrating.com/a.gif?a=&c=860010-2918010100" width="1" height="1"/></noscript>
+<!-- END WRating v1.0 -->
+
+<script language="JavaScript" type="text/javascript">
+    if (typeof (setCookUrl) == 'undefined') { var setCookUrl = { lang: {}, params: {}} };
+    setCookUrl = {
+        getCookieJsonp: function (url, callback, jp_no) {
+            var url = (url.indexOf('?') != -1) ? (url + '&') : (url + '?');
+            var name = 'hxbase_json' + new Date().getTime();
+            if (typeof jp_no != 'undefined') name += jp_no;
+            url += 'callback=' + name;
+            window[name] = callback;
+            var road = document.createElement('script');
+            road.type = 'text/javascript';
+            road.src = url;
+            document.getElementsByTagName('head')[0].appendChild(road);
+            if (road.readyState) {
+                road.onreadystatechange = function () {
+                    if (road.readyState == 'loaded' || road.readyState == 'complete') {
+                        road.onreadystatechange = null;
+                        document.getElementsByTagName('head')[0].removeChild(road);
+                        window[name] = 'undefined';
+                        try { delete window[name]; }
+                        catch (e) { }
+                    }
+                }
+            }
+            else {
+                road.onload = function () {
+                    document.getElementsByTagName('head')[0].removeChild(road);
+                    window[name] = 'undefined';
+                    try { delete window[name]; }
+                    catch (e) { }
+                }
+            }
+        },
+        getCookieSid: function (key) {
+            var aCookie = document.cookie.split(";");
+            for (var i = 0; i < aCookie.length; i++) {
+                var aCrumb = aCookie[i].split("=");
+                if (key === aCrumb[0].replace(/^\s*|\s*$/, "")) {
+                    return unescape(aCrumb[2]);
+                }
+            }
+        },
+        getCookieUserId: function (key) {
+            var aCookie = document.cookie.split(";");
+            for (var i = 0; i < aCookie.length; i++) {
+                var aCrumb = aCookie[i].split("=");
+                if (key === aCrumb[0].replace(/^\s*|\s*$/, "")) {
+                    return unescape(aCrumb[1]).split("|")[0];
+                    //   return unescape(aCrumb[2]);
+                }
+            }
+        },
+        getCookieUrl: function (type) {
+            var getsid = setCookUrl.getCookieSid("HexunTrack").split("&")[0];
+            var getuse = setCookUrl.getCookieUserId("userToken");
+            var userid = "";
+            var cookieId = "";
+            var cookieUrl = "http://m.wrating.com/m.gif?a=&c=860010-2370010130&mcookie="
+            var cookieUrl2 = "http://m.wrating.com/m.gif?a=&c=860010-2370010131&mcookie="
+            if (type == "sid") {
+                if (getsid != "" && getsid != "undefined") {
+                    return cookieUrl + getsid;
+                } else {
+                    return cookieUrl
+                }
+            }
+            if (type == "use") {
+                if (getuse != "" && getuse != "undefined") {
+                    return cookieUrl2 + getuse;
+                } else {
+                    return cookieUrl2;
+                }
+            }
+        },
+        postCookieUrl: function () {
+            var sidurl = setCookUrl.getCookieUrl("sid");
+            var useurl = setCookUrl.getCookieUrl("use");
+            setCookUrl.getCookieJsonp(sidurl);
+            setCookUrl.getCookieJsonp(useurl);
+        }
+    };
+    setCookUrl.postCookieUrl();
+</script>
+
+
+<div style="left: 166px;" id="hx_share20110711"><div style="width: 1px; display: none;" id="share_panel0711"><div><iframe src="" id="shareFrame0711" style="display:none;"></iframe><ul class="bdshare_t bds_tools get-codes-bdshare" id="bdshare"><li><a class="bds_thx thx hx0711" href="#">和讯微博</a></li><li><a class="bds_tsohu shwb sh0711" href="#">搜狐微博</a></li><li><a class="bds_tsina sina0711" href="#">新浪微博</a></li><li><a class="bds_renren rr0711" href="#">人人网</a></li><li><a class="bds_tqq qqwb0711" href="#">腾讯微博</a></li><li><a class="bds_douban db db0711" href="#">豆瓣网</a></li><li><a class="bds_qzone qqkj0711" href="#">QQ空间</a></li><li><a class="bds_more" href="#">更多分享</a></li></ul></div></div><div id="share_opt0711"><span class=""></span></div></div></body></html>

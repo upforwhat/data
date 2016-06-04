@@ -1,0 +1,647 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>bboss mvc参数绑定注解RequestParam使用说明 - Bboss 打造中国制造品牌-每天都在进步 - ITeye技术网站</title>
+    <meta name="description" content="bboss mvc参数绑定注解RequestParam使用说明 @RequestParam作为控制器方法参数、bean对象属性的注解，可以起到以下5个作用： 1.指定方法参数与request请求参数名称的映射关系 方法参数-当方法参数名称yournames和request参数名称name不一致时，则需要RequestParam注解来指定映射关系 public String sayHelloArray ...">
+    <meta name="keywords" content="bboss, mvc, request, 注解 bboss mvc参数绑定注解RequestParam使用说明">
+    <link rel="shortcut icon" href="http://yin-bp.iteye.com/images/favicon.ico" type="image/x-icon">
+    <link rel="search" type="application/opensearchdescription+xml" href="http://yin-bp.iteye.com/open_search.xml" title="ITeye">
+    <link href="http://yin-bp.iteye.com/rss" rel="alternate" title="Bboss 打造中国制造品牌-每天都在进步" type="application/rss+xml">
+    <link href="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/blue.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/ga.js" async="" type="text/javascript"></script><script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/application.js" type="text/javascript"></script>    
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/SyntaxHighlighter.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/shCoreCommon.js" type="text/javascript"></script>
+<script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/hotkey.js" type="text/javascript"></script>
+  <script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/code_favorites.js" type="text/javascript"></script>
+<script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/weiboshare.js" type="text/javascript"></script>
+    
+  <style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style></head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">知识库</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="http://yin-bp.iteye.com/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="http://yin-bp.iteye.com/login">登录</a>
+    <a href="http://yin-bp.iteye.com/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="http://yin-bp.iteye.com/">Bboss 打造中国制造品牌-每天都在进步</a></h1>
+        </div>
+        <div id="fd"></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class="blog_navbar_for"><a href="http://yin-bp.iteye.com/"><strong>博客</strong></a></li>
+            <li><a href="http://yin-bp.iteye.com/weibo">微博</a></li>
+            <li><a href="http://yin-bp.iteye.com/album">相册</a></li>
+            <li><a href="http://yin-bp.iteye.com/link">收藏</a></li>
+            <li><a href="http://yin-bp.iteye.com/blog/guest_book">留言</a></li>
+            <li><a href="http://yin-bp.iteye.com/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text">
+              <input class="submit_search" value="" type="submit">
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style="display:none">
+  <a href="http://yin-bp.iteye.com/" class="p-author" target="_blank">yin_bp</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="http://yin-bp.iteye.com/blog/1926341">bboss mvc参数绑定注解RequestParam使用说明</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class="blog_categories"><strong>博客分类：</strong> <li><a href="http://yin-bp.iteye.com/category/132426">bboss mvc</a></li> </ul>
+        <div class="news_tag"><a href="http://www.iteye.com/blogs/tag/bboss">bboss</a><a href="http://www.iteye.com/blogs/tag/mvc">mvc</a><a href="http://www.iteye.com/blogs/tag/request">request</a><a href="http://www.iteye.com/blogs/tag/%E6%B3%A8%E8%A7%A3">注解</a>&nbsp;</div>
+    	  
+    	
+    	
+  		
+      </div>
+
+  <div id="blog_content" class="blog_content">
+    bboss mvc参数绑定注解RequestParam使用说明
+<br>
+<br>@RequestParam作为控制器方法参数、bean对象属性的注解，可以起到以下5个作用：
+<br><span style="font-size: large;"><strong>1.指定方法参数与request请求参数名称的映射关系</strong></span>
+<br>方法参数-当方法参数名称yournames和request参数名称name不一致时，则需要RequestParam注解来指定映射关系
+<br>
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=public%20String%20sayHelloArray(%0A%09%09%09%40RequestParam(name%20%3D%20%22name%22)%20String%5B%5D%20yournames%2C%20ModelMap%20model)" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">public</span><span>&nbsp;String&nbsp;sayHelloArray(&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="annotation">@RequestParam</span><span>(name&nbsp;=&nbsp;</span><span class="string">"name"</span><span>)&nbsp;String[]&nbsp;yournames,&nbsp;ModelMap&nbsp;model)&nbsp;&nbsp;</span></span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="0" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">public String sayHelloArray(
+			@RequestParam(name = "name") String[] yournames, ModelMap model)</pre>
+<br>
+<br>bean属性-当属性名称favovate 和request参数名称favovate_ddd不一致时，则需要RequestParam注解来指定映射关系
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=%40RequestParam(name%3D%22favovate_ddd%22)%0A%09private%20int%20favovate%20%3B" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="annotation">@RequestParam</span><span>(name=</span><span class="string">"favovate_ddd"</span><span>)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">int</span><span>&nbsp;favovate&nbsp;;&nbsp;&nbsp;</span></span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="1" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">@RequestParam(name="favovate_ddd")
+	private int favovate ;</pre>
+<br>
+<br>这个只是最简单的映射方式，bboss mvc还支持带变量的参数名称映射方式：
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=%40RequestParam(name%3D%22favovate%24%7Bid%7D%22)%0A%09private%20int%20favovate%20%3B" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="annotation">@RequestParam</span><span>(name=</span><span class="string">"favovate${id}"</span><span>)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">int</span><span>&nbsp;favovate&nbsp;;&nbsp;&nbsp;</span></span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="2" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">@RequestParam(name="favovate${id}")
+	private int favovate ;</pre>
+<br>这里@RequestParam(name="favovate${id}")中的name属性的值为favovate${id}，其中
+的${id}部分的含义是request参数的名称由favovate加上另外一个request参数id的值组合而成，也就是是这个参数名称根据id参
+数的值来动态生成，这种情况适用于集合参数绑定场景（简单的参数映射也可以使用）：
+<br>表单代码，输入两个人的姓名和兴趣喜好，提交后绑定成List&lt;ExampleBean&gt; yourname参数
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=%3Ctr%3E%3Ctd%3E%0A%09%09%09%09%09%09%3Cinput%20name%3D%22id%22%20type%3D%22hidden%22%20value%3D%220%22%3E%0A%09%09%09%09%09%09%09%E8%AF%B7%E8%BE%93%E5%85%A5%E6%82%A8%E7%9A%84%E5%90%8D%E5%AD%97%EF%BC%9A%0A%09%09%09%09%09%09%3Cinput%20name%3D%22name%22%20type%3D%22text%22%3E%0A%09%09%09%09%09%09%3C%2Ftd%3E%0A%09%09%09%09%09%3C%2Ftr%3E%0A%09%09%09%09%09%3Ctr%3E%3Ctd%3E%E5%96%9C%E5%A5%BD%EF%BC%9A%0A%09%09%09%09%09%09%3Cinput%20name%3D%22favovate0%22%20type%3D%22radio%22%20checked%3D%22true%22%20%20value%3D%220%22%3E%20%E4%B9%92%E4%B9%93%E7%90%83%0A%09%09%09%09%09%09%3Cinput%20name%3D%22favovate0%22%20type%3D%22radio%22%20value%3D%221%22%3E%20%E7%AF%AE%E7%90%83%0A%09%09%09%09%09%09%3Cinput%20name%3D%22favovate0%22%20type%3D%22radio%22%20value%3D%222%22%3E%20%E6%8E%92%E7%90%83%0A%09%09%09%09%09%09%3C%2Ftd%3E%0A%09%09%09%09%09%3C%2Ftr%3E%0A%09%09%09%09%09%0A%09%09%09%09%09%3Ctr%3E%3Ctd%3E%0A%09%09%09%09%09%09%3Cinput%20name%3D%22id%22%20type%3D%22hidden%22%20value%3D%221%22%3E%0A%09%09%09%09%09%09%09%E8%AF%B7%E8%BE%93%E5%85%A5%E6%82%A8%E7%9A%84%E5%90%8D%E5%AD%97%EF%BC%9A%0A%09%09%09%09%09%09%3Cinput%20name%3D%22name%22%20type%3D%22text%22%3E%0A%09%09%09%09%09%09%3C%2Ftd%3E%0A%09%09%09%09%09%3C%2Ftr%3E%0A%09%09%09%09%09%3Ctr%3E%3Ctd%3E%E5%96%9C%E5%A5%BD%EF%BC%9A%0A%09%09%09%09%09%09%3Cinput%20name%3D%22favovate1%22%20type%3D%22radio%22%20checked%3D%22true%22%20%20value%3D%220%22%3E%20%E4%B9%92%E4%B9%93%E7%90%83%0A%09%09%09%09%09%09%3Cinput%20name%3D%22favovate1%22%20type%3D%22radio%22%20value%3D%221%22%3E%20%E7%AF%AE%E7%90%83%0A%09%09%09%09%09%09%3Cinput%20name%3D%22favovate1%22%20type%3D%22radio%22%20value%3D%222%22%3E%20%E6%8E%92%E7%90%83%0A%09%09%09%09%09%09%3C%2Ftd%3E%0A%09%09%09%09%09%3C%2Ftr%3E" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span>&lt;tr&gt;&lt;td&gt;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"id"</span><span>&nbsp;type=</span><span class="string">"hidden"</span><span>&nbsp;value=</span><span class="string">"0"</span><span>&gt;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+请输入您的名字：&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"name"</span><span>&nbsp;type=</span><span class="string">"text"</span><span>&gt;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;&lt;td&gt;
+喜好：&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"favovate0"</span><span>&nbsp;type=</span><span class="string">"radio"</span><span>&nbsp;checked=</span><span class="string">"true"</span><span>&nbsp;&nbsp;value=</span><span class="string">"0"</span><span>&gt;&nbsp;乒乓球&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"favovate0"</span><span>&nbsp;type=</span><span class="string">"radio"</span><span>&nbsp;value=</span><span class="string">"1"</span><span>&gt;&nbsp;篮球&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"favovate0"</span><span>&nbsp;type=</span><span class="string">"radio"</span><span>&nbsp;value=</span><span class="string">"2"</span><span>&gt;&nbsp;排球&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;&lt;td&gt;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"id"</span><span>&nbsp;type=</span><span class="string">"hidden"</span><span>&nbsp;value=</span><span class="string">"1"</span><span>&gt;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+请输入您的名字：&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"name"</span><span>&nbsp;type=</span><span class="string">"text"</span><span>&gt;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;&lt;td&gt;
+喜好：&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"favovate1"</span><span>&nbsp;type=</span><span class="string">"radio"</span><span>&nbsp;checked=</span><span class="string">"true"</span><span>&nbsp;&nbsp;value=</span><span class="string">"0"</span><span>&gt;&nbsp;乒乓球&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"favovate1"</span><span>&nbsp;type=</span><span class="string">"radio"</span><span>&nbsp;value=</span><span class="string">"1"</span><span>&gt;&nbsp;篮球&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;name=<span class="string">"favovate1"</span><span>&nbsp;type=</span><span class="string">"radio"</span><span>&nbsp;value=</span><span class="string">"2"</span><span>&gt;&nbsp;排球&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;&nbsp;&nbsp;</span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="3" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">&lt;tr&gt;&lt;td&gt;
+						&lt;input name="id" type="hidden" value="0"&gt;
+							请输入您的名字：
+						&lt;input name="name" type="text"&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;&lt;td&gt;喜好：
+						&lt;input name="favovate0" type="radio" checked="true"  value="0"&gt; 乒乓球
+						&lt;input name="favovate0" type="radio" value="1"&gt; 篮球
+						&lt;input name="favovate0" type="radio" value="2"&gt; 排球
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					
+					&lt;tr&gt;&lt;td&gt;
+						&lt;input name="id" type="hidden" value="1"&gt;
+							请输入您的名字：
+						&lt;input name="name" type="text"&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;&lt;td&gt;喜好：
+						&lt;input name="favovate1" type="radio" checked="true"  value="0"&gt; 乒乓球
+						&lt;input name="favovate1" type="radio" value="1"&gt; 篮球
+						&lt;input name="favovate1" type="radio" value="2"&gt; 排球
+						&lt;/td&gt;
+					&lt;/tr&gt;</pre>
+<br>控制器方法：
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=public%20String%20sayHelloBeanList(List%3CExampleBean%3E%20yourname%2C%20ModelMap%20model)%0A%09%7B%0A%0A%09%09model.addAttribute(%22serverHelloListBean%22%2C%20yourname)%3B%0A%0A%09%09return%20%22path%3AsayHello%22%3B%0A%09%7D" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">public</span><span>&nbsp;String&nbsp;sayHelloBeanList(List&lt;ExampleBean&gt;&nbsp;yourname,&nbsp;ModelMap&nbsp;model)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model.addAttribute(<span class="string">"serverHelloListBean"</span><span>,&nbsp;yourname);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="string">"path:sayHello"</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="4" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">public String sayHelloBeanList(List&lt;ExampleBean&gt; yourname, ModelMap model)
+	{
+
+		model.addAttribute("serverHelloListBean", yourname);
+
+		return "path:sayHello";
+	}</pre>
+<br>ExampleBean类的favovate属性分别对应于表单中的favovate0和favovate1，也就是说每条记录对应一组radio的名称都不一样，由favovate+记录id的值组成：
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=public%20class%20ExampleBean%0A%7B%0A%09private%20String%20id%3B%0A%09private%20String%20name%20%3D%20null%3B%0A%09private%20String%20sex%20%3D%20null%3B%0A%09%40RequestParam(name%3D%22favovate%24%7Bid%7D%22)%0A%09private%20int%20favovate%20%3B%0A%7D" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;ExampleBean&nbsp;&nbsp;</span></span></li><li><span>{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;String&nbsp;id;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;String&nbsp;name&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;String&nbsp;sex&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="annotation">@RequestParam</span><span>(name=</span><span class="string">"favovate${id}"</span><span>)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">int</span><span>&nbsp;favovate&nbsp;;&nbsp;&nbsp;</span></span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="5" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">public class ExampleBean
+{
+	private String id;
+	private String name = null;
+	private String sex = null;
+	@RequestParam(name="favovate${id}")
+	private int favovate ;
+}</pre>
+<br>那么在后台就可以通过favovate${id}来指定request参数和属性favovate的映射关系
+<br>@RequestParam(name="favovate${id}")
+<br>private int favovate ;
+<br>目前变量参数名中只能指定一个变量，这个变量在参数名称中的位置可以任意有以下形式：
+<br>favovate${id}：假设请求参数id的值为1，那么最终的映射参数名称为favovate1
+<br>fav${id}ovate：假设请求参数id的值为1，那么最终的映射参数名称为fav1ovate
+<br>${id}favovate：假设请求参数id的值为1，那么最终的映射参数名称为1favovate
+<br>也可以只有变量：
+<br>${id}：假设请求参数id的值为1，那么最终的映射参数名称为1
+<br>
+<br>变量参数中如果请求参数id的值为null或者""时，变量id对应的名称部分将被忽略，所以一般需要注意这一点。
+<br>
+<br>在控制器方法参数上简单的使用参数变量的示例：
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=public%20String%20sayHelloStringVar(%40RequestParam(name%20%3D%20%22name%24%7Bid%7D%22)%20String%20yourname%2C%0A%09%09%09ModelMap%20model)" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">public</span><span>&nbsp;String&nbsp;sayHelloStringVar(</span><span class="annotation">@RequestParam</span><span>(name&nbsp;=&nbsp;</span><span class="string">"name${id}"</span><span>)&nbsp;String&nbsp;yourname,&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ModelMap&nbsp;model)&nbsp;&nbsp;</span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="6" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">public String sayHelloStringVar(@RequestParam(name = "name${id}") String yourname,
+			ModelMap model)</pre>
+<br><span style="font-size: large;"><strong>2.指定参数的解码字符集</strong></span>
+<br>@RequestParam( decodeCharset = "UTF-8")
+<br>	private String name;
+<br><span style="font-size: large;"><strong>3.指定日期格式</strong></span>
+<br>示例如下：
+<br>@RequestParam( dateformat="yyyy-MM-dd") java.util.Date[] d12
+<br><span style="font-size: large;"><strong>4.指定参数的默认值</strong></span>
+<br>示例如下：
+<br>@RequestParam(defaultvalue="0") int ynum
+<br><span style="font-size: large;"><strong>5.指定参数值转换器<a href="http://www.iteye.com/topic/1127896" target="_blank">Editor</a></strong></span>
+<br>如果请求参数和要绑定的参数类型不能直接转换时需要通过Editor来实现自定义的参数绑定和类型转换，下面是一个实例：
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=public%20String%20sayHelloEditors(%40RequestParam(editor%3D%22org.frameworkset.mvc.ListStringArrayEditor%22)%20List%3CString%5B%5D%3E%20name%2CModelMap%20model)" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">public</span><span>&nbsp;String&nbsp;sayHelloEditors(</span><span class="annotation">@RequestParam</span><span>(editor=</span><span class="string">"org.frameworkset.mvc.ListStringArrayEditor"</span><span>)&nbsp;List&lt;String[]&gt;&nbsp;name,ModelMap&nbsp;model)&nbsp;&nbsp;</span></span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="7" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">public String sayHelloEditors(@RequestParam(editor="org.frameworkset.mvc.ListStringArrayEditor") List&lt;String[]&gt; name,ModelMap model)</pre>
+<br>
+<br>转换器org.frameworkset.mvc.ListStringArrayEditor定义如下：
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=public%20class%20ListStringArrayEditor%20implements%20ArrayEditorInf%3CList%3CString%5B%5D%3E%3E%20%7B%0A%0A%09%40Override%0A%09public%20List%3CString%5B%5D%3E%20getValueFromObject(Object%20fromValue)%20%7B%0A%09%09if(fromValue%20%3D%3D%20null)%0A%09%09%09return%20null%3B%0A%09%09if(fromValue%20instanceof%20String%5B%5D)%0A%09%09%7B%0A%09%09%09String%5B%5D%20datas%20%3D%20(String%5B%5D)fromValue%3B%20%0A%09%09%09if(datas.length%3C%3D0)%0A%09%09%09%09return%20null%3B%0A%09%09%09List%3CString%5B%5D%3E%20ret%20%3D%20new%20ArrayList%3CString%5B%5D%3E()%3B%0A%09%09%09%0A%09%09%09for(String%20data%20%3Adatas)%0A%09%09%09%7B%0A%09%09%09%09String%5B%5D%20tt%20%3D%20data.split(%22%2C%22)%3B%0A%09%09%09%09ret.add(tt)%3B%0A%09%09%09%7D%0A%09%09%09return%20ret%3B%0A%09%09%7D%0A%09%09return%20null%3B%0A%09%09%0A%09%7D%0A%0A%09%40Override%0A%09public%20List%3CString%5B%5D%3E%20getValueFromString(String%20fromValue)%20%7B%0A%09%09return%20null%3B%0A%09%7D%0A%7D" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;ListStringArrayEditor&nbsp;</span><span class="keyword">implements</span><span>&nbsp;ArrayEditorInf&lt;List&lt;String[]&gt;&gt;&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="annotation">@Override</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;List&lt;String[]&gt;&nbsp;getValueFromObject(Object&nbsp;fromValue)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(fromValue&nbsp;==&nbsp;</span><span class="keyword">null</span><span>)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(fromValue&nbsp;</span><span class="keyword">instanceof</span><span>&nbsp;String[])&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[]&nbsp;datas&nbsp;=&nbsp;(String[])fromValue;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(datas.length&lt;=</span><span class="number">0</span><span>)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;String[]&gt;&nbsp;ret&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;ArrayList&lt;String[]&gt;();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(String&nbsp;data&nbsp;:datas)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[]&nbsp;tt&nbsp;=&nbsp;data.split(<span class="string">","</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret.add(tt);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;ret;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="annotation">@Override</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;List&lt;String[]&gt;&nbsp;getValueFromString(String&nbsp;fromValue)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="8" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">public class ListStringArrayEditor implements ArrayEditorInf&lt;List&lt;String[]&gt;&gt; {
+
+	@Override
+	public List&lt;String[]&gt; getValueFromObject(Object fromValue) {
+		if(fromValue == null)
+			return null;
+		if(fromValue instanceof String[])
+		{
+			String[] datas = (String[])fromValue; 
+			if(datas.length&lt;=0)
+				return null;
+			List&lt;String[]&gt; ret = new ArrayList&lt;String[]&gt;();
+			
+			for(String data :datas)
+			{
+				String[] tt = data.split(",");
+				ret.add(tt);
+			}
+			return ret;
+		}
+		return null;
+		
+	}
+
+	@Override
+	public List&lt;String[]&gt; getValueFromString(String fromValue) {
+		return null;
+	}
+}</pre>
+<br> mvc框架参数绑定时，如果指定了类型为ArrayEditorInf的属性编辑器， 则要求mvc框架传入的参数为参数数组，否则只能传入单个值。这个转换器有点复杂，可以看一个简单一点的转换器：
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=public%20class%20ListEditor%20implements%20EditorInf%3CList%3CString%3E%3E%20%7B%0A%0A%09public%20List%3CString%3E%20getValueFromObject(Object%20fromValue)%20%7B%0A%09%09if(fromValue%20%3D%3D%20null%20%7C%7C%20fromValue.equals(%22%22))%0A%09%09%09return%20null%3B%0A%09%09%09%0A%09%09return%20getValueFromString(String.valueOf(%20fromValue))%3B%0A%09%09%0A%09%7D%0A%0A%09public%20List%3CString%3E%20getValueFromString(String%20fromValue)%20%7B%0A%09%09List%3CString%3E%20ret%20%3D%20new%20ArrayList%3CString%3E()%3B%0A%09%09String%5B%5D%20datas%20%3D%20fromValue.split(%22%2C%22)%3B%20%0A%09%09for(String%20data%20%3Adatas)%0A%09%09%7B%0A%09%09%09%0A%09%09%09ret.add(data)%3B%0A%09%09%7D%0A%09%09return%20ret%3B%0A%09%0A%09%7D%0A%0A%0A%7D" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;ListEditor&nbsp;</span><span class="keyword">implements</span><span>&nbsp;EditorInf&lt;List&lt;String&gt;&gt;&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;List&lt;String&gt;&nbsp;getValueFromObject(Object&nbsp;fromValue)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(fromValue&nbsp;==&nbsp;</span><span class="keyword">null</span><span>&nbsp;||&nbsp;fromValue.equals(</span><span class="string">""</span><span>))&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;getValueFromString(String.valueOf(&nbsp;fromValue));&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;List&lt;String&gt;&nbsp;getValueFromString(String&nbsp;fromValue)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;String&gt;&nbsp;ret&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;ArrayList&lt;String&gt;();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[]&nbsp;datas&nbsp;=&nbsp;fromValue.split(<span class="string">","</span><span>);&nbsp;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(String&nbsp;data&nbsp;:datas)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret.add(data);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;ret;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre title="bboss mvc参数绑定注解RequestParam使用说明" pre_index="9" source_url="http://yin-bp.iteye.com/blog/1926341#" codeable_type="BlogComment" codeable_id="" style="display: none;" name="code" class="java">public class ListEditor implements EditorInf&lt;List&lt;String&gt;&gt; {
+
+	public List&lt;String&gt; getValueFromObject(Object fromValue) {
+		if(fromValue == null || fromValue.equals(""))
+			return null;
+			
+		return getValueFromString(String.valueOf( fromValue));
+		
+	}
+
+	public List&lt;String&gt; getValueFromString(String fromValue) {
+		List&lt;String&gt; ret = new ArrayList&lt;String&gt;();
+		String[] datas = fromValue.split(","); 
+		for(String data :datas)
+		{
+			
+			ret.add(data);
+		}
+		return ret;
+	
+	}
+
+
+}</pre>
+<br>EditorInf类型的editor专门处理单个参数值的转换，ArrayEditorInf类型的editor专门处理数组参数转换；通过这两种类型的editor我们可以实现复杂的参数类型转换。
+<br>
+<br>更多详细信息请参考bboss mvc的参数绑定测试用例：
+<br>
+<br><a href="https://github.com/bbossgroups/bbossgroups-3.5/blob/3e4d674e1b2cc7b7c02782304a2fb4c4e2172794/bboss-mvc/test/org/frameworkset/mvc/HelloWord.java" target="_blank">HelloWord.java</a>
+<br><a href="https://github.com/bbossgroups/bbossgroups-3.5/blob/3e4d674e1b2cc7b7c02782304a2fb4c4e2172794/bboss-mvc/WebRoot/jsp/examples/hello.jsp" target="_blank">hello.jsp</a>
+  </div>
+
+  
+
+  <ins data-revive-zoneid="171" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type="sina" href="javascript:;" title="分享到新浪微博"><img src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/sina.jpg"></a>
+      <a data-type="qq" href="javascript:;" title="分享到腾讯微博"><img src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="http://yin-bp.iteye.com/blog/1934974" class="next" title="bbossgroups标签使用大全（续一）-安全篇">bbossgroups标签使用大全（续一）-安全篇</a>
+      |
+      <a href="http://yin-bp.iteye.com/blog/1925173" class="pre" title="bboss持久层sql语句输出到log4j日志文件设置">bboss持久层sql语句输出到log4j日志文件 ...</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2013-08-17 00:02</li>
+      <li>浏览 1342</li>
+      <li><a href="#comments">评论(2)</a></li>
+       <li>论坛回复 / <a href="http://yin-bp.iteye.com/topic/1131693">浏览</a> (0 / 2215)</li> 
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/opensource">开源软件</a></li>      
+      <li class="last"><a href="http://www.iteye.com/wiki/blog/1926341" target="_blank" class="more">相关推荐</a></li>
+    </ul>    
+  </div>
+  
+		    
+		
+<div class="boutique-curr-box blog_comment">
+	  <div class="boutique-curr clearfix">
+	    <h5 class="h3titles">参考知识库</h5>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/36"><img src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/1463455906707_707.jpg" alt="" height="58" width="58"></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/36" classs="title">PHP知识库</a>
+              <span>
+                 <em>530</em>&nbsp;&nbsp;关注 <i>|</i> <em>300</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/40"><img src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/1463378338830_830.jpg" alt="" height="58" width="58"></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/40" classs="title">信息无障碍知识库</a>
+              <span>
+                 <em>61</em>&nbsp;&nbsp;关注 <i>|</i> <em>73</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/37"><img src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/1463023002983_983.jpg" alt="" height="58" width="58"></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/37" classs="title">计算机网络知识库</a>
+              <span>
+                 <em>578</em>&nbsp;&nbsp;关注 <i>|</i> <em>2836</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/25"><img src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/1462342584443_443.jpg" alt="" height="58" width="58"></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/25" classs="title">C#知识库</a>
+              <span>
+                 <em>576</em>&nbsp;&nbsp;关注 <i>|</i> <em>312</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	  </div>
+</div>
+ 		
+      
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2358349">
+  <div class="comment_title">
+    2 楼
+    <a href="http://yin-bp.iteye.com/" target="_blank" title="yin_bp">yin_bp</a>
+    2014-09-12&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">请将下面代码中的dataformat（用来格式化数字的属性）修改为dateformat属性试试<br>&nbsp; @RequestParam(dataformat="yyyy-MM-dd")<br>&nbsp; private Date startime;<br>&nbsp; @RequestParam(dataformat="yyyy-MM-dd")<br>&nbsp; private Date endtime;<br><br>修改后应该为：<br>&nbsp; @RequestParam(dateformat="yyyy-MM-dd")<br>&nbsp; private Date startime;<br>&nbsp; @RequestParam(dateformat="yyyy-MM-dd")<br>&nbsp; private Date endtime;</div>
+</div>
+
+<div id="bc2358339">
+  <div class="comment_title">
+    1 楼
+    <a href="http://ljthinkpad.iteye.com/" target="_blank" title="ljthinkpad">ljthinkpad</a>
+    2014-09-12&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">&nbsp; @RequestParam(dataformat="yyyy-MM-dd")<br>	&nbsp; private Date startime;<br>	&nbsp; @RequestParam(dataformat="yyyy-MM-dd")<br>	&nbsp; private Date endtime;<br><br><br>前台传入如 2014-09-12 的日期 ，后台报错：<br>[com.frameworkset.util.ValueObjectUtil] Unparseable date: "2014-09-12"<br>java.text.ParseException: Unparseable date: "2014-09-12"<br>	at java.text.DateFormat.parse(Unknown Source)<br>	at com.frameworkset.util.ValueObjectUtil.convertObjToDateWithDateformat(ValueObjectUtil.java:2003)<br>	at com.frameworkset.util.ValueObjectUtil.convertObjToDate(ValueObjectUtil.java:1944)<br>	at com.frameworkset.util.ValueObjectUtil.basicTypeCast(ValueObjectUtil.java:1722)<br>	at com.frameworkset.util.ValueObjectUtil.typeCast(ValueObjectUtil.java:1233)<br>	at com.frameworkset.util.ValueObjectUtil.typeCast(ValueObjectUtil.java:604)</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="http://yin-bp.iteye.com/login" style="background-color:white;"> <img src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/login_icon.png" style="vertical-align:middle; margin-right: 10px;"></a><a href="http://yin-bp.iteye.com/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1926341;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'bboss mvc参数绑定注解RequestParam使用说明');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'bboss mvc参数绑定注解RequestParam使用说明');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href="http://yin-bp.iteye.com/"><img alt="yin_bp的博客" class="logo" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/9353678a-1c6f-3dfe-af0f-af38a282d5b6.jpg" title="yin_bp的博客: Bboss 打造中国制造品牌-每天都在进步" width=""></a></div>
+  <div id="blog_owner_name">yin_bp</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 222488 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_minigender_1.gif" title="男"></li>
+              <li>来自: 长沙</li>
+              <li><img src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/offline.gif"></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style="font-weight:normal;font-size:12px;padding-left:30px;"><a href="http://yin-bp.iteye.com/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://heli600761.iteye.com/" target="_blank"><img alt="heli600761的博客" class="logo" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="heli600761的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://heli600761.iteye.com/" target="_blank" title="heli600761">heli600761</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://lixialv.iteye.com/" target="_blank"><img alt="lixialv的博客" class="logo" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="lixialv的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://lixialv.iteye.com/" target="_blank" title="lixialv">lixialv</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://injavawetrust.iteye.com/" target="_blank"><img alt="InJavaWeTrust的博客" class="logo" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/62c7a4f6-b0fd-32fa-bc44-d237aa55889e-thumb.jpg" title="InJavaWeTrust的博客: 问世间Java为何物 直教人生死相许" width="48px"></a></div>
+                <div class="left"><a href="http://injavawetrust.iteye.com/" target="_blank" title="InJavaWeTrust">InJavaWeTrust</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://zhongzhch.iteye.com/" target="_blank"><img alt="zhongzhch的博客" class="logo" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="zhongzhch的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://zhongzhch.iteye.com/" target="_blank" title="zhongzhch">zhongzhch</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="http://yin-bp.iteye.com/">全部博客 (306)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/206848">quick start (59)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/55606">bboss aop (40)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/132426">bboss mvc (44)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/55607">bboss persistent (91)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/69334">bboss taglib (28)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/65637">bboss event (10)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/99389">bbossgroups (52)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/55608">bboss (24)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/327553">bboss会话共享 (12)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/327706">bboss rpc (7)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/327707">bboss 国际化 (5)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/327708">bboss 序列化 (9)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/327709">bboss cxf webservice (8)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/327710">bboss hessian (3)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/327711">bboss 安全认证SSO (15)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/327712">bboss 工作流 (6)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/335883">平台 (14)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/333270">bboss quartz (2)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/102477">杂谈 (5)</a></li>
+                
+                  <li><a href="http://yin-bp.iteye.com/category/344010">大数据 (1)</a></li>
+                
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="http://yin-bp.iteye.com/blog/news">我的资讯</a> (20)</li>
+                <li>
+                  <a href="http://yin-bp.iteye.com/blog/post">我的论坛</a> (697)
+                </li>
+                <li><a href="http://yin-bp.iteye.com/blog/answered_problems">我的问答</a> (19)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="http://yin-bp.iteye.com/blog/monthblog/2016-05">2016-05</a> (1)</li>
+                
+                  <li><a href="http://yin-bp.iteye.com/blog/monthblog/2016-04">2016-04</a> (1)</li>
+                
+                  <li><a href="http://yin-bp.iteye.com/blog/monthblog/2016-03">2016-03</a> (4)</li>
+                
+                <li><a href="http://yin-bp.iteye.com/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+              <div id="comments_top">
+                <h5>评论排行榜</h5>
+                <ul>
+                  
+                    <li><a href="http://yin-bp.iteye.com/blog/2230399" title="基于bboss开发平台eclipse开发工程生成工具介绍">基于bboss开发平台eclipse开发工程生成工 ...</a></li>
+                  
+                    <li><a href="http://yin-bp.iteye.com/blog/2256948" title="bboss自动代码生成工具使用指南">bboss自动代码生成工具使用指南</a></li>
+                  
+                </ul>
+              </div>
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href="http://javacyx.iteye.com/" target="_blank" title="梦醒无尘">梦醒无尘</a>： 
+                   看明白了……<br>
+                  <a href="http://yin-bp.iteye.com/blog/2128726#bc2389195">bboss安全认证过滤器认证后重定向到请求页面功能介绍</a>
+                </li>
+                
+                <li>
+                  <a href="http://yin-bp.iteye.com/" target="_blank" title="yin_bp">yin_bp</a>： 
+                  mongodb版本目前支持2.6.3,3.0.7<br>
+                  <a href="http://yin-bp.iteye.com/blog/2177475#bc2386261">bboss会话共享培训文档分享</a>
+                </li>
+                
+                <li>
+                  <a href="http://yin-bp.iteye.com/" target="_blank" title="yin_bp">yin_bp</a>： 
+                  mongodb版本目前支持2.6.3，3.0.x,3.1.x版 ...<br>
+                  <a href="http://yin-bp.iteye.com/blog/2079685#bc2384183">bboss session共享架构及特点</a>
+                </li>
+                
+                <li>
+                  <a href="http://yin-bp.iteye.com/" target="_blank" title="yin_bp">yin_bp</a>： 
+                  www.bbossgroups.com正在进行首次备案，需要暂 ...<br>
+                  <a href="http://yin-bp.iteye.com/blog/2230399#bc2384143">基于bboss开发平台eclipse开发工程生成工具介绍</a>
+                </li>
+                
+                <li>
+                  <a href="http://yin-bp.iteye.com/" target="_blank" title="yin_bp">yin_bp</a>： 
+                  huangjia7 写道请问下：#foreach($ldxxb ...<br>
+                  <a href="http://yin-bp.iteye.com/blog/1262066#bc2382755">bboss 动态sql使用foreach循环示例</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br>
+          © 2003-2016 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script><img src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/a.gif" height="0" width="0">
+
+<script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tracking.js" type="text/javascript"></script>
+
+    
+    
+    <script language="javascript" type="text/javascript" src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/async_new.js"></script>
+<script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/jquery-1.js" type="text/javascript"></script>
+<script type="text/javascript">var $csdn_iteye_jq = jQuery.noConflict();// 解决jq与prototype.js命名空间冲突的问题</script>
+<script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tracking_002.js" type="text/javascript"></script>
+    
+	    
+	    <script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/web-storage-cache.js" type="text/javascript"></script>
+	    <script src="bboss%20mvc%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E6%B3%A8%E8%A7%A3RequestParam%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20-%20Bboss%20%E6%89%93%E9%80%A0%E4%B8%AD%E5%9B%BD%E5%88%B6%E9%80%A0%E5%93%81%E7%89%8C-%E6%AF%8F%E5%A4%A9%E9%83%BD%E5%9C%A8%E8%BF%9B%E6%AD%A5%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/replace.js" type="text/javascript"></script>
+    
+    
+  
+
+</body></html>

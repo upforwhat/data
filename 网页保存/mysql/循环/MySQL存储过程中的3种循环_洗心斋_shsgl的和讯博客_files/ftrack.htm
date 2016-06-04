@@ -1,0 +1,58 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=gbk"><script type="text/javascript">
+  var request = {
+  QueryString : function(val) {
+  var uri = window.location.search;
+  var re = new RegExp("" +val+ "\=([^\&\?]*)", "ig");
+  return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+ },
+ QueryStrings : function() {
+ var uri = window.location.search;
+ var re = /\w*\=([^\&\?]*)/ig;
+ var retval=[];
+ while ((arr = re.exec(uri)) != null)
+ retval.push(arr[0]);
+ return retval;
+ },
+ setQuery : function(val1, val2) {
+ var a = this.QueryStrings();
+ var retval = "";
+ var seted = false;
+ var re = new RegExp("^" +val1+ "\=([^\&\?]*)$", "ig");
+ for(var i=0; i<a.length; i++) {
+ if (re.test(a[i])) {
+ seted = true;
+ a[i] = val1 +"="+ val2;
+ }
+ }
+ retval = a.join("&");
+ return "?" +retval+ (seted ? "" : (retval ? "&" : "") +val1+ "=" +val2);
+ }
+}
+var time=request.QueryString("time");
+var site=request.QueryString("calc_l");
+var rsite=request.QueryString("calc_r");
+var title=request.QueryString("title");
+var isiframed=request.QueryString("isiframed");
+var sflag=request.QueryString("sflag");
+
+function sendtrackrequest()
+{
+	var isiframed='0';
+	if (sflag=="2")
+	{
+		document.write("<iframe src='http://utrack.hexun.com/frmTrack.aspx?site="+site+"&time="+time+"&rsite="+rsite+"' height=0 frameborder=0></iframe>");
+		return;
+	}
+	
+	if(typeof(_title_for_track_)=='undefined')
+	{
+		document.write("<iframe src='http://utrack.hexun.com/usertrack.aspx?site="+site+"&time="+time+"&rsite="+rsite+"' height=0 frameborder=0></iframe>");
+	}
+	else
+	{
+		document.write("<iframe src='http://utrack.hexun.com/usertrack.aspx?site="+site+"&time="+time+"&rsite="+rsite+"&title="+title+"' height=0 frameborder=0></iframe>");
+	}
+}
+sendtrackrequest();
+</script></head><body><iframe src="ftrack_data/frmTrack.htm" frameborder="0" height="0"></iframe></body></html>
