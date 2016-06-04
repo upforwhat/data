@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="strutsqs" extends="json-default" namespace="/">
+		<action name="GoLogin" class="com.action.GoLogin">
+			<result name="input">/Login.jsp</result>
+			<result name="success">/Index.jsp</result>
+		</action>
+		<action name="Quit" class="com.action.Quit">
+			<result name="success">/Login.jsp</result>
+		</action>
+		<action name="PasswordUpdateSave" class="com.action.PasswordUpdateSave">
+			<result name="input">/PasswordUpdate.jsp</result>
+		</action>
+
+		<action name="TeacherManager" class="com.action.TeacherManager">
+			<result name="success">/TeacherManager.jsp</result>
+		</action>
+		<action name="TeacherAddSave" class="com.action.TeacherAddSave">
+		</action>
+		<action name="TeacherUpdate" class="com.action.TeacherUpdate">
+			<result name="success">/TeacherUpdate.jsp</result>
+		</action>
+		<action name="TeacherUpdateSave" class="com.action.TeacherUpdateSave">
+		</action>
+		<action name="TeacherDel" class="com.action.TeacherDel">
+			<result name="success" type="chain">TeacherManager</result>
+		</action>
+
+		<action name="StudentManager" class="com.action.StudentManager">
+			<result type="json"></result>
+		</action>
+		<action name="StudentAddSave" class="com.action.StudentAddSave">
+		</action>
+		<action name="StudentUpdate" class="com.action.StudentUpdate">
+			<result name="success">/StudentUpdate.jsp</result>
+		</action>
+		<action name="StudentUpdateSave" class="com.action.StudentUpdateSave">
+		</action>
+		<action name="StudentDel" class="com.action.StudentDel">
+			<result type="json"></result>
+		</action>
+
+		<action name="BuildingManager" class="com.action.BuildingManager">
+			<result name="success">/BuildingManager.jsp</result>
+		</action>
+		<action name="BuildingAddSave" class="com.action.BuildingAddSave">
+		</action>
+		<action name="BuildingUpdate" class="com.action.BuildingUpdate">
+			<result name="success">/BuildingUpdate.jsp</result>
+		</action>
+		<action name="BuildingUpdateSave" class="com.action.BuildingUpdateSave">
+		</action>
+		<action name="BuildingDel" class="com.action.BuildingDel">
+			<result name="success" type="chain">BuildingManager</result>
+		</action>
+		<!-- 宿舍房间管理 -->
+		<action name="DomitoryAdd" class="com.action.DomitoryAdd">
+			<result name="success">/DomitoryAdd.jsp</result>
+		</action>
+		<action name="DomitoryFindbyBuildingId" class="com.action.DomitoryFindbyBuildingId">
+			<result name="success">/weiguiAdd.jsp</result>
+		</action>
+		<action name="DomitoryManager" class="com.action.DomitoryManager">
+			<result type="json"></result>
+		</action>
+		<action name="DomitoryAddSave" class="com.action.DomitoryAddSave">
+		</action>
+		<action name="DomitoryUpdate" class="com.action.DomitoryUpdate">
+			<result name="success">/DomitoryUpdate.jsp</result>
+		</action>
+		<action name="DomitoryUpdateSave" class="com.action.DomitoryUpdateSave">
+			<result type="json"></result>
+		</action>
+		<action name="DomitoryDel" class="com.action.DomitoryDel">
+			<result type="json"></result>
+		</action>
+
+		<!-- 违规管理 -->
+		<action name="weiguiManager" class="com.action.weiguiManager">
+			<result type="json"></result>
+		</action>
+		<action name="weiguiAdd" class="com.action.weiguiAdd">
+			<result name="success">/weiguiAdd.jsp</result>
+		</action>
+		<action name="weiguiAddSave" class="com.action.weiguiAddSave">
+		</action>
+		<action name="weiguiUpdate" class="com.action.weiguiUpdate">
+			<result name="success">/weiguiUpdate.jsp</result>
+		</action>
+		<action name="weiguiUpdateSave" class="com.action.weiguiUpdateSave">
+			<result type="json"></result>
+		</action>
+		<action name="weiguiDel" class="com.action.weiguiDel">
+			<result type="json"></result>
+		</action>
+		<!-- 卫生水电管理 -->
+		<action name="weishengshuidianManager"
+			class="com.action.weishengshuidianAction.weishengshuidianManager">
+			<result type="json"></result>
+		</action>
+		<action name="weishengshuidianAdd"
+			class="com.action.weishengshuidianAction.WeishengshuidianAdd">
+			<result name="success">/admin/Weishengshuidian/WeishengshuidianManager.jsp
+			</result>
+		</action>
+		<action name="weishengshuidianDel"
+			class="com.action.weishengshuidianAction.WeishengshuidianDel">
+			<result type="json"></result>
+		</action>
+		<action name="weishengshuidianUpdate"
+			class="com.action.weishengshuidianAction.WeishengshuidianUpdate">
+			<result name="success">/admin/Weishengshuidian/WeishengshuidianUpdate.jsp
+			</result>
+		</action>
+		<action name="weishengshuidianUpdateSave"
+			class="com.action.weishengshuidianAction.WeishengshuidianUpdateSave">
+			<result type="json"></result>
+		</action>
+		<!-- 水电单价修改管理 -->
+		<action name="shuidianFeilvUpdateSave"
+			class="com.action.weishengshuidianAction.shuidianFeilvUpdateSave">
+			<result type="chain">shuidianFeilvSearch</result>
+		</action>
+		<action name="shuidianFeilvSearch"
+			class="com.action.weishengshuidianAction.shuidianFeilvSearch">
+			<result name="success">/admin/Weishengshuidian/shuidianFeilvUpdateSave.jsp
+			</result>
+		</action>
+		<!-- 公告管理 -->
+		<action name="gonggaoManager" class="com.action.gonggaoAction.gonggaoManager">
+			<result name="success">/admin/gonggao/gongaoManager.jsp
+			</result>
+		</action>
+		<action name="gonggaoAdd" class="com.action.gonggaoAction.gonggaoAdd">
+		</action>
+		<action name="gonggaoDel" class="com.action.gonggaoAction.gonggaoDel">
+		</action>
+		<action name="gonggaoUpdate" class="com.action.gonggaoAction.gonggaoUpdate">
+			<result name="success">/admin/gonggao/gonggaoUpdate.jsp
+			</result>
+		</action>
+		<action name="gonggaoUpdateSave" class="com.action.gonggaoAction.gonggaoUpdateSave">
+		</action>
+		<action name="getgonggao" class="com.action.gonggaoAction.getgonggao">
+			<result name="success">/gonggao.jsp</result>
+		</action>
+		<!--over -->
+
+		<!-- 设备管理 -->
+		<action name="shebeiManager" class="com.action.shebei.shebeiManager">
+			<result type="json"></result>
+		</action>
+		<action name="shebeiDel" class="com.action.shebei.shebeiDel">
+			<result type="json"></result>
+		</action>
+
+		<action name="shebeiSave" class="com.action.shebei.shebeiSave">
+			<result type="json"></result>
+		</action>
+
+		<!--over -->
+
+
+
+		<!-- 学生批量导入stufileupload -->
+		<action name="stufileupload" class="com.action.uploadfileAction.stufileupload"
+			method="upload">
+			<result type="json"></result>
+		</action>
+		<!--over -->
+
+		<!--卫生水电 -->
+		<action name="weishengshuidianupload"
+			class="com.action.uploadfileAction.weishengshuidianupload" method="upload">
+			<result type="json"></result>
+		</action>
+		<!-- -->
+		<!--设备批量导入 -->
+		<action name="shebeiuploading" class="com.action.uploadfileAction.shebeiupload"
+			method="upload">
+			<result type="json"></result>
+		</action>
+		<!-- -->
+		<!--设备批量导入 -->
+		<action name="domitoryupload" class="com.action.uploadfileAction.Aboutdomitory"
+			method="upload">
+			<result type="json"></result>
+		</action>
+		<!-- -->
+
+
+
+
+
+
+		<!--报修管理 -->
+		<action name="baoxiuManager" class="com.action.baoxiu.baoxiuManager">
+			<result type="json"></result>
+		</action>
+		<action name="baoxiuShouli" class="com.action.baoxiu.baoxiuShouli">
+			<result type="json"></result>
+		</action>
+		<action name="baoxiuDel" class="com.action.baoxiu.baoxiuDel">
+			<result type="json"></result>
+		</action>
+		<!--学生申请报修 -->
+		<action name="baoxiuStuAdd" class="com.action.baoxiu.stu.baoxiuStuAdd">
+			<result name="success">/stu/baoxiu/baoxiuAdd.jsp</result>
+		</action>
+		<action name="baoxiuStuAddSave" class="com.action.baoxiu.stu.baoxiuStuAddSave">
+			<result name="success">/stu/baoxiu/baoxiuStuManager.jsp</result>
+		</action>
+		<action name="baoxiuStuManager" class="com.action.baoxiu.stu.baoxiuStuManager">
+			<result type="json"></result>
+		</action>
+
+		<!--over -->
+
+		<!-- 学生查看自己的信息 -->
+		<action name="aboutme" class="com.action.stu.aboutme">
+			<result type="json"></result>
+		</action>
+		<!--查看水电信息 -->
+		<action name="weishengshuidianStudentManager" class="com.action.stu.weishengshuidianStudentManager">
+			<result type="json"></result>
+		</action>
+		<!-- -->
+		<!-- 学生违规查询 -->
+		<action name="stuweigui" class="com.action.stu.stuweigui">
+			<result type="json"></result>
+		</action>
+
+
+		<!-- -->
+		<!-- 宿舍楼宿舍级联查询 -->
+		<action name="GetBuilding"
+			class="com.action.BuildingAndDormitory.BuildingAndDormitory" method="SearchBuilding">
+			<result type="json"></result>
+		</action>
+		<action name="GetDomitory"
+			class="com.action.BuildingAndDormitory.BuildingAndDormitory" method="SearchDomitory">
+			<result type="json"></result>
+		</action>
+
+		<!-- -->
+		<!--查看水电个人信息 -->
+		<action name="Stugerenshuidiandetail" class="com.action.stu.Stugerenshuidiandetail">
+			<result type="json"></result>
+		</action>
+		<!-- -->
+
+		<action name="StudentRZ" class="com.action.StudentRZ">
+			<result name="success">/StudentRZ.jsp</result>
+		</action>
+		<action name="StudentRZSave" class="com.action.StudentRZSave">
+		</action>
+		<action name="StudentTH" class="com.action.StudentTH">
+			<result name="success">/StudentTH2.jsp</result>
+		</action>
+		<action name="StudentTHSave" class="com.action.StudentTHSave">
+		</action>
+		<action name="StudentQC" class="com.action.StudentQC">
+			<result name="success">/StudentQC2.jsp</result>
+		</action>
+		<action name="StudentQCSave" class="com.action.StudentQCSave">
+		</action>
+
+		<action name="TBManager" class="com.action.TBManager">
+			<result name="success">/TBManager.jsp</result>
+		</action>
+		<action name="TBAddSave" class="com.action.TBAddSave">
+		</action>
+		<action name="TBDel" class="com.action.TBDel">
+		</action>
+
+		<action name="MyStudent" class="com.action.MyStudent">
+			<result name="success">/MyStudent.jsp</result>
+		</action>
+		<action name="MyStudentList" class="com.action.MyStudentList">
+			<result name="success">/MyStudentList.jsp</result>
+		</action>
+
+		<action name="LogAdd" class="com.action.LogAdd">
+			<result name="success">/LogAdd.jsp</result>
+		</action>
+		<action name="LogAddSave" class="com.action.LogAddSave">
+		</action>
+
+		<action name="MyLog" class="com.action.MyLog">
+			<result name="success">/MyLog.jsp</result>
+		</action>
+		<action name="MyLogList" class="com.action.MyLogList">
+			<result name="success">/MyLogList.jsp</result>
+		</action>
+
+		<action name="StudentLog" class="com.action.StudentLog">
+			<result name="success">/StudentLog.jsp</result>
+		</action>
+		<!-- 缺勤记录 -->
+		<action name="AdminLog" class="com.action.AdminLog">
+			<result name="success">/AdminLog.jsp</result>
+		</action>
+		<action name="AdminLogList" class="com.action.AdminLogList">
+			<result name="success">/AdminLogList.jsp</result>
+		</action>
+		<!-- 迁出记录 -->
+		<action name="OutList" class="com.action.OutList">
+			<result name="success">/OutList.jsp</result>
+		</action>
+
+		<!-- 页面跳转 -->
+		<action name="DomitoryManagerview" class="com.action.view.justgo">
+			<result name="success">admin/domitory/DomitoryManager.jsp</result>
+		</action>
+		<action name="StudentManagerview" class="com.action.view.justgo">
+			<result name="success">admin/student/StudentManager.jsp</result>
+		</action>
+		<action name="weiguiManagerview" class="com.action.view.justgo">
+			<result name="success">admin/weigui/weiguiManager.jsp</result>
+		</action>
+		<action name="WeishengshuidianManagerview" class="com.action.view.justgo">
+			<result name="success">admin/Weishengshuidian/WeishengshuidianManager.jsp
+			</result>
+		</action>
+		<action name="baoxiuManagerview" class="com.action.view.justgo">
+			<result name="success">admin/baoxiu/baoxiuManager.jsp</result>
+		</action>
+		<action name="shebeiManagerview" class="com.action.view.justgo">
+			<result name="success">admin/shebei/shebeiManager.jsp</result>
+		</action>
+		<!--  -->
+		<!-- <action name="nothing7" class="com.action.justgo7">
+			<result name="success">seguan/Weishengshuidian/WeishengshuidianManager.jsp
+			</result>
+		</action>
+			<action name="nothing8" class="com.action.justgo8">
+			<result name="success">stu/stuweigui.jsp</result>
+		</action>
+			<action name="nothing9" class="com.action.justgo9">
+			<result name="success">stu/aboutme.jsp</result>
+		</action>
+			<action name="nothing10" class="com.action.justgo10">
+			<result name="success">stu/shuidian/shuidianweisheng.jsp</result>
+		</action>
+			<action name="nothing11" class="com.action.justgo11">
+			<result name="success">stu/baoxiu/baoxiuStuManager.jsp</result>
+		</action> -->
+	</package>
+</struts>    
